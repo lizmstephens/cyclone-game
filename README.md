@@ -1,22 +1,26 @@
 # Madagascar Cyclone Decision Game
 
-A browser-based training game exploring cyclone forecast uncertainty and anticipatory action under a shared seasonal budget.
+## Play the games
 
-## Playable prototype
-The current `index.html` runs a daily Cyclone Jokwe sequence from 25 February to 10 March 2008, showing RSMC-inspired forecast maps based on WATTCH hindcast ensembles, with intermediate days constructed between actual initialization dates.
+- **`index.html` — Full-season training game (new):** Each new game randomly selects **2–7 storms** drawn without replacement from **94 usable WATTCH scenarios**, with a shared CHF 150,000 season budget, daily decision opportunities, forecast-map envelope, warehouse prepositioning/distribution restrictions, and Chef (boss) feedback.
+- **`jokwe.html` — Approved single-storm Jokwe prototype:** Preserved separately, including its detailed daily RSMC-style forecast images and enlarged warehouse markers.
 
-The player chooses **Keep monitoring**, **Preposition Kits**, or **Distribute Kits**, subject to lead-time restrictions and availability of prepositioned stocks. The game tracks CHF expenditure, indicative beneficiaries and the **Chef (boss)**'s reactions.
+Open `index.html` locally in Chrome after downloading it; its 94-scenario dataset is embedded so no server is required. The repository is private, so GitHub Pages is not currently available.
 
-Warehouse dots and location labels have been enlarged for readability.
+## Training-game rules
 
-## Scenario library and variable seasons — under development
-- `data/scenarios-100.json`: 100 distinct Madagascar-relevant cases extracted from the user-provided WATTCH archives, including ensemble tracks, landfall records and reference tracks.
-- `js/seasons.js`: `loadCatalogue()` and `makeSeason()` to select a **variable number of independent storms**, currently 2–7 (weighted counts of 10%, 20%, 25%, 20%, 15%, 10%).
-- The sampler draws cases from different historical years to produce a **fictional training season**. They must not be described as a historically observed sequence of storms.
-- The new sampler is not yet wired into the playable Jokwe HTML. A future step is transforming each selected ensemble forecast into its own day-by-day forecast briefing, then connecting seasons, scoring and budget persistence to the game.
+- Decide daily: **Keep monitoring**, **Preposition Kits**, or **Distribute Kits**.
+- Preposition costs CHF 20,000 per warehouse and requires 4+ days remaining in the approximate event window.
+- Distribute costs CHF 8,000 per stocked warehouse and requires 0–3 days remaining.
+- Stock is storm-specific; the **budget, Chef happiness, and cumulative reach** are carried across the season.
+- The season ends after its sampled 2–7 storms. Select **New season** for a new random selection.
 
-## Scientific/data caveats
-WATTCH trajectories are physically plausible hindcast ensembles, not necessarily the operational forecasts seen at the time. A 12-hour forecast-valid-time series from one initialization is not the same as updated daily forecasts. Daily update graphics between distinct initializations require explicit interpolation. WATTCH's `Wind` units and any exposure estimates should be checked against the metadata. Geographic warehouse locations and costs are placeholders pending verification.
+## Source and limitations
 
-## Hosting
-The repository is private. GitHub Pages is not enabled. The current `index.html` embeds its forecast images so it can be downloaded and opened locally in a browser.
+`data/scenarios-100.json` holds 100 WATTCH archive selections, but six currently lack sufficient reference track or ensemble information for the integrated replay, so the playable version embeds **94 usable cases**.
+
+The source cases include **one forecast initialization** for each scenario; they do not supply a real sequence of operational daily forecast updates. The integrated game therefore creates **training updates** by adjusting the archived ensemble against the reference track at each replay day. These updates are *illustrative constructs*, not genuine WATTCH forecasts issued on successive dates. The maps use an approximate positional uncertainty envelope and do not represent calibrated 75% probability of landfall. The storms are sampled from different historical years into **fictional training seasons**, not a real chronology.
+
+The impact footprint (distance to selected warehouse locations), affected people, CHF costs, activation deadlines and Chef feedback are simplified gameplay assumptions and require review before the game can be used to assess real operational performance. Wind units are treated as m/s in the game and should be checked against source metadata before any scientific claims.
+
+The original `js/seasons.js` exposes reusable `makeSeason()` and `loadCatalogue()` utilities if the game is modularized later.
