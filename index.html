@@ -74,7 +74,7 @@ const catalogue=JSON.parse(document.getElementById("embedded-data").textContent)
 const hubs=[{id:"N",name:"Antsiranana",lon:49.29,lat:-12.27},{id:"NE",name:"Sambava",lon:50.17,lat:-14.27},{id:"NW",name:"Mahajanga",lon:46.32,lat:-15.72},{id:"E",name:"Toamasina",lon:49.4,lat:-18.15},{id:"SE",name:"Mananjary",lon:48.33,lat:-21.23},{id:"SW",name:"Toliara",lon:43.67,lat:-23.36}];
 const cost={preposition:20000,distribute:8000};
 const $=id=>document.getElementById(id);
-const date=x=>new Date(String(x).replace(" ","T")+"Z");
+const date=x=>{const s=String(x).trim().replace(" ","T");return new Date((/^\d{4}-\d{2}-\d{2}$/.test(s)?s+"T00:00:00":s)+"Z");};
 const dayMs=86400000, money=x=>"CHF "+Math.round(x).toLocaleString("en-GB");
 const clamp=(a,lo,hi)=>Math.max(lo,Math.min(hi,a));
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
