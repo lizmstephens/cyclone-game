@@ -2,7 +2,7 @@
 
 ## Play the games
 
-- **`index.html` — Full-season training game (new):** Each new game randomly selects **2–7 storms** drawn without replacement from **94 usable WATTCH scenarios**, with a shared CHF 150,000 season budget, daily decision opportunities, forecast-map envelope, warehouse prepositioning/distribution restrictions, and Chef (boss) feedback.
+- **`index.html` — Full-season training game:** Each new game randomly selects **2–7 storms** drawn without replacement from **94 usable WATTCH scenarios**, with a shared CHF 150,000 season budget, daily decision opportunities, forecast-map envelope, warehouse prepositioning/distribution restrictions, and Chef (boss) feedback. Players do not see the total number of storms or historical storm identities until the season ends.
 - **`jokwe.html` — Approved single-storm Jokwe prototype:** Preserved separately, including its detailed daily RSMC-style forecast images and enlarged warehouse markers.
 
 Open `index.html` locally in Chrome after downloading it; its 94-scenario dataset is embedded so no server is required. The repository is private, so GitHub Pages is not currently available.
@@ -13,7 +13,10 @@ Open `index.html` locally in Chrome after downloading it; its 94-scenario datase
 - Preposition costs CHF 20,000 per warehouse and requires 4+ days remaining in the approximate event window.
 - Distribute costs CHF 8,000 per stocked warehouse and requires 0–3 days remaining.
 - Stock is storm-specific; the **budget, Chef happiness, and cumulative reach** are carried across the season.
-- The season ends after its sampled 2–7 storms. Select **New season** for a new random selection.
+- The season ends after its sampled 2–7 storms. The results screen reveals historical WATTCH storm names, years, geographic reference-track context and game outcomes. Select **New season** for another random selection.
+- Warehouse markers start red, turn green when kits are prepositioned and darken when kits have been distributed.
+- A fixed-coordinate Madagascar coastline replaces the earlier schematic outline; the map scale stays fixed rather than changing between forecast briefings.
+- Players see fictional dates during a single **December–April 2026–27** training season. The historical forecast times remain internal for dataset interpolation and are revealed with the storm identities after the season.
 
 ## Source and limitations
 
