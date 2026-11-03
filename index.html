@@ -37,6 +37,7 @@ footer{margin-top:12px;color:#5f7780;font-size:12px;line-height:1.5}
 <div class="stat"><div class="k">People reached</div><div class="v" id="peoplestat">0</div></div>
 <div class="stat"><div class="k">Chef's happiness</div><div class="v" id="chefstat">—</div></div>
 </div>
+<section id="season-summary" class="panel" hidden aria-live="polite"></section>
 <div class="layout">
 <section>
 <div class="panel">
@@ -84,13 +85,24 @@ const dist=(a,b)=>{const mean=((a[0]+b[0])/2)*Math.PI/180;return Math.hypot((a[1
 function midpoint(vals){const a=vals.slice().sort((x,y)=>x-y);return a[Math.floor((a.length-1)/2)];}
 function quantile(vals,q){if(!vals.length)return 0;const a=vals.slice().sort((x,y)=>x-y),i=(a.length-1)*q,l=Math.floor(i),f=i-l;return a[l]*(1-f)+a[Math.min(l+1,a.length-1)]*f;}
 function eventDate(s){const ev=s.forecast_landfalls?.map(p=>date(p.time)).filter(d=>!isNaN(+d));if(ev?.length)return new Date(midpoint(ev.map(x=>+x)));const init=date(s.initialization),ref=s.reference_track;let closest=null;for(const p of ref){const t=date(p[0]);if(t<init)continue;const lat=+p[1],lon=+p[2];if(lat>=-26&&lat<=-11&&lon>=43&&lon<=52){closest=t;break;}}return closest||new Date(+init+8*dayMs);}
-function startScenario(s){const t=date(s.initialization),event=eventDate(s);const duration=clamp(Math.ceil((event-t)/dayMs)+2,5,12);return {data:s,start:t,event,day:0,duration,stock:new Set(),distributed:new Set(),choice:"",chosen:new Set(),acted:false,history:[],impact:null};}
+function startScenario(s,simStart){const t=date(s.initialization),event=eventDate(s);const duration=clamp(Math.ceil((event-t)/dayMs)+2,5,12);return {data:s,start:t,simStart,event,day:0,duration,stock:new Set(),distributed:new Set(),choice:"",chosen:new Set(),acted:false,history:[],impact:null};}
 function current(){return G.storms[G.slot];}
 function issueTime(){const st=current();return new Date(+st.start+st.day*dayMs);}
+function displayTime(){const st=current();return addDays(st.simStart,st.day);}
 function remainingDays(){return Math.ceil((current().event-issueTime())/dayMs);}
 function canPrep(){return remainingDays()>=4;}
 function canDist(){const d=remainingDays();return d>=0&&d<=3&&[...current().stock].some(x=>!current().distributed.has(x));}
-function changeSeason(){const n=stormCount(),chosen=shuffle(catalogue.scenarios).slice(0,n);G={storms:chosen.map(startScenario),slot:0,budget:150000,people:0,chef:60,finished:false};render();}
+function changeSeason(){
+ const n=stormCount(),chosen=shuffle(catalogue.scenarios).slice(0,n);
+ const seasonStart=new Date("2026-12-01T00:00:00Z");
+ const storms=chosen.map((s,i)=>{
+   // Fictional dates are ordered, nonoverlapping, and fall within Dec–Apr.
+   const offset=Math.round((i+0.5)*130/n+Math.random()*3);
+   return startScenario(s,addDays(seasonStart,offset));
+ });
+ G={storms,slot:0,budget:150000,people:0,chef:60,finished:false};
+ render();
+}
 let G;
 function addDays(d,n){return new Date(+d+n*dayMs);}
 function forecast(st){
@@ -137,7 +149,7 @@ function forecastMessage(rows){if(!rows.length)return "We're monitoring this sys
 function impact(st){const ref=st.data.reference_track;const hits=[];for(const h of hubs){let best=null;for(const p of ref){const t=date(p[0]);if(t<st.start||t>addDays(st.event,2))continue;const km=dist([h.lat,h.lon],[+p[1],+p[2]]);if(!best||km<best.km)best={km,wind:+p[3]*3.6};}if(best&&best.km<175&&best.wind>=63)hits.push(h.id);}return hits;}
 function finishStorm(){const st=current(),imp=impact(st),helped=imp.filter(x=>st.distributed.has(x));let lost=imp.filter(x=>!st.distributed.has(x));G.people+=helped.length*1000;G.chef=clamp(G.chef+helped.length*13-lost.length*17-st.distributed.size*2-st.stock.size*2,0,100);st.impact=imp;st.history.push("Outcome: "+imp.length+" warehouse area(s) within illustrative impact radius; "+helped.length+" protected by distribution.");st.acted=true;G.finished=G.slot===G.storms.length-1;render();$("message").textContent="Storm completed. "+helped.length+" impacted areas received advance distribution."; }
 function render(){
-const st=current(),t=issueTime(),remaining=remainingDays(),rows=forecast(st),last=st.impact!==null;
+const st=current(),t=displayTime(),remaining=remainingDays(),rows=forecast(st),last=st.impact!==null;
 $("seasonstat").textContent="Storm "+(G.slot+1)+" · Season underway";
 $("budgetstat").textContent=money(G.budget);$("peoplestat").textContent=G.people.toLocaleString("en-GB");$("chefstat").textContent=(G.chef>=70?"🙂":G.chef<40?"😟":"😐")+" "+G.chef+" / 100";
 $("stormtitle").textContent="Storm "+(G.slot+1)+" · Tropical system";
@@ -158,7 +170,56 @@ $("cost").textContent=st.acted?"Decision confirmed for today.":st.choice==="moni
 $("confirm").disabled=st.acted||last||!st.choice||(["preposition","distribute"].includes(st.choice)&&!n)||n>G.budget;
 $("advance").style.display=st.acted&&!last?"inline-block":"none";$("advance").textContent=st.day+1>=st.duration?"Review storm outcome →":"Next forecast →";
 $("nextstorm").style.display=last&&!G.finished?"inline-block":"none";
-if(G.finished){$("message").textContent="Season complete · "+G.storms.length+" storms · "+money(G.budget)+" remaining · "+G.people.toLocaleString("en-GB")+" people reached. Select New season to replay.";}
+if(G.finished){
+ $("message").textContent="Season complete.";
+ $("season-summary").hidden=false;
+ document.querySelector(".layout").hidden=true;
+ $("season-summary").innerHTML=seasonSummary();
+} else {
+ $("season-summary").hidden=true;
+ document.querySelector(".layout").hidden=false;
+}
+}
+function inIsland(lat,lon){
+ let inside=false;
+ for(let i=0,j=coast.length-1;i<coast.length;j=i++){
+   const xi=coast[i][0],yi=coast[i][1],xj=coast[j][0],yj=coast[j][1];
+   if(((yi>lat)!==(yj>lat))&&(lon<(xj-xi)*(lat-yi)/(yj-yi)+xi))inside=!inside;
+ }
+ return inside;
+}
+function archiveOutcome(s){
+ const valid=s.reference_track||[];
+ const crossed=valid.some(p=>inIsland(+p[1],+p[2]));
+ const near=valid.some(p=>hubs.some(h=>dist([+p[1],+p[2]],[h.lat,h.lon])<175));
+ return crossed?"The archived reference track crosses Madagascar.":near?"The archived reference track passes close to Madagascar.":"A Madagascar landfall is not established by the sampled reference track.";
+}
+function seasonSummary(){
+ const spent=150000-G.budget;
+ const cards=G.storms.map((st,i)=>{
+   const name=esc(st.data.storm_name||"Unnamed system");
+   const year=esc(st.data.initialization.slice(0,4));
+   const impacted=(st.impact||[]).map(id=>hubs.find(h=>h.id===id)?.name||id);
+   const helped=impacted.filter(n=>[...st.distributed].some(id=>hubs.find(h=>h.id===id)?.name===n));
+   const spending=st.history.filter(h=>/committed/.test(h)).join(" ");
+   return '<article style="border:1px solid #d7e2e6;padding:14px;border-radius:9px;margin:12px 0;background:#f7fafb">'+
+     '<h3 style="margin:0 0 6px">Storm '+(i+1)+' revealed: '+name+' ('+year+')</h3>'+
+     '<p class="subtle" style="margin:0 0 10px">Game date: '+st.simStart.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"})+
+     ' · Original WATTCH initialization: '+esc(st.data.initialization)+'.</p>'+
+     '<p>'+archiveOutcome(st.data)+'</p>'+
+     '<p><strong>Game outcome:</strong> '+impacted.length+' modelled warehouse areas affected; '+helped.length+' received kits in advance. Prepositioned at '+st.stock.size+' sites; distributed at '+st.distributed.size+' sites.</p>'+
+     '<p class="subtle">'+esc(spending||"No expenditure.")+'</p></article>';
+ }).join("");
+ return '<h2>End of cyclone season</h2>'+
+ '<p>You have now completed the season. You were not told in advance that there would be <strong>'+G.storms.length+' storms</strong>.</p>'+
+ '<div class="stats" style="margin:16px 0"><div class="stat"><div class="k">Storms encountered</div><div class="v">'+G.storms.length+'</div></div>'+
+ '<div class="stat"><div class="k">Budget spent</div><div class="v">'+money(spent)+'</div></div>'+
+ '<div class="stat"><div class="k">Budget remaining</div><div class="v">'+money(G.budget)+'</div></div>'+
+ '<div class="stat"><div class="k">Chef happiness</div><div class="v">'+G.chef+' / 100</div></div></div>'+
+ '<p><strong>'+G.people.toLocaleString("en-GB")+' people reached</strong> under the illustrative game impact model.</p>'+
+ '<h2>The real storms behind your game</h2>'+cards+
+ '<p class="subtle">Each identity and historical year comes from the WATTCH scenario archive. Fictional game dates do not correspond to actual storm dates. A mapped reference-track crossing indicates an approximate geographic crossing, not a verified historical impact assessment. Game estimates of impact, people reached and CHF expenditure are illustrative.</p>'+
+ '<button class="btn" type="button" id="summary-restart">Play another season</button>';
 }
 function selectAction(a){const st=current();if(st.acted||st.impact!==null)return;if(a==="preposition"&&!canPrep()||a==="distribute"&&!canDist())return;st.choice=a;st.chosen.clear();$("message").textContent="";render();}
 function confirm(){const st=current(),a=st.choice,selected=[...st.chosen];if(st.acted||!a)return;const n=selected.length*cost[a]||0;if((a!=="monitor"&&!selected.length)||n>G.budget)return;G.budget-=n;if(a==="preposition")selected.forEach(x=>st.stock.add(x));if(a==="distribute"){selected.forEach(x=>st.distributed.add(x));G.people+=0;}st.history.push(a==="monitor"?"Keep monitoring: no funds committed.":a==="preposition"?"Prepositioned at "+selected.join(", ")+"; "+money(n)+" committed.":"Distributed at "+selected.join(", ")+"; "+money(n)+" committed.");st.acted=true;render();$("message").textContent="Decision saved. Advance to the next briefing.";}
@@ -169,6 +230,7 @@ $("advance").addEventListener("click",()=>{const st=current();if(!st.acted)retur
 $("nextstorm").addEventListener("click",()=>{if(current().impact===null||G.finished)return;G.slot++;$("message").textContent="A new cyclone is developing. Your remaining budget carries forward.";render();});
 $("restart").addEventListener("click",()=>{if(G&&!G.finished&&!confirmNewSeason())return;changeSeason();});
 function confirmNewSeason(){return window.confirm("Start a new season? Current decisions and progress will be reset.");}
+$("season-summary").addEventListener("click",e=>{if(e.target.closest("#summary-restart"))changeSeason();});
 changeSeason();
 })();
 </script></body></html>
