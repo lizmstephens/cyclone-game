@@ -168,7 +168,7 @@ $("warehouses").innerHTML=hubs.map(h=>{const blocked=st.choice==="preposition"?s
 const n=st.chosen.size*cost[st.choice]||0;
 $("cost").textContent=st.acted?"Decision confirmed for today.":st.choice==="monitor"?"No cost.":st.choice?"Cost: "+money(n)+(n>G.budget?" — insufficient budget":""):"Choose one of the three actions.";
 $("confirm").disabled=st.acted||last||!st.choice||(["preposition","distribute"].includes(st.choice)&&!n)||n>G.budget;
-$("advance").style.display=st.acted&&!last?"inline-block":"none";$("advance").textContent=st.day+1>=st.duration?"Review storm outcome →":"Next forecast →";
+$("advance").style.display=st.acted&&!last?"inline-block":"none";$("advance").textContent=st.day+1>=st.duration?"Complete storm and continue season →":"Next forecast →";
 $("nextstorm").style.display=last&&!G.finished?"inline-block":"none";
 if(G.finished){
  $("message").textContent="Season complete.";
@@ -226,7 +226,7 @@ function confirm(){const st=current(),a=st.choice,selected=[...st.chosen];if(st.
 $("actions").addEventListener("click",e=>{const b=e.target.closest("[data-action]");if(b&&!b.disabled)selectAction(b.dataset.action);});
 $("warehouses").addEventListener("change",e=>{const box=e.target.closest("[data-hub]");if(!box)return;const st=current();if(box.checked)st.chosen.add(box.dataset.hub);else st.chosen.delete(box.dataset.hub);render();});
 $("confirm").addEventListener("click",confirm);
-$("advance").addEventListener("click",()=>{const st=current();if(!st.acted)return;if(st.day+1>=st.duration){finishStorm();return;}st.day++;st.acted=false;st.choice="";st.chosen.clear();$("message").textContent="";render();});
+$("advance").addEventListener("click",()=>{const st=current();if(!st.acted||st.impact!==null)return;if(st.day+1>=st.duration){finishStorm();if(!G.finished){G.slot++;render();$("message").textContent="The previous storm has passed. A new cyclone is developing. Your remaining budget carries forward.";}return;}st.day++;st.acted=false;st.choice="";st.chosen.clear();$("message").textContent="";render();});
 $("nextstorm").addEventListener("click",()=>{if(current().impact===null||G.finished)return;G.slot++;$("message").textContent="A new cyclone is developing. Your remaining budget carries forward.";render();});
 $("restart").addEventListener("click",()=>{if(G&&!G.finished&&!confirmNewSeason())return;changeSeason();});
 function confirmNewSeason(){return window.confirm("Start a new season? Current decisions and progress will be reset.");}
