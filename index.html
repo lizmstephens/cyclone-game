@@ -115,7 +115,7 @@ for(let d=0;d<=7;d++){
 const valid=addDays(issue,d),positions=members.map(m=>pt(m.points,valid)).filter(Boolean);
 if(positions.length<3)continue;
 const adjust=actual&&nowMedian?Math.exp(-d/2.5):0;
-const shifted=positions.map(p=>[p[0]+(actual[0]-nowMedian[0])*adjust,p[1]+(actual[1]-nowMedian[1])*adjust,p[2]]);
+const shifted=actual&&nowMedian?positions.map(p=>[p[0]+(actual[0]-nowMedian[0])*adjust,p[1]+(actual[1]-nowMedian[1])*adjust,p[2]]):positions;
 const lat=midpoint(shifted.map(p=>p[0])),lon=midpoint(shifted.map(p=>p[1])),wind=midpoint(shifted.map(p=>p[2]))*3.6;
 const distances=shifted.map(p=>dist([lat,lon],[p[0],p[1]]));
 const radius=Math.max(12,quantile(distances,.75));
