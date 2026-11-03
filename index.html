@@ -85,7 +85,7 @@ const dist=(a,b)=>{const mean=((a[0]+b[0])/2)*Math.PI/180;return Math.hypot((a[1
 function midpoint(vals){const a=vals.slice().sort((x,y)=>x-y);return a[Math.floor((a.length-1)/2)];}
 function quantile(vals,q){if(!vals.length)return 0;const a=vals.slice().sort((x,y)=>x-y),i=(a.length-1)*q,l=Math.floor(i),f=i-l;return a[l]*(1-f)+a[Math.min(l+1,a.length-1)]*f;}
 function eventDate(s){const ev=s.forecast_landfalls?.map(p=>date(p.time)).filter(d=>!isNaN(+d));if(ev?.length)return new Date(midpoint(ev.map(x=>+x)));const init=date(s.initialization),ref=s.reference_track;let closest=null;for(const p of ref){const t=date(p[0]);if(t<init)continue;const lat=+p[1],lon=+p[2];if(lat>=-26&&lat<=-11&&lon>=43&&lon<=52){closest=t;break;}}return closest||new Date(+init+8*dayMs);}
-function startScenario(s,simStart){const t=date(s.initialization),event=eventDate(s);const duration=clamp(Math.ceil((event-t)/dayMs)+2,5,12);return {data:s,start:t,simStart,event,day:0,duration,stock:new Set(),distributed:new Set(),choice:"",chosen:new Set(),acted:false,history:[],impact:null};}
+function startScenario(s,simStart){const t=date(s.initialization),event=eventDate(s);const duration=clamp(Math.ceil((event-t)/dayMs)+2,5,12);return {data:s,start:t,simStart,event,day:0,duration,stock:new Set(),distributed:new Set(),choice:"",chosen:new Set(),acted:false,history:[],decisionLog:[],impact:null};}
 function current(){return G.storms[G.slot];}
 function issueTime(){const st=current();return new Date(+st.start+st.day*dayMs);}
 function displayTime(){const st=current();return addDays(st.simStart,st.day);}
@@ -194,6 +194,42 @@ function archiveOutcome(s){
  const near=valid.some(p=>hubs.some(h=>dist([+p[1],+p[2]],[h.lat,h.lon])<175));
  return crossed?"The archived reference track crosses Madagascar.":near?"The archived reference track passes close to Madagascar.":"A Madagascar landfall is not established by the sampled reference track.";
 }
+// Wind values in this archive are retained in their native units (assumed m/s for display).
+// A reference-track crossing is a model/reference estimate, NOT verified IBTrACS landfall intensity.
+function crossingIntensity(track){
+ if(!Array.isArray(track)||!track.length)return null;
+ for(let i=1;i<track.length;i++){
+  const a=track[i-1],b=track[i],insideA=inIsland(+a[1],+a[2]),insideB=inIsland(+b[1],+b[2]);
+  if(!insideA&&insideB){
+   let low=0,high=1;
+   for(let j=0;j<20;j++){const f=(low+high)/2;const lat=+a[1]+f*(+b[1]-+a[1]),lon=+a[2]+f*(+b[2]-+a[2]);if(inIsland(lat,lon))high=f;else low=f;}
+   const f=high,wind=(+a[3]+f*(+b[3]-+a[3]))*3.6;
+   const when=new Date(+date(a[0])+f*(+date(b[0])-+date(a[0])));
+   return {wind,when};
+  }
+ }
+ return null;
+}
+function evaluateDecision(st){
+ const affected=new Set(st.impact||[]),distributed=[...st.distributed],stocked=[...st.stock];
+ const covered=distributed.filter(id=>affected.has(id)),uncovered=[...affected].filter(id=>!st.distributed.has(id));
+ const extra=stocked.filter(id=>!affected.has(id));
+ const observations=st.decisionLog||[];
+ const timely=observations.some(x=>x.action==="preposition"&&x.lead>=4)&&observations.some(x=>x.action==="distribute"&&x.lead<=3&&x.lead>=0);
+ const signal=observations.some(x=>x.forecastSignal);
+ const parts=[];
+ if(covered.length)parts.push(covered.length+" affected warehouse area(s) received advance distribution.");
+ if(uncovered.length)parts.push(uncovered.length+" affected area(s) did not receive advance distribution.");
+ if(!affected.size)parts.push("No warehouse area met the game's illustrative impact threshold.");
+ if(extra.length)parts.push("Kits were also prepositioned at "+extra.length+" location(s) outside the modelled impact footprint.");
+ if(stocked.length===hubs.length)parts.push("You prepositioned at every warehouse, using substantial resources regardless of the eventual track.");
+ if(covered.length&&!signal)parts.push("Your action reached affected areas, but the recorded briefing did not provide a clear supporting landfall signal; this may have been a correct outcome for the wrong reasons.");
+ if(covered.length&&signal)parts.push("Your action was consistent with a landfall signal in the training guidance.");
+ if(!covered.length&&affected.size&&!signal)parts.push("The recorded briefings did not show a clear landfall signal; this was a forecast-limited situation in the illustrative game, not proof that operational action was impossible.");
+ if(!covered.length&&affected.size&&signal)parts.push("A landfall signal appeared in the training guidance, but no affected area received kits.");
+ if(stocked.length&&!distributed.length)parts.push("Prepositioned kits were not distributed.");
+ return parts.join(" ");
+}
 function seasonSummary(){
  const spent=150000-G.budget;
  const cards=G.storms.map((st,i)=>{
@@ -202,11 +238,17 @@ function seasonSummary(){
    const impacted=(st.impact||[]).map(id=>hubs.find(h=>h.id===id)?.name||id);
    const helped=impacted.filter(n=>[...st.distributed].some(id=>hubs.find(h=>h.id===id)?.name===n));
    const spending=st.history.filter(h=>/committed/.test(h)).join(" ");
+   const crossing=crossingIntensity(st.data.reference_track);
+   const intensity=crossing?'<p><strong>Reference-track Madagascar crossing:</strong> '+crossing.when.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"})+'; interpolated wind '+Math.round(crossing.wind)+' km/h (archive reference-track value; averaging convention unverified).</p>':'<p><strong>Landfall intensity:</strong> No Madagascar crossing established in the reference track; verified historical landfall wind not available in this game dataset.</p>';
+   const assessment=esc(evaluateDecision(st));
+   const wiki='https://en.wikipedia.org/wiki/Special:Search?search='+encodeURIComponent((st.data.storm_name||"tropical cyclone")+" cyclone "+year);
    return '<article style="border:1px solid #d7e2e6;padding:14px;border-radius:9px;margin:12px 0;background:#f7fafb">'+
      '<h3 style="margin:0 0 6px">Storm '+(i+1)+' revealed: '+name+' ('+year+')</h3>'+
      '<p class="subtle" style="margin:0 0 10px">Game date: '+st.simStart.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"})+
      ' · Original WATTCH initialization: '+esc(st.data.initialization)+'.</p>'+
-     '<p>'+archiveOutcome(st.data)+'</p>'+
+     '<p>'+archiveOutcome(st.data)+'</p>'+intensity+
+     '<p><strong>Your decisions:</strong> '+assessment+'</p>'+
+     '<p><a href="'+wiki+'" target="_blank" rel="noopener noreferrer">Look up historical impacts on Wikipedia</a> (fatalities and damage figures not yet verified for this storm).</p>'+
      '<p><strong>Game outcome:</strong> '+impacted.length+' modelled warehouse areas affected; '+helped.length+' received kits in advance. Prepositioned at '+st.stock.size+' sites; distributed at '+st.distributed.size+' sites.</p>'+
      '<p class="subtle">'+esc(spending||"No expenditure.")+'</p></article>';
  }).join("");
@@ -222,7 +264,7 @@ function seasonSummary(){
  '<button class="btn" type="button" id="summary-restart">Play another season</button>';
 }
 function selectAction(a){const st=current();if(st.acted||st.impact!==null)return;if(a==="preposition"&&!canPrep()||a==="distribute"&&!canDist())return;st.choice=a;st.chosen.clear();$("message").textContent="";render();}
-function confirm(){const st=current(),a=st.choice,selected=[...st.chosen];if(st.acted||!a)return;const n=selected.length*cost[a]||0;if((a!=="monitor"&&!selected.length)||n>G.budget)return;G.budget-=n;if(a==="preposition")selected.forEach(x=>st.stock.add(x));if(a==="distribute"){selected.forEach(x=>st.distributed.add(x));G.people+=0;}st.history.push(a==="monitor"?"Keep monitoring: no funds committed.":a==="preposition"?"Prepositioned at "+selected.join(", ")+"; "+money(n)+" committed.":"Distributed at "+selected.join(", ")+"; "+money(n)+" committed.");st.acted=true;render();$("message").textContent="Decision saved. Advance to the next briefing.";}
+function confirm(){const st=current(),a=st.choice,selected=[...st.chosen];if(st.acted||!a)return;const n=selected.length*cost[a]||0;if((a!=="monitor"&&!selected.length)||n>G.budget)return;G.budget-=n;st.decisionLog.push({action:a,lead:remainingDays(),locations:selected.slice(),forecastSignal:forecast(st).some(p=>p.lon>=43&&p.lon<=52&&p.lat>=-26&&p.lat<=-11&&p.wind>=63)});if(a==="preposition")selected.forEach(x=>st.stock.add(x));if(a==="distribute"){selected.forEach(x=>st.distributed.add(x));G.people+=0;}st.history.push(a==="monitor"?"Keep monitoring: no funds committed.":a==="preposition"?"Prepositioned at "+selected.join(", ")+"; "+money(n)+" committed.":"Distributed at "+selected.join(", ")+"; "+money(n)+" committed.");st.acted=true;render();$("message").textContent="Decision saved. Advance to the next briefing.";}
 $("actions").addEventListener("click",e=>{const b=e.target.closest("[data-action]");if(b&&!b.disabled)selectAction(b.dataset.action);});
 $("warehouses").addEventListener("change",e=>{const box=e.target.closest("[data-hub]");if(!box)return;const st=current();if(box.checked)st.chosen.add(box.dataset.hub);else st.chosen.delete(box.dataset.hub);render();});
 $("confirm").addEventListener("click",confirm);
