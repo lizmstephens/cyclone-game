@@ -42,7 +42,7 @@ footer{margin-top:12px;color:#5f7780;font-size:12px;line-height:1.5}
 <div class="panel">
 <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap"><h2 id="stormtitle">Loading…</h2><span class="pill" id="datepill">Forecast briefing</span></div>
 <div id="map" role="img" aria-label="Map of Madagascar with forecast uncertainty envelope, storm track and warehouse locations"></div>
-<div class="subtle" style="margin-top:10px">Green shading: ensemble-derived forecast position uncertainty · Dashed red: forecast track · Red dots: Red Cross warehouses</div>
+<div class="subtle" style="margin-top:10px">Green shading: forecast uncertainty · Dashed red: forecast track · Warehouse dots: red = not stocked, green = prepositioned</div>
 <details><summary>About these forecasts</summary>Each storm uses a distinct WATTCH ensemble hindcast. Daily training updates are constructed from the archived ensemble and a reference track, not genuine successive operational forecasts. The green region is an illustrative 75th-percentile position envelope, not a calibrated probability region. The season combines storms from different historical years.</details>
 </div>
 <div class="panel"><h3>Met Service · WhatsApp update</h3><div id="brief"></div><div class="subtle" id="forecastsource"></div></div>
@@ -112,10 +112,10 @@ rows.push({day:d,lat,lon,wind,radius,n:shifted.length});
 return rows;
 }
 function hull(points){const p=points.slice().sort((a,b)=>a[0]-b[0]||a[1]-b[1]);if(p.length<3)return p;const cr=(a,b,c)=>(b[0]-a[0])*(c[1]-a[1])-(b[1]-a[1])*(c[0]-a[0]);const low=[],high=[];for(const x of p){while(low.length>1&&cr(low.at(-2),low.at(-1),x)<=0)low.pop();low.push(x);}for(let i=p.length-1;i>=0;i--){const x=p[i];while(high.length>1&&cr(high.at(-2),high.at(-1),x)<=0)high.pop();high.push(x);}return low.slice(0,-1).concat(high.slice(0,-1));}
-const coast=[[49.1,-12.1],[49.8,-12.6],[50.3,-13.9],[50.4,-15.4],[50.2,-16.8],[49.9,-18.1],[49.3,-19.8],[48.6,-21.6],[47.6,-23.9],[46.4,-25.4],[45.4,-25.6],[44.4,-24.7],[43.6,-23.5],[43.5,-22.1],[44.2,-20.9],[44.4,-19.6],[44.8,-18.2],[45.6,-16.5],[46.4,-15.1],[47.4,-13.4],[48.6,-12.1]];
+const coast=[[49.543519,-12.469833],[49.808981,-12.895285],[50.056511,-13.555761],[50.217431,-14.758789],[50.476537,-15.226512],[50.377111,-15.706069],[50.200275,-16.000263],[49.860606,-15.414253],[49.672607,-15.710204],[49.863344,-16.451037],[49.774564,-16.875042],[49.498612,-17.106036],[49.435619,-17.953064],[49.041792,-19.118781],[48.548541,-20.496888],[47.930749,-22.391501],[47.547723,-23.781959],[47.095761,-24.94163],[46.282478,-25.178463],[45.409508,-25.601434],[44.833574,-25.346101],[44.03972,-24.988345],[43.763768,-24.460677],[43.697778,-23.574116],[43.345654,-22.776904],[43.254187,-22.057413],[43.433298,-21.336475],[43.893683,-21.163307],[43.89637,-20.830459],[44.374325,-20.072366],[44.464397,-19.435454],[44.232422,-18.961995],[44.042976,-18.331387],[43.963084,-17.409945],[44.312469,-16.850496],[44.446517,-16.216219],[44.944937,-16.179374],[45.502732,-15.974373],[45.872994,-15.793454],[46.312243,-15.780018],[46.882183,-15.210182],[47.70513,-14.594303],[48.005215,-14.091233],[47.869047,-13.663869],[48.293828,-13.784068],[48.84506,-13.089175],[48.863509,-12.487868],[49.194651,-12.040557],[49.543519,-12.469833]];
 const esc=x=>String(x).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 function mapSvg(rows){
-const positions=rows.map(p=>p.lon),lo=clamp(Math.min(36,...positions)-3,31,39),hi=Math.max(60,Math.max(54,...positions)+5),left=58,top=25,width=820,height=525,x=lon=>left+(lon-lo)/(hi-lo)*(width-left-15),y=lat=>top+(-5-lat)/29*(height-top-28);
+const lo=34,hi=71,left=58,top=25,width=820,height=525,x=lon=>left+(lon-lo)/(hi-lo)*(width-left-15),y=lat=>top+(-5-lat)/29*(height-top-28);
 const coords=arr=>arr.map(p=>x(p[0]).toFixed(1)+","+y(p[1]).toFixed(1)).join(" ");
 const mapPts=coast.map(p=>[p[0],p[1]]);
 let svg='<svg viewBox="0 0 820 525" xmlns="http://www.w3.org/2000/svg" aria-label="Cyclone forecast track and uncertainty around Madagascar">';
@@ -129,7 +129,7 @@ if(rows.length){
  svg+='<polyline points="'+coords(rows.map(p=>[p.lon,p.lat]))+'" fill="none" stroke="#c74c44" stroke-width="3" stroke-dasharray="8 5"/>';
  for(const p of rows){const c=p.wind<63?"#61b7db":p.wind<89?"#36b99b":p.wind<118?"#ebca55":p.wind<166?"#f39a4b":"#cf4b4b";svg+='<circle cx="'+x(p.lon)+'" cy="'+y(p.lat)+'" r="6.2" fill="'+c+'" stroke="#224650" stroke-width="1.1"/><text x="'+(x(p.lon)+9)+'" y="'+(y(p.lat)-10)+'" font-size="11" fill="#234553" stroke="#dfeef7" stroke-width="3" paint-order="stroke">+'+p.day+'d</text>';}
 }
-for(const h of hubs)svg+='<circle cx="'+x(h.lon)+'" cy="'+y(h.lat)+'" r="8.7" fill="#bf4139" stroke="#fff" stroke-width="2"/><text x="'+(x(h.lon)+13)+'" y="'+(y(h.lat)-8)+'" font-size="15" font-weight="750" fill="#193742" stroke="#fff" stroke-width="4" paint-order="stroke">'+esc(h.name)+'</text>';
+for(const h of hubs){const stocked=current().stock.has(h.id),delivered=current().distributed.has(h.id);const fill=delivered?"#216c43":stocked?"#32a852":"#c43b35";svg+='<circle cx="'+x(h.lon)+'" cy="'+y(h.lat)+'" r="8.7" fill="'+fill+'" stroke="#fff" stroke-width="2"/><text x="'+(x(h.lon)+13)+'" y="'+(y(h.lat)-8)+'" font-size="15" font-weight="750" fill="#193742" stroke="#fff" stroke-width="4" paint-order="stroke">'+esc(h.name)+'</text>';}
 svg+='</svg>';return svg;
 }
 function coordsPixel(p){return p.map(v=>v[0].toFixed(1)+","+v[1].toFixed(1)).join(" ");}
@@ -138,13 +138,13 @@ function impact(st){const ref=st.data.reference_track;const hits=[];for(const h 
 function finishStorm(){const st=current(),imp=impact(st),helped=imp.filter(x=>st.distributed.has(x));let lost=imp.filter(x=>!st.distributed.has(x));G.people+=helped.length*1000;G.chef=clamp(G.chef+helped.length*13-lost.length*17-st.distributed.size*2-st.stock.size*2,0,100);st.impact=imp;st.history.push("Outcome: "+imp.length+" warehouse area(s) within illustrative impact radius; "+helped.length+" protected by distribution.");st.acted=true;G.finished=G.slot===G.storms.length-1;render();$("message").textContent="Storm completed. "+helped.length+" impacted areas received advance distribution."; }
 function render(){
 const st=current(),t=issueTime(),remaining=remainingDays(),rows=forecast(st),last=st.impact!==null;
-$("seasonstat").textContent=(G.slot+1)+" / "+G.storms.length+" storms";
+$("seasonstat").textContent="Storm "+(G.slot+1)+" · Season underway";
 $("budgetstat").textContent=money(G.budget);$("peoplestat").textContent=G.people.toLocaleString("en-GB");$("chefstat").textContent=(G.chef>=70?"🙂":G.chef<40?"😟":"😐")+" "+G.chef+" / 100";
-$("stormtitle").textContent="Storm "+(G.slot+1)+" · "+esc(st.data.storm_name||"Unnamed cyclone");
+$("stormtitle").textContent="Storm "+(G.slot+1)+" · Tropical system";
 $("datepill").textContent=t.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"});
 $("map").innerHTML=mapSvg(rows);
 $("brief").textContent=last?"The storm has passed. Reviewing impacts and expenditure.":forecastMessage(rows);
-$("forecastsource").textContent="Training update · Scenario derived from WATTCH ensemble initialized "+st.data.initialization;
+$("forecastsource").textContent="Training update · WATTCH-based hindcast (identity revealed at season end)";
 $("leadtime").textContent=last?"Storm completed":remaining>=0?"Approximate event window: "+remaining+" day(s) remaining":"Event window has passed";
 $("stockstat").textContent="Prepositioned: "+([...st.stock].map(id=>hubs.find(h=>h.id===id)?.name).join(", ")||"None")+" · Distributed: "+([...st.distributed].map(id=>hubs.find(h=>h.id===id)?.name).join(", ")||"None");
 $("progressbar").style.width=(100*(st.day+1)/(st.duration+1)).toFixed(0)+"%";
