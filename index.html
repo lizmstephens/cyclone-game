@@ -241,7 +241,7 @@ function seasonSummary(){
    const helped=impacted.filter(n=>[...st.distributed].some(id=>hubs.find(h=>h.id===id)?.name===n));
    const spending=st.history.filter(h=>/committed/.test(h)).join(" ");
    const crossing=crossingIntensity(st.data.reference_track);
-   const intensity=crossing?'<p><strong>Reference-track Madagascar crossing:</strong> '+crossing.when.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"})+'; interpolated wind '+Math.round(crossing.wind)+' km/h (archive reference-track value; averaging convention unverified).</p>':'<p><strong>Landfall intensity:</strong> No Madagascar crossing established in the reference track; verified historical landfall wind not available in this game dataset.</p>';
+   const intensity=crossing?'<p><strong>Archive reference-track crossing (not independently verified observed landfall):</strong> '+crossing.when.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"})+'; interpolated wind '+Math.round(crossing.wind)+' km/h (archive 10-m wind estimate; sustained-wind averaging period unverified).</p>':'<p><strong>Landfall intensity:</strong> No Madagascar crossing established in the reference track; verified historical landfall wind not available in this game dataset.</p>';
    const assessment=esc(evaluateDecision(st));
    const wiki='https://en.wikipedia.org/wiki/Special:Search?search='+encodeURIComponent((st.data.storm_name||"tropical cyclone")+" cyclone "+year);
    return '<article style="border:1px solid #d7e2e6;padding:14px;border-radius:9px;margin:12px 0;background:#f7fafb">'+
@@ -250,7 +250,7 @@ function seasonSummary(){
      ' · Original WATTCH initialization: '+esc(st.data.initialization)+'.</p>'+
      '<p>'+archiveOutcome(st.data)+'</p>'+intensity+
      '<p><strong>Your decisions:</strong> '+assessment+'</p>'+
-     '<p><a href="'+wiki+'" target="_blank" rel="noopener noreferrer">Look up historical impacts on Wikipedia</a> (fatalities and damage figures not yet verified for this storm).</p>'+
+     '<p><a href="'+wiki+'" target="_blank" rel="noopener noreferrer">Look up historical impacts on Wikipedia</a> · <a href="https://www.ncei.noaa.gov/products/international-best-track-archive" target="_blank" rel="noopener noreferrer">IBTrACS source</a> · <a href="https://zenodo.org/records/20446920" target="_blank" rel="noopener noreferrer">WATTCH source</a>. Historical fatalities, economic loss, verified location and observed sustained wind at actual landfall: not available in this scenario dataset; no value inferred.</p>'+
      '<p><strong>Game outcome:</strong> '+impacted.length+' modelled warehouse areas affected; '+helped.length+' received kits in advance. Prepositioned at '+st.stock.size+' sites; distributed at '+st.distributed.size+' sites.</p>'+
      '<p class="subtle">'+esc(spending||"No expenditure.")+'</p></article>';
  }).join("");
