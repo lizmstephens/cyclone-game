@@ -26,11 +26,12 @@ details{margin-top:10px;color:#526b77;font-size:13px}details summary{cursor:poin
 .progress{height:7px;background:#d7e4e7;border-radius:10px;overflow:hidden;margin-top:8px}.progress span{display:block;height:100%;background:#4ca0b2}
 footer{margin-top:12px;color:#5f7780;font-size:12px;line-height:1.5}
 @media(max-width:800px){.layout{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}header{padding:15px}header h1{font-size:19px}}
+#start-screen{position:fixed;inset:0;background:#eef3f4;z-index:50;display:grid;place-items:center;padding:18px;overflow:auto}#start-screen .intro{max-width:690px;background:white;border:1px solid #d7e2e6;border-radius:14px;padding:28px}#start-screen label{display:block;padding:12px;border:1px solid #d7e2e6;border-radius:8px;margin:8px 0;cursor:pointer}#start-screen label:has(input:checked){border-color:#17667b;background:#e7f6f8}#start-screen p{line-height:1.5}
 </style>
 </head>
 <body>
 <header><div><h1>Madagascar Cyclone Decision Game</h1><small>Can you protect communities without exhausting your seasonal budget?</small></div><button class="btn alt" id="restart">New season</button></header>
-<main>
+<section id="start-screen"><div class="intro"><h2>Madagascar Cyclone Anticipatory Action Game</h2><p>Manage a shared budget to prepare for cyclones approaching Madagascar. Interpret the latest forecast, decide whether and where to preposition or distribute emergency kits, and learn about decisions under uncertainty.</p><p>Play through an unknown number of storms in a fictional season. The real storms are revealed only at the end. Daily briefings are training simulations based on WATTCH hindcasts.</p><h3>Difficulty</h3><label><input type="radio" name="difficulty" value="3"> <strong>Easy</strong> — preposition at least 3 days before the event</label><label><input type="radio" name="difficulty" value="4" checked> <strong>Medium</strong> — at least 4 days before</label><label><input type="radio" name="difficulty" value="5"> <strong>Hard</strong> — at least 5 days before</label><p class="subtle">Distribute closer to landfall, once kits have been prepositioned. The budget lasts all season.</p><button type="button" class="btn" id="start-game">Start season</button></div></section><main>
 <div class="stats">
 <div class="stat"><div class="k">Season progress</div><div class="v" id="seasonstat">—</div></div>
 <div class="stat"><div class="k">Remaining budget</div><div class="v" id="budgetstat">—</div></div>
@@ -42,9 +43,9 @@ footer{margin-top:12px;color:#5f7780;font-size:12px;line-height:1.5}
 <section>
 <div class="panel">
 <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap"><h2 id="stormtitle">Loading…</h2><span class="pill" id="datepill">Forecast briefing</span></div>
-<div id="map" role="img" aria-label="Map of Madagascar with forecast uncertainty envelope, storm track and warehouse locations"></div>
-<div class="subtle" style="margin-top:10px">Green shading: forecast uncertainty · Dashed red: forecast track · Warehouse dots: red = not stocked, green = prepositioned</div>
-<details><summary>About these forecasts</summary>Each storm uses a distinct WATTCH ensemble hindcast. Daily training updates are constructed from the archived ensemble and a reference track, not genuine successive operational forecasts. The green region is an illustrative 75th-percentile position envelope, not a calibrated probability region. The season combines storms from different historical years.</details>
+<div id="map" role="img" aria-label="Map of Madagascar with forecast tracks and warehouse locations"></div>
+<div class="subtle" style="margin-top:10px">Dashed red: forecast track · Coloured points: forecast wind · Warehouse dots: red = not stocked, green = prepositioned</div>
+<details><summary>About these forecasts</summary>Each storm uses a distinct WATTCH ensemble hindcast. Daily training updates are constructed from the archived ensemble and a reference track, not genuine successive operational forecasts. The displayed track is an illustrative ensemble-based training forecast.</details>
 </div>
 <div class="panel"><h3>Met Service · WhatsApp update</h3><div id="brief"></div><div class="subtle" id="forecastsource"></div></div>
 </section>
@@ -52,8 +53,8 @@ footer{margin-top:12px;color:#5f7780;font-size:12px;line-height:1.5}
 <div class="panel"><h2>Your decision</h2><div class="subtle" id="leadtime"></div>
 <div class="actions" id="actions">
 <button type="button" data-action="monitor" class="action">👀 <strong>Keep monitoring</strong><div class="subtle">CHF 0 · Wait for the next forecast</div></button>
-<button type="button" data-action="preposition" class="action">📦 <strong>Preposition Kits</strong><div class="subtle">CHF 20,000 per warehouse · Requires 4+ days' lead</div></button>
-<button type="button" data-action="distribute" class="action">🤝 <strong>Distribute Kits</strong><div class="subtle">CHF 8,000 per warehouse · Stock must be in place · 0–3 days' lead</div></button>
+<button type="button" data-action="preposition" class="action">📦 <strong>Preposition Kits</strong><div class="subtle">CHF 20,000 per warehouse · Deadline depends on difficulty</div></button>
+<button type="button" data-action="distribute" class="action">🤝 <strong>Distribute Kits</strong><div class="subtle">CHF 8,000 per warehouse · Stock must be in place · After prepositioning deadline</div></button>
 </div>
 <div id="warehouses" class="wh"></div><div id="cost" class="subtle">Select an action above.</div>
 <div id="message" aria-live="polite"></div>
@@ -90,8 +91,8 @@ function current(){return G.storms[G.slot];}
 function issueTime(){const st=current();return new Date(+st.start+st.day*dayMs);}
 function displayTime(){const st=current();return addDays(st.simStart,st.day);}
 function remainingDays(){return Math.ceil((current().event-issueTime())/dayMs);}
-function canPrep(){return remainingDays()>=4;}
-function canDist(){const d=remainingDays();return d>=0&&d<=3&&[...current().stock].some(x=>!current().distributed.has(x));}
+function canPrep(){return remainingDays()>=G.prepDays;}
+function canDist(){const d=remainingDays();return d>=0&&d<G.prepDays&&[...current().stock].some(x=>!current().distributed.has(x));}
 function changeSeason(){
  const n=stormCount(),chosen=shuffle(catalogue.scenarios).slice(0,n);
  const seasonStart=new Date("2026-12-01T00:00:00Z");
@@ -100,7 +101,7 @@ function changeSeason(){
    const offset=Math.round((i+0.5)*130/n+Math.random()*3);
    return startScenario(s,addDays(seasonStart,offset));
  });
- G={storms,slot:0,budget:150000,people:0,chef:60,finished:false};
+ G={storms,slot:0,budget:150000,people:0,chef:60,finished:false,prepDays:Number(document.querySelector('input[name="difficulty"]:checked')?.value||4)};
  render();
 }
 let G;
@@ -136,8 +137,8 @@ for(let l=40;l<=hi;l+=5)svg+='<line x1="'+x(l)+'" y1="20" x2="'+x(l)+'" y2="510"
 for(let lat=-10;lat>=-30;lat-=5)svg+='<line x1="43" y1="'+y(lat)+'" x2="808" y2="'+y(lat)+'" stroke="#bfd6de" stroke-dasharray="3 5"/><text x="8" y="'+(y(lat)+4)+'" fill="#527080" font-size="12">'+Math.abs(lat)+'°S</text>';
 svg+='<polygon points="'+coords(mapPts)+'" fill="#efece0" stroke="#738b7e" stroke-width="2"/>';
 if(rows.length){
- const samples=[];for(const p of rows){const rx=p.radius/(111*Math.cos(p.lat*Math.PI/180))*(x(p.lon+1)-x(p.lon)),ry=p.radius/111*(y(p.lat-1)-y(p.lat));for(let a=0;a<24;a++){const z=a*2*Math.PI/24;samples.push([x(p.lon)+rx*Math.cos(z),y(p.lat)+ry*Math.sin(z)]);}}
- const envelope=hull(samples);if(envelope.length>2)svg+='<polygon points="'+coordsPixel(envelope)+'" fill="#a8d379" fill-opacity=".6" stroke="#739f5d" stroke-width="2"/>';
+
+
  svg+='<polyline points="'+coords(rows.map(p=>[p.lon,p.lat]))+'" fill="none" stroke="#c74c44" stroke-width="3" stroke-dasharray="8 5"/>';
  for(const p of rows){const c=p.wind<63?"#61b7db":p.wind<89?"#36b99b":p.wind<118?"#ebca55":p.wind<166?"#f39a4b":"#cf4b4b";svg+='<circle cx="'+x(p.lon)+'" cy="'+y(p.lat)+'" r="6.2" fill="'+c+'" stroke="#224650" stroke-width="1.1"/><text x="'+(x(p.lon)+9)+'" y="'+(y(p.lat)-10)+'" font-size="11" fill="#234553" stroke="#dfeef7" stroke-width="3" paint-order="stroke">+'+p.day+'d</text>';}
 }
@@ -156,8 +157,8 @@ $("stormtitle").textContent="Storm "+(G.slot+1)+" · Tropical system";
 $("datepill").textContent=t.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"});
 $("map").innerHTML=mapSvg(rows);
 $("brief").textContent=last?"The storm has passed. Reviewing impacts and expenditure.":forecastMessage(rows);
-$("forecastsource").textContent="Training update · WATTCH-based hindcast (identity revealed at season end)";
-$("leadtime").textContent=last?"Storm completed":remaining>=0?"Approximate event window: "+remaining+" day(s) remaining":"Event window has passed";
+const windAtLandfall=forecastLandfall(rows);$("forecastsource").textContent="Simulated daily update · WATTCH hindcast · Forecast landfall: "+(windAtLandfall===null?"not indicated":windAtLandfall+" km/h (model 10-m wind; averaging period unverified)")+" · Identity revealed at season end";
+$("leadtime").textContent=last?"Storm completed":remaining>=0?"Approximate event window: "+remaining+" day(s) remaining · prepositioning requires "+G.prepDays+"+ days":"Event window has passed";
 $("stockstat").textContent="Prepositioned: "+([...st.stock].map(id=>hubs.find(h=>h.id===id)?.name).join(", ")||"None")+" · Distributed: "+([...st.distributed].map(id=>hubs.find(h=>h.id===id)?.name).join(", ")||"None");
 $("progressbar").style.width=(100*(st.day+1)/(st.duration+1)).toFixed(0)+"%";
 $("feedback").textContent=last?"“"+(st.distributed.size?"You acted ahead of the storm. Let's review whether we spent in the right places.":"We need to think carefully about our readiness before the next storm.")+"”":st.history.length?"“"+st.history.at(-1)+"”":"“We have one budget for the whole season. Think carefully about when and where we act.”";
@@ -215,20 +216,21 @@ function evaluateDecision(st){
  const covered=distributed.filter(id=>affected.has(id)),uncovered=[...affected].filter(id=>!st.distributed.has(id));
  const extra=stocked.filter(id=>!affected.has(id));
  const observations=st.decisionLog||[];
- const timely=observations.some(x=>x.action==="preposition"&&x.lead>=4)&&observations.some(x=>x.action==="distribute"&&x.lead<=3&&x.lead>=0);
- const signal=observations.some(x=>x.forecastSignal);
+ const timely=observations.some(x=>x.action==="preposition"&&x.lead>=G.prepDays)&&observations.some(x=>x.action==="distribute"&&x.lead<G.prepDays&&x.lead>=0);
+ const signal=observations.some(x=>x.forecastSignal);const actionable=st.decisionLog.some(x=>x.lead>=G.prepDays&&x.forecastSignal);
  const parts=[];
  if(covered.length)parts.push(covered.length+" affected warehouse area(s) received advance distribution.");
  if(uncovered.length)parts.push(uncovered.length+" affected area(s) did not receive advance distribution.");
  if(!affected.size)parts.push("No warehouse area met the game's illustrative impact threshold.");
- if(extra.length)parts.push("Kits were also prepositioned at "+extra.length+" location(s) outside the modelled impact footprint.");
+ if(distributed.some(id=>!affected.has(id)))parts.push("Distribution was also made in unaffected warehouse areas.");
+  if(extra.length)parts.push("Kits were also prepositioned at "+extra.length+" location(s) outside the modelled impact footprint.");
  if(stocked.length===hubs.length)parts.push("You prepositioned at every warehouse, using substantial resources regardless of the eventual track.");
  if(covered.length&&!signal)parts.push("Your action reached affected areas, but the recorded briefing did not provide a clear supporting landfall signal; this may have been a correct outcome for the wrong reasons.");
  if(covered.length&&signal)parts.push("Your action was consistent with a landfall signal in the training guidance.");
- if(!covered.length&&affected.size&&!signal)parts.push("The recorded briefings did not show a clear landfall signal; this was a forecast-limited situation in the illustrative game, not proof that operational action was impossible.");
- if(!covered.length&&affected.size&&signal)parts.push("A landfall signal appeared in the training guidance, but no affected area received kits.");
+ if(!covered.length&&affected.size&&!actionable)parts.push("The recorded briefings did not show a clear landfall signal; this was a forecast-limited situation in the illustrative game, not proof that operational action was impossible.");
+ if(!covered.length&&affected.size&&actionable)parts.push("A landfall signal appeared in the training guidance, but no affected area received kits.");
  if(stocked.length&&!distributed.length)parts.push("Prepositioned kits were not distributed.");
- return parts.join(" ");
+ parts.push("Expenditure: "+money(observations.reduce((sum,x)=>sum+(x.locations?.length||0)*(cost[x.action]||0),0))+"; "+stocked.length+" stocked and "+distributed.length+" distributed locations. This evaluation uses simplified forecast signals and impact thresholds, not a calibrated forecast-skill assessment.");return parts.join(" ");
 }
 function seasonSummary(){
  const spent=150000-G.budget;
@@ -263,6 +265,8 @@ function seasonSummary(){
  '<p class="subtle">Each identity and historical year comes from the WATTCH scenario archive. Fictional game dates do not correspond to actual storm dates. A mapped reference-track crossing indicates an approximate geographic crossing, not a verified historical impact assessment. Game estimates of impact, people reached and CHF expenditure are illustrative.</p>'+
  '<button class="btn" type="button" id="summary-restart">Play another season</button>';
 }
+function forecastEvidence(st,day){const original=st.day;st.day=day;const guidance=forecast(st);st.day=original;return guidance.some(p=>p.lat>=-26&&p.lat<=-11&&p.lon>=43&&p.lon<=52);}
+function forecastLandfall(rows){for(let i=1;i<rows.length;i++){const a=rows[i-1],b=rows[i];if(!inIsland(a.lat,a.lon)&&inIsland(b.lat,b.lon)){let lo=0,hi=1;for(let z=0;z<18;z++){const f=(lo+hi)/2;if(inIsland(a.lat+(b.lat-a.lat)*f,a.lon+(b.lon-a.lon)*f))hi=f;else lo=f;}return Math.round(a.wind+(b.wind-a.wind)*hi);}}return null;}
 function selectAction(a){const st=current();if(st.acted||st.impact!==null)return;if(a==="preposition"&&!canPrep()||a==="distribute"&&!canDist())return;st.choice=a;st.chosen.clear();$("message").textContent="";render();}
 function confirm(){const st=current(),a=st.choice,selected=[...st.chosen];if(st.acted||!a)return;const n=selected.length*cost[a]||0;if((a!=="monitor"&&!selected.length)||n>G.budget)return;G.budget-=n;st.decisionLog.push({action:a,lead:remainingDays(),locations:selected.slice(),forecastSignal:forecast(st).some(p=>p.lon>=43&&p.lon<=52&&p.lat>=-26&&p.lat<=-11&&p.wind>=63)});if(a==="preposition")selected.forEach(x=>st.stock.add(x));if(a==="distribute"){selected.forEach(x=>st.distributed.add(x));G.people+=0;}st.history.push(a==="monitor"?"Keep monitoring: no funds committed.":a==="preposition"?"Prepositioned at "+selected.join(", ")+"; "+money(n)+" committed.":"Distributed at "+selected.join(", ")+"; "+money(n)+" committed.");st.acted=true;render();$("message").textContent="Decision saved. Advance to the next briefing.";}
 $("actions").addEventListener("click",e=>{const b=e.target.closest("[data-action]");if(b&&!b.disabled)selectAction(b.dataset.action);});
@@ -270,9 +274,9 @@ $("warehouses").addEventListener("change",e=>{const box=e.target.closest("[data-
 $("confirm").addEventListener("click",confirm);
 $("advance").addEventListener("click",()=>{const st=current();if(!st.acted||st.impact!==null)return;if(st.day+1>=st.duration){finishStorm();if(!G.finished){G.slot++;render();$("message").textContent="The previous storm has passed. A new cyclone is developing. Your remaining budget carries forward.";}return;}st.day++;st.acted=false;st.choice="";st.chosen.clear();$("message").textContent="";render();});
 $("nextstorm").addEventListener("click",()=>{if(current().impact===null||G.finished)return;G.slot++;$("message").textContent="A new cyclone is developing. Your remaining budget carries forward.";render();});
-$("restart").addEventListener("click",()=>{if(G&&!G.finished&&!confirmNewSeason())return;changeSeason();});
+$("restart").addEventListener("click",()=>{if(G&&!G.finished&&!confirmNewSeason())return;$("start-screen").hidden=false;});
 function confirmNewSeason(){return window.confirm("Start a new season? Current decisions and progress will be reset.");}
-$("season-summary").addEventListener("click",e=>{if(e.target.closest("#summary-restart"))changeSeason();});
+$("season-summary").addEventListener("click",e=>{if(e.target.closest("#summary-restart")){$("start-screen").hidden=false;}});$("start-game").addEventListener("click",()=>{$("start-screen").hidden=true;changeSeason();});
 changeSeason();
 })();
 </script></body></html>
