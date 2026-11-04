@@ -181,22 +181,23 @@ fetch('https://raw.githubusercontent.com/datasets/geo-countries/master/data/coun
    const geom=f.geometry;if(!geom)continue;
    const polys=geom.type==='Polygon'?[geom.coordinates]:geom.type==='MultiPolygon'?geom.coordinates:[];
    for(const poly of polys)for(const ring of poly){
-    if(ring.some(p=>p[0]>=34&&p[0]<=71&&p[1]>=-34&&p[1]<=-5))rings.push(ring);
+    const xs=ring.map(p=>p[0]),ys=ring.map(p=>p[1]);
+    if(Math.max(...xs)>=16&&Math.min(...xs)<=71&&Math.max(...ys)>=-36&&Math.min(...ys)<=-5)rings.push(ring);
    }
   }
   landShapes=rings;
   if(typeof G!=='undefined'&&G&&G.storms?.length)document.getElementById('map').innerHTML=mapSvg(forecast(current()));
  }).catch(()=>{});
 function mapSvg(rows){
-const lo=34,hi=71,left=58,top=25,width=820,height=525,x=lon=>left+(lon-lo)/(hi-lo)*(width-left-15),y=lat=>top+(-5-lat)/29*(height-top-28);
+const lo=16,hi=71,left=58,top=25,width=820,height=525,x=lon=>left+(lon-lo)/(hi-lo)*(width-left-15),y=lat=>top+(-5-lat)/31*(height-top-28);
 const coords=arr=>arr.map(p=>x(p[0]).toFixed(1)+","+y(p[1]).toFixed(1)).join(" ");
 const mapPts=coast.map(p=>[p[0],p[1]]);
 const ensemble=forecastMembers(current());
 
 let svg='<svg viewBox="0 0 820 525" xmlns="http://www.w3.org/2000/svg" aria-label="Cyclone forecast track and uncertainty around Madagascar">';
 svg+='<rect width="820" height="525" fill="#dfeef7"/>';
-for(let l=40;l<=hi;l+=5)svg+='<line x1="'+x(l)+'" y1="20" x2="'+x(l)+'" y2="510" stroke="#bfd6de" stroke-dasharray="3 5"/><text x="'+x(l)+'" y="516" fill="#527080" font-size="12" text-anchor="middle">'+l+'°E</text>';
-for(let lat=-10;lat>=-30;lat-=5)svg+='<line x1="43" y1="'+y(lat)+'" x2="808" y2="'+y(lat)+'" stroke="#bfd6de" stroke-dasharray="3 5"/><text x="8" y="'+(y(lat)+4)+'" fill="#527080" font-size="12">'+Math.abs(lat)+'°S</text>';
+for(let l=20;l<=hi;l+=5)svg+='<line x1="'+x(l)+'" y1="20" x2="'+x(l)+'" y2="510" stroke="#bfd6de" stroke-dasharray="3 5"/><text x="'+x(l)+'" y="516" fill="#527080" font-size="12" text-anchor="middle">'+l+'°E</text>';
+for(let lat=-10;lat>=-35;lat-=5)svg+='<line x1="43" y1="'+y(lat)+'" x2="808" y2="'+y(lat)+'" stroke="#bfd6de" stroke-dasharray="3 5"/><text x="8" y="'+(y(lat)+4)+'" fill="#527080" font-size="12">'+Math.abs(lat)+'°S</text>';
 svg+=landShapes.length?landShapes.map(ring=>'<polygon points="'+coords(ring)+'" fill="#efece0" stroke="#738b7e" stroke-width="1.3"/>').join(""):'<polygon points="'+coords(mapPts)+'" fill="#efece0" stroke="#738b7e" stroke-width="2"/>';
 if(rows.length){
  svg+=ensemble.map(track=>'<polyline points="'+coords(track.map(p=>[p.lon,p.lat]))+'" fill="none" stroke="#416b89" stroke-opacity=".48" stroke-width="1.7" stroke-linejoin="round"/>').join("");
