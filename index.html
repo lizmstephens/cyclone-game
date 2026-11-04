@@ -306,8 +306,9 @@ function seasonSummary(){
    const intensity=crossing?'<p><strong>Archive reference-track crossing (not independently verified observed landfall):</strong> '+crossing.when.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"})+'; interpolated wind '+Math.round(crossing.wind)+' km/h (archive 10-m wind estimate; sustained-wind averaging period unverified).</p>':'<p><strong>Landfall intensity:</strong> No Madagascar crossing established in the reference track; verified historical landfall wind not available in this game dataset.</p>';
    const assessment=esc(evaluateDecision(st));
     const verified=historical[st.data.event_id]||null;
-    const ibSid=ibtracsMatches[st.data.event_id];
-    const ibLink=ibSid?'<p class="subtle"><strong>IBTrACS storm identifier:</strong> <a href="https://agora.ex.nii.ac.jp/digital-typhoon/ibtracs/'+ibSid+'/index.html.en" target="_blank" rel="noopener noreferrer">'+ibSid+'</a>. Matched to the NOAA IBTrACS name-to-serial mapping (version dated 3 November 2026). Agency-specific landfall winds require separate verification.</p>':'<p class="subtle">IBTrACS storm identifier not yet independently verified.</p>';
+    // The former manual event_id-to-IBTrACS table has not been validated against
+    // the WATTCH ERA5/IBTrACS match metadata. Do not expose its links as facts.
+    const ibLink='<p class="subtle"><strong>Historical identity verification:</strong> WATTCH/IBTrACS event identifier awaiting validation against the original archive metadata. No inferred IBTrACS serial is displayed.</p>';
 
     const evidence=verified?'<p><strong>Documented historical landfall:</strong> '+esc(verified.location)+' on '+new Date(verified.landfallDate+"T00:00:00Z").toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"})+'.</p>'+
       (verified.ibtracsFix?'<p><strong>IBTrACS near-landfall intensity:</strong> '+verified.ibtracsFix.windKt+' kt ('+verified.ibtracsFix.kmh+' km/h), <strong>10-minute sustained wind</strong>, RSMC La Réunion at '+esc(verified.ibtracsFix.utc)+'; IBTrACS centre-to-land distance '+verified.ibtracsFix.dist2landKm+' km. '+esc(verified.ibtracsFix.positionNote)+'. This is an agency best-track fix, not a direct wind measurement at the exact coastline-crossing moment.</p>':'<p><strong>IBTrACS landfall wind:</strong> Agency-specific near-landfall fix not yet verified.</p>')+
@@ -320,7 +321,7 @@ function seasonSummary(){
 
    const wiki='https://en.wikipedia.org/wiki/Special:Search?search='+encodeURIComponent((st.data.storm_name||"tropical cyclone")+" cyclone "+year);
    return '<article style="border:1px solid #d7e2e6;padding:14px;border-radius:9px;margin:12px 0;background:#f7fafb">'+
-     '<h3 style="margin:0 0 6px">Storm '+(i+1)+' revealed: '+name+' ('+year+')</h3>'+
+     '<h3 style="margin:0 0 6px">Storm '+(i+1)+' revealed: '+name+' ('+year+')'+(verified?'':' — identity not independently verified')</h3>'+
      '<p class="subtle" style="margin:0 0 10px">Game date: '+st.simStart.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"})+
      ' · Original WATTCH initialization: '+esc(st.data.initialization)+'.</p>'+
      '<p>'+archiveOutcome(st.data)+'</p>'+ibLink+evidence+intensity+
