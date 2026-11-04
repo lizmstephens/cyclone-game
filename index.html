@@ -30,8 +30,8 @@ footer{margin-top:12px;color:#5f7780;font-size:12px;line-height:1.5}
 </style>
 </head>
 <body>
-<header><div><h1>Madagascar Cyclone Decision Game</h1><small>Can you protect communities without exhausting your seasonal budget?</small></div><button class="btn alt" id="restart">New season</button></header>
-<section id="start-screen"><div class="intro"><h2>Madagascar Cyclone Anticipatory Action Game</h2><p>Manage a shared budget to prepare for cyclones approaching Madagascar. Interpret the latest forecast, decide whether and where to preposition or distribute emergency kits, and learn about decisions under uncertainty.</p><p>Play through an unknown number of storms in a fictional season. The real storms are revealed only at the end. Daily briefings are training simulations based on WATTCH hindcasts.</p><h3>Difficulty</h3><label><input type="radio" name="difficulty" value="3"> <strong>Easy</strong> — preposition at least 3 days before the event</label><label><input type="radio" name="difficulty" value="4" checked> <strong>Medium</strong> — at least 4 days before</label><label><input type="radio" name="difficulty" value="5"> <strong>Hard</strong> — at least 5 days before</label><p class="subtle">Distribute closer to landfall, once kits have been prepositioned. The budget lasts all season.</p><button type="button" class="btn" id="start-game">Start season</button></div></section><main>
+<header><div><h1>Madagascar Cyclone Decision Game</h1><small>Can you protect communities without exhausting your seasonal budget?</small></div><button class="btn alt" id="restart">New game</button></header>
+<section id="start-screen"><div class="intro"><h2>Madagascar Cyclone Anticipatory Action Game</h2><p>Manage a shared budget to prepare for cyclones approaching Madagascar. Interpret the latest forecast, decide whether and where to preposition or distribute emergency kits, and learn about decisions under uncertainty.</p><p>Play one storm or an unknown number of storms in a fictional season. Real identities are revealed only at the end. Daily briefings are training simulations based on WATTCH hindcasts.</p><h3>How long would you like to play?</h3><label><input type="radio" name="game-length" value="single"> <strong>Play one storm</strong> — follow one cyclone through to its historical reveal</label><label><input type="radio" name="game-length" value="season" checked> <strong>Play a whole season</strong> — manage several cyclones with one shared budget, without knowing how many are coming</label><h3>Difficulty</h3><label><input type="radio" name="difficulty" value="3"> <strong>Easy</strong> — preposition at least 3 days before the event</label><label><input type="radio" name="difficulty" value="4" checked> <strong>Medium</strong> — at least 4 days before</label><label><input type="radio" name="difficulty" value="5"> <strong>Hard</strong> — at least 5 days before</label><p class="subtle">Distribute closer to landfall, once kits have been prepositioned. The budget is shared across all storms in a season.</p><button type="button" class="btn" id="start-game">Start game</button></div></section><main>
 <div class="stats">
 <div class="stat"><div class="k">Season progress</div><div class="v" id="seasonstat">—</div></div>
 <div class="stat"><div class="k">Remaining budget</div><div class="v" id="budgetstat">—</div></div>
@@ -97,14 +97,15 @@ function remainingDays(){return Math.ceil((current().event-issueTime())/dayMs);}
 function canPrep(){return remainingDays()>=G.prepDays;}
 function canDist(){const d=remainingDays();return d>=0&&d<G.prepDays&&[...current().stock].some(x=>!current().distributed.has(x));}
 function changeSeason(){
- const n=stormCount(),chosen=[],seen=new Set();for(const s of shuffle(catalogue.scenarios)){const key=ibtracsMatches[s.event_id]||s.event_id;if(seen.has(key))continue;seen.add(key);chosen.push(s);if(chosen.length>=n)break;}
+ const mode=document.querySelector('input[name="game-length"]:checked')?.value==="single"?"single":"season";
+ const n=mode==="single"?1:stormCount(),chosen=[],seen=new Set();for(const s of shuffle(catalogue.scenarios)){const key=ibtracsMatches[s.event_id]||s.event_id;if(seen.has(key))continue;seen.add(key);chosen.push(s);if(chosen.length>=n)break;}
  const seasonStart=new Date("2026-12-01T00:00:00Z");
  const storms=chosen.map((s,i)=>{
    // Fictional dates are ordered, nonoverlapping, and fall within Dec–Apr.
    const offset=Math.round((i+0.5)*130/n+Math.random()*3);
    return startScenario(s,addDays(seasonStart,offset));
  });
- G={storms,slot:0,budget:150000,people:0,chef:60,finished:false,prepDays:Number(document.querySelector('input[name="difficulty"]:checked')?.value||4)};
+ G={storms,slot:0,budget:150000,people:0,chef:60,finished:false,mode,prepDays:Number(document.querySelector('input[name="difficulty"]:checked')?.value||4)};
  render();
 }
 let G;
@@ -154,7 +155,7 @@ function impact(st){const ref=st.data.reference_track;const hits=[];for(const h 
 function finishStorm(){const st=current(),imp=impact(st),helped=imp.filter(x=>st.distributed.has(x));let lost=imp.filter(x=>!st.distributed.has(x));G.people+=helped.length*1000;G.chef=clamp(G.chef+helped.length*13-lost.length*17-st.distributed.size*2-st.stock.size*2,0,100);st.impact=imp;st.history.push("Outcome: "+imp.length+" warehouse area(s) within illustrative impact radius; "+helped.length+" protected by distribution.");st.acted=true;G.finished=G.slot===G.storms.length-1;render();$("message").textContent="Storm completed. "+helped.length+" impacted areas received advance distribution."; }
 function render(){
 const st=current(),t=displayTime(),remaining=remainingDays(),rows=forecast(st),last=st.impact!==null;
-$("seasonstat").textContent="Storm "+(G.slot+1)+" · Season underway";
+$("seasonstat").textContent=G.mode==="single"?"One storm · In progress":"Storm "+(G.slot+1)+" · Season underway";
 $("budgetstat").textContent=money(G.budget);$("peoplestat").textContent=G.people.toLocaleString("en-GB");$("chefstat").textContent=(G.chef>=70?"🙂":G.chef<40?"😟":"😐")+" "+G.chef+" / 100";
 $("stormtitle").textContent="Storm "+(G.slot+1)+" · Tropical system";
 $("datepill").textContent=t.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"});
@@ -270,16 +271,16 @@ function seasonSummary(){
      '<p><strong>Game outcome:</strong> '+impacted.length+' modelled warehouse areas affected; '+helped.length+' received kits in advance. Prepositioned at '+st.stock.size+' sites; distributed at '+st.distributed.size+' sites.</p>'+
      '<p class="subtle">'+esc(spending||"No expenditure.")+'</p></article>';
  }).join("");
- return '<h2>End of cyclone season</h2>'+
- '<p>You have now completed the season. You were not told in advance that there would be <strong>'+G.storms.length+' storms</strong>.</p>'+
+ return (G.mode==='single'?'<h2>End of storm</h2>':'<h2>End of cyclone season</h2>')+
+ (G.mode==='single'?'<p>You have completed your storm. Here is its historical identity and a review of your decisions.</p>':'<p>You have now completed the season. You were not told in advance that there would be <strong>'+G.storms.length+' storms</strong>.</p>')+
  '<div class="stats" style="margin:16px 0"><div class="stat"><div class="k">Storms encountered</div><div class="v">'+G.storms.length+'</div></div>'+
  '<div class="stat"><div class="k">Budget spent</div><div class="v">'+money(spent)+'</div></div>'+
  '<div class="stat"><div class="k">Budget remaining</div><div class="v">'+money(G.budget)+'</div></div>'+
  '<div class="stat"><div class="k">Chef happiness</div><div class="v">'+G.chef+' / 100</div></div></div>'+
  '<p><strong>'+G.people.toLocaleString("en-GB")+' people reached</strong> under the illustrative game impact model.</p>'+
- '<h2>The real storms behind your game</h2>'+cards+
+ '<h2>'+(G.mode==='single'?'The real storm behind your game':'The real storms behind your game')+'</h2>'+cards+
  '<p class="subtle">Each identity and historical year comes from the WATTCH scenario archive. Fictional game dates do not correspond to actual storm dates. A mapped reference-track crossing indicates an approximate geographic crossing, not a verified historical impact assessment. Game estimates of impact, people reached and CHF expenditure are illustrative.</p>'+
- '<button class="btn" type="button" id="summary-restart">Play another season</button>';
+ '<button class="btn" type="button" id="summary-restart">Play again</button>';
 }
 function forecastEvidence(st,day){const original=st.day;st.day=day;const guidance=forecast(st);st.day=original;return guidance.some(p=>p.lat>=-26&&p.lat<=-11&&p.lon>=43&&p.lon<=52);}
 function forecastLandfall(rows){for(let i=1;i<rows.length;i++){const a=rows[i-1],b=rows[i];if(!inIsland(a.lat,a.lon)&&inIsland(b.lat,b.lon)){let lo=0,hi=1;for(let z=0;z<18;z++){const f=(lo+hi)/2;if(inIsland(a.lat+(b.lat-a.lat)*f,a.lon+(b.lon-a.lon)*f))hi=f;else lo=f;}return Math.round(a.wind+(b.wind-a.wind)*hi);}}return null;}
@@ -291,7 +292,7 @@ $("confirm").addEventListener("click",confirm);
 $("advance").addEventListener("click",()=>{const st=current();if(!st.acted||st.impact!==null)return;if(st.day+1>=st.duration){finishStorm();if(!G.finished){G.slot++;render();$("message").textContent="The previous storm has passed. A new cyclone is developing. Your remaining budget carries forward.";}return;}st.day++;st.acted=false;st.choice="";st.chosen.clear();$("message").textContent="";render();});
 $("nextstorm").addEventListener("click",()=>{if(current().impact===null||G.finished)return;G.slot++;$("message").textContent="A new cyclone is developing. Your remaining budget carries forward.";render();});
 $("restart").addEventListener("click",()=>{if(G&&!G.finished&&!confirmNewSeason())return;$("start-screen").hidden=false;});
-function confirmNewSeason(){return window.confirm("Start a new season? Current decisions and progress will be reset.");}
+function confirmNewSeason(){return window.confirm("Start a new game? Current decisions and progress will be reset.");}
 $("season-summary").addEventListener("click",e=>{if(e.target.closest("#summary-restart")){$("start-screen").hidden=false;}});$("start-game").addEventListener("click",()=>{$("start-screen").hidden=true;changeSeason();});
 changeSeason();
 })();
