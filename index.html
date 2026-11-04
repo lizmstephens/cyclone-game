@@ -56,8 +56,8 @@ footer{margin-top:12px;color:#5f7780;font-size:12px;line-height:1.5}
 <div class="panel">
 <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap"><h2 id="stormtitle">Loading…</h2><span class="pill" id="datepill">Forecast briefing</span></div>
 <div id="map" role="img" aria-label="Map of Madagascar with forecast tracks and warehouse locations"></div>
-<div class="subtle" style="margin-top:10px">Dashed red: forecast track · Coloured points: forecast wind · Warehouse dots: red = not stocked, green = prepositioned</div>
-<details><summary>About these forecasts</summary>Each storm uses a distinct WATTCH ensemble hindcast. Daily training updates are constructed from the archived ensemble and a reference track, not genuine successive operational forecasts. The displayed track is an illustrative ensemble-based training forecast.</details>
+<div class="subtle" style="margin-top:10px">Blue lines: all ensemble members · Dashed red: ensemble median · Coloured points: median forecast wind · Warehouse dots: red = not stocked, green = prepositioned</div>
+<details><summary>About these forecasts</summary>Each storm uses a distinct WATTCH ensemble hindcast. Daily training updates are constructed from the archived ensemble and a reference track, not genuine successive operational forecasts. All available ensemble-member tracks are displayed, alongside an illustrative median-based training forecast.</details>
 </div>
 <div class="panel"><h3>Met Service · WhatsApp update</h3><div id="brief"></div><div class="subtle" id="forecastsource"></div></div>
 </section>
@@ -155,18 +155,51 @@ return rows;
 function hull(points){const p=points.slice().sort((a,b)=>a[0]-b[0]||a[1]-b[1]);if(p.length<3)return p;const cr=(a,b,c)=>(b[0]-a[0])*(c[1]-a[1])-(b[1]-a[1])*(c[0]-a[0]);const low=[],high=[];for(const x of p){while(low.length>1&&cr(low.at(-2),low.at(-1),x)<=0)low.pop();low.push(x);}for(let i=p.length-1;i>=0;i--){const x=p[i];while(high.length>1&&cr(high.at(-2),high.at(-1),x)<=0)high.pop();high.push(x);}return low.slice(0,-1).concat(high.slice(0,-1));}
 const coast=[[49.543519,-12.469833],[49.808981,-12.895285],[50.056511,-13.555761],[50.217431,-14.758789],[50.476537,-15.226512],[50.377111,-15.706069],[50.200275,-16.000263],[49.860606,-15.414253],[49.672607,-15.710204],[49.863344,-16.451037],[49.774564,-16.875042],[49.498612,-17.106036],[49.435619,-17.953064],[49.041792,-19.118781],[48.548541,-20.496888],[47.930749,-22.391501],[47.547723,-23.781959],[47.095761,-24.94163],[46.282478,-25.178463],[45.409508,-25.601434],[44.833574,-25.346101],[44.03972,-24.988345],[43.763768,-24.460677],[43.697778,-23.574116],[43.345654,-22.776904],[43.254187,-22.057413],[43.433298,-21.336475],[43.893683,-21.163307],[43.89637,-20.830459],[44.374325,-20.072366],[44.464397,-19.435454],[44.232422,-18.961995],[44.042976,-18.331387],[43.963084,-17.409945],[44.312469,-16.850496],[44.446517,-16.216219],[44.944937,-16.179374],[45.502732,-15.974373],[45.872994,-15.793454],[46.312243,-15.780018],[46.882183,-15.210182],[47.70513,-14.594303],[48.005215,-14.091233],[47.869047,-13.663869],[48.293828,-13.784068],[48.84506,-13.089175],[48.863509,-12.487868],[49.194651,-12.040557],[49.543519,-12.469833]];
 const esc=x=>String(x).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+// Full WATTCH ensemble at each simulated issue time; preserve each member's identity.
+function forecastMembers(st){
+ const issue=issueTime(),actual=pt(st.data.reference_track,issue);
+ const members=st.data.forecast_tracks||[];
+ const now=members.map(m=>pt(m.points,issue)).filter(Boolean);
+ const median=now.length>=3?[midpoint(now.map(p=>p[0])),midpoint(now.map(p=>p[1]))]:null;
+ return members.map(m=>{
+  const points=[];
+  for(let d=0;d<=7;d+=0.25){
+   const p=pt(m.points,addDays(issue,d));if(!p)continue;
+   const shift=actual&&median?Math.exp(-d/2.5):0;
+   points.push({lat:p[0]+(actual?actual[0]-median[0]:0)*shift,lon:p[1]+(actual?actual[1]-median[1]:0)*shift,wind:p[2]*3.6});
+  }
+  return points;
+ }).filter(t=>t.length>1);
+}
+// Natural Earth-derived world boundaries loaded separately from game logic.
+let landShapes=[];
+fetch('https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson')
+ .then(r=>{if(!r.ok)throw Error('coastline unavailable');return r.json();})
+ .then(g=>{
+  const rings=[];
+  for(const f of g.features||[]){
+   const geom=f.geometry;if(!geom)continue;
+   const polys=geom.type==='Polygon'?[geom.coordinates]:geom.type==='MultiPolygon'?geom.coordinates:[];
+   for(const poly of polys)for(const ring of poly){
+    if(ring.some(p=>p[0]>=34&&p[0]<=71&&p[1]>=-34&&p[1]<=-5))rings.push(ring);
+   }
+  }
+  landShapes=rings;
+  if(typeof G!=='undefined'&&G&&G.storms?.length)document.getElementById('map').innerHTML=mapSvg(forecast(current()));
+ }).catch(()=>{});
 function mapSvg(rows){
 const lo=34,hi=71,left=58,top=25,width=820,height=525,x=lon=>left+(lon-lo)/(hi-lo)*(width-left-15),y=lat=>top+(-5-lat)/29*(height-top-28);
 const coords=arr=>arr.map(p=>x(p[0]).toFixed(1)+","+y(p[1]).toFixed(1)).join(" ");
 const mapPts=coast.map(p=>[p[0],p[1]]);
+const ensemble=forecastMembers(current());
+
 let svg='<svg viewBox="0 0 820 525" xmlns="http://www.w3.org/2000/svg" aria-label="Cyclone forecast track and uncertainty around Madagascar">';
 svg+='<rect width="820" height="525" fill="#dfeef7"/>';
 for(let l=40;l<=hi;l+=5)svg+='<line x1="'+x(l)+'" y1="20" x2="'+x(l)+'" y2="510" stroke="#bfd6de" stroke-dasharray="3 5"/><text x="'+x(l)+'" y="516" fill="#527080" font-size="12" text-anchor="middle">'+l+'°E</text>';
 for(let lat=-10;lat>=-30;lat-=5)svg+='<line x1="43" y1="'+y(lat)+'" x2="808" y2="'+y(lat)+'" stroke="#bfd6de" stroke-dasharray="3 5"/><text x="8" y="'+(y(lat)+4)+'" fill="#527080" font-size="12">'+Math.abs(lat)+'°S</text>';
-svg+='<polygon points="'+coords(mapPts)+'" fill="#efece0" stroke="#738b7e" stroke-width="2"/>';
+svg+=landShapes.length?landShapes.map(ring=>'<polygon points="'+coords(ring)+'" fill="#efece0" stroke="#738b7e" stroke-width="1.3"/>').join(""):'<polygon points="'+coords(mapPts)+'" fill="#efece0" stroke="#738b7e" stroke-width="2"/>';
 if(rows.length){
-
-
+ svg+=ensemble.map(track=>'<polyline points="'+coords(track.map(p=>[p.lon,p.lat]))+'" fill="none" stroke="#416b89" stroke-opacity=".48" stroke-width="1.7" stroke-linejoin="round"/>').join("");
  svg+='<polyline points="'+coords(rows.map(p=>[p.lon,p.lat]))+'" fill="none" stroke="#c74c44" stroke-width="3" stroke-dasharray="8 5"/>';
  for(const p of rows){const c=p.wind<63?"#61b7db":p.wind<89?"#36b99b":p.wind<118?"#ebca55":p.wind<166?"#f39a4b":"#cf4b4b";svg+='<circle cx="'+x(p.lon)+'" cy="'+y(p.lat)+'" r="6.2" fill="'+c+'" stroke="#224650" stroke-width="1.1"/><text x="'+(x(p.lon)+9)+'" y="'+(y(p.lat)-10)+'" font-size="11" fill="#234553" stroke="#dfeef7" stroke-width="3" paint-order="stroke">+'+p.day+'d</text>';}
 }
