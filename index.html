@@ -75,6 +75,7 @@ footer{margin-top:12px;color:#5f7780;font-size:12px;line-height:1.5}
 "use strict";
 const catalogue=JSON.parse(document.getElementById("embedded-data").textContent);
 const historical=JSON.parse(document.getElementById("historical-data").textContent);
+const ibtracsMatches={"2004_tr0014":"2004061S12072","2008_tr0014":"2008037S10055","2008_tr0019":"2008062S10064","2012_tr0014":"2012039S14075","2022_tr0007":"2022024S09090","2023_tr0009":"2023036S12117","2024_tr0027":"2024341S12086"};
 const hubs=[{id:"N",name:"Antsiranana",lon:49.29,lat:-12.27},{id:"NE",name:"Sambava",lon:50.17,lat:-14.27},{id:"NW",name:"Mahajanga",lon:46.32,lat:-15.72},{id:"E",name:"Toamasina",lon:49.4,lat:-18.15},{id:"SE",name:"Mananjary",lon:48.33,lat:-21.23},{id:"SW",name:"Toliara",lon:43.67,lat:-23.36}];
 const cost={preposition:20000,distribute:8000};
 const $=id=>document.getElementById(id);
@@ -246,6 +247,9 @@ function seasonSummary(){
    const intensity=crossing?'<p><strong>Archive reference-track crossing (not independently verified observed landfall):</strong> '+crossing.when.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"})+'; interpolated wind '+Math.round(crossing.wind)+' km/h (archive 10-m wind estimate; sustained-wind averaging period unverified).</p>':'<p><strong>Landfall intensity:</strong> No Madagascar crossing established in the reference track; verified historical landfall wind not available in this game dataset.</p>';
    const assessment=esc(evaluateDecision(st));
     const verified=historical[st.data.event_id]||null;
+    const ibSid=ibtracsMatches[st.data.event_id];
+    const ibLink=ibSid?'<p class="subtle"><strong>IBTrACS storm identifier:</strong> <a href="https://agora.ex.nii.ac.jp/digital-typhoon/ibtracs/'+ibSid+'/index.html.en" target="_blank" rel="noopener noreferrer">'+ibSid+'</a>. Matched by historical storm name and track period; official agency-specific landfall winds require separate verification.</p>':'<p class="subtle">IBTrACS storm identifier not yet independently verified.</p>';
+
     const evidence=verified?'<p><strong>Documented historical landfall:</strong> '+esc(verified.location)+' on '+new Date(verified.landfallDate+"T00:00:00Z").toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"})+'.</p>'+
       '<p><strong>Reported sustained wind at landfall:</strong> '+(verified.windKmh?esc(verified.windKmh+" km/h"):verified.windKmhRange?esc(verified.windKmhRange.join("–")+" km/h"):"Not verified in available sources")+(verified.windPeriod?" ("+esc(verified.windPeriod)+")":"")+'.</p>'+
       (verified.windNote?'<p class="subtle">'+esc(verified.windNote)+'</p>':'')+
@@ -259,7 +263,7 @@ function seasonSummary(){
      '<h3 style="margin:0 0 6px">Storm '+(i+1)+' revealed: '+name+' ('+year+')</h3>'+
      '<p class="subtle" style="margin:0 0 10px">Game date: '+st.simStart.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"})+
      ' · Original WATTCH initialization: '+esc(st.data.initialization)+'.</p>'+
-     '<p>'+archiveOutcome(st.data)+'</p>'+evidence+intensity+
+     '<p>'+archiveOutcome(st.data)+'</p>'+ibLink+evidence+intensity+
      '<p><strong>Your decisions:</strong> '+assessment+'</p>'+
      '<p><a href="'+wiki+'" target="_blank" rel="noopener noreferrer">Look up historical impacts on Wikipedia</a> · <a href="https://www.ncei.noaa.gov/products/international-best-track-archive" target="_blank" rel="noopener noreferrer">IBTrACS source</a> · <a href="https://zenodo.org/records/20446920" target="_blank" rel="noopener noreferrer">WATTCH source</a>. Archive-level historical figures are unverified unless independently documented above.</p>'+
      '<p><strong>Game outcome:</strong> '+impacted.length+' modelled warehouse areas affected; '+helped.length+' received kits in advance. Prepositioned at '+st.stock.size+' sites; distributed at '+st.distributed.size+' sites.</p>'+
