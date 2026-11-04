@@ -2,13 +2,14 @@
 
 ## Play the games
 
-- **`index.html` — Full-season training game:** Each new game randomly selects **2–7 storms** drawn without replacement from **94 usable WATTCH scenarios**, with a shared CHF 150,000 season budget, daily decision opportunities, forecast-track display, warehouse prepositioning/distribution restrictions, and Chef (boss) feedback. Players do not see the total number of storms or historical storm identities until the season ends.
+- **`index.html` — Full-season training game:** Choose **one storm** or a **full season of 2–7 storms**, sampled from **94 usable WATTCH scenarios**, with a shared CHF 150,000 season budget, daily decision opportunities, forecast-track display, warehouse prepositioning/distribution restrictions, and Chef (boss) feedback. Players do not see the total number of storms or historical storm identities until the season ends.
 - **`jokwe.html` — Approved single-storm Jokwe prototype:** Preserved separately, including its detailed daily RSMC-style forecast images and enlarged warehouse markers.
 
 Open `index.html` locally in Chrome after downloading it; its 94-scenario dataset is embedded so no server is required. The repository is public and can be deployed with GitHub Pages.
 
 ## Training-game rules
 
+- On the start screen, choose **Play one storm** or **Play a whole season**, then Easy (3-day prepositioning deadline), Medium (4-day deadline) or Hard (5-day deadline). One-storm mode ends after the first storm with the same decision assessment and historical reveal; season mode retains the unknown 2–7 storm count and shared budget.
 - Decide daily: **Keep monitoring**, **Preposition Kits**, or **Distribute Kits**.
 - Preposition costs CHF 20,000 per warehouse; the deadline depends on the chosen mode (Easy: 3+ days, Medium: 4+ days, Hard: 5+ days before the approximate event window).
 - Distribute costs CHF 8,000 per stocked warehouse and is allowed from the end of the prepositioning window until the event (0 to fewer than 3/4/5 days remaining, by difficulty).
@@ -39,3 +40,7 @@ Historical storm-name/impact enrichment has **not** been completed: all 94 embed
 The integrated game now includes sourced historical landfall/impact annotations for **13 of 94** scenarios, including Gafilo, Elita, Ivan, Bingiza, Giovanna, Haruna, Enawo, Ava, Belna, Batsirai, Freddy, Gamane and Chido. Historical deaths and damages are only included when supported by the linked reports, with source-specific date and geographic scope.
 
 The summaries currently contain **10 source-checked RSMC La Réunion near-landfall 10-minute sustained-wind fixes** (in knots converted to km/h) for Elita, Gafilo, Ivan, Giovanna, Haruna, Enawo, Ava, Belna, Batsirai and Freddy. The best-track fixes are at discrete times and can be offshore or inland, rather than exact shoreline-crossing observations. Bingiza's Réunion wind field is missing at crossing, so its nearby JTWC 1-minute estimates remain a separately labelled note. No 1-minute/10-minute conversion is assumed. WATTCH's '10-m wind' describes height, *not* a 10-minute averaging period. Following these changes, 35 additional automated full-season decision-and-advance simulations completed without errors and no duplicate Dando was encountered. A further 45 full-season progressions (15 each for Easy, Medium and Hard) all completed, confirming the selected prepositioning deadlines were applied. Browser visual testing and the full 94-scenario impact verification are still outstanding.
+
+## One-storm mode check (4 November 2026)
+
+Added a start-page game-length selector to the existing `index.html`, leaving forecast generation, warehouse actions, and season progression shared. Automated DOM-mocked regression checks completed 90 games (15 per each combination of one storm/season and Easy/Medium/Hard) successfully, including the correct end-summary wording and single-storm termination. These are logic checks, not visual in-browser testing.
