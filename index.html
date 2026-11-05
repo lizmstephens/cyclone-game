@@ -219,7 +219,7 @@ $("stormtitle").textContent="Storm "+(G.slot+1)+" · Tropical system";
 $("datepill").textContent=t.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"});
 $("map").innerHTML=mapSvg(rows);
 $("brief").textContent=last?"The storm has passed. Reviewing impacts and expenditure.":forecastMessage(rows);
-const windAtLandfall=forecastLandfall(rows);$("forecastsource").textContent="Simulated daily update · WATTCH hindcast · Forecast landfall: "+(windAtLandfall===null?"not indicated":windAtLandfall+" km/h (model 10-m wind; averaging period unverified)")+" · Identity revealed at season end";
+const windAtLandfall=forecastLandfall(rows);$("forecastsource").textContent="Simulated daily update · WATTCH hindcast · Forecast landfall: "+(windAtLandfall===null?"not indicated":windAtLandfall+" km/h (model 10-m wind; averaging period unverified)")+" · Identity revealed after the storm";
 $("leadtime").textContent=last?"Storm completed":remaining>=0?"Approximate event window: "+remaining+" day(s) remaining · prepositioning requires "+G.prepDays+"+ days":"Event window has passed";
 $("stockstat").textContent="Prepositioned: "+([...st.stock].map(id=>hubs.find(h=>h.id===id)?.name).join(", ")||"None")+" · Distributed: "+([...st.distributed].map(id=>hubs.find(h=>h.id===id)?.name).join(", ")||"None");
 $("progressbar").style.width=(100*(st.day+1)/(st.duration+1)).toFixed(0)+"%";
@@ -238,6 +238,10 @@ if(G.finished){
  $("season-summary").hidden=false;
  document.querySelector(".layout").hidden=true;
  $("season-summary").innerHTML=seasonSummary();
+} else if(last){
+ $("season-summary").hidden=false;
+ document.querySelector(".layout").hidden=true;
+ $("season-summary").innerHTML=seasonSummary(true);
 } else {
  $("season-summary").hidden=true;
  document.querySelector(".layout").hidden=false;
@@ -294,9 +298,9 @@ function evaluateDecision(st){
  if(stocked.length&&!distributed.length)parts.push("Prepositioned kits were not distributed.");
  parts.push("Expenditure: "+money(observations.reduce((sum,x)=>sum+(x.locations?.length||0)*(cost[x.action]||0),0))+"; "+stocked.length+" stocked and "+distributed.length+" distributed locations. This evaluation uses simplified forecast signals and impact thresholds, not a calibrated forecast-skill assessment.");return parts.join(" ");
 }
-function seasonSummary(){
+function seasonSummary(onlyCurrent=false){
  const spent=150000-G.budget;
- const cards=G.storms.map((st,i)=>{
+ const cards=(onlyCurrent?[G.storms[G.slot]]:G.storms).map((st,i)=>{
    const name=esc(st.data.storm_name||"Unnamed system");
    const year=esc(st.data.initialization.slice(0,4));
    const impacted=(st.impact||[]).map(id=>hubs.find(h=>h.id===id)?.name||id);
@@ -330,6 +334,7 @@ function seasonSummary(){
      '<p><strong>Game outcome:</strong> '+impacted.length+' modelled warehouse areas affected; '+helped.length+' received kits in advance. Prepositioned at '+st.stock.size+' sites; distributed at '+st.distributed.size+' sites.</p>'+
      '<p class="subtle">'+esc(spending||"No expenditure.")+'</p></article>';
  }).join("");
+ if(onlyCurrent)return '<h2>Storm outcome</h2><p>The historical identity is revealed after your decisions. Review the storm and your actions before continuing.</p>'+cards+'<button type="button" class="btn" id="review-next">Continue to next storm →</button>';
  return (G.mode==='single'?'<h2>End of storm</h2>':'<h2>End of cyclone season</h2>')+
  (G.mode==='single'?'<p>You have completed your storm. Here is its historical identity and a review of your decisions.</p>':'<p>You have now completed the season. You were not told in advance that there would be <strong>'+G.storms.length+' storms</strong>.</p>')+
  '<div class="stats" style="margin:16px 0"><div class="stat"><div class="k">Storms encountered</div><div class="v">'+G.storms.length+'</div></div>'+
@@ -348,11 +353,11 @@ function confirm(){const st=current(),a=st.choice,selected=[...st.chosen];if(st.
 $("actions").addEventListener("click",e=>{const b=e.target.closest("[data-action]");if(b&&!b.disabled)selectAction(b.dataset.action);});
 $("warehouses").addEventListener("change",e=>{const box=e.target.closest("[data-hub]");if(!box)return;const st=current();if(box.checked)st.chosen.add(box.dataset.hub);else st.chosen.delete(box.dataset.hub);render();});
 $("confirm").addEventListener("click",confirm);
-$("advance").addEventListener("click",()=>{const st=current();if(!st.acted||st.impact!==null)return;if(st.day+1>=st.duration){finishStorm();if(!G.finished){G.slot++;render();$("message").textContent="The previous storm has passed. A new cyclone is developing. Your remaining budget carries forward.";}return;}st.day++;st.acted=false;st.choice="";st.chosen.clear();$("message").textContent="";render();});
+$("advance").addEventListener("click",()=>{const st=current();if(!st.acted||st.impact!==null)return;if(st.day+1>=st.duration){finishStorm();return;}st.day++;st.acted=false;st.choice="";st.chosen.clear();$("message").textContent="";render();});
 $("nextstorm").addEventListener("click",()=>{if(current().impact===null||G.finished)return;G.slot++;$("message").textContent="A new cyclone is developing. Your remaining budget carries forward.";render();});
 $("restart").addEventListener("click",()=>{if(G&&!G.finished&&!confirmNewSeason())return;$("start-screen").hidden=false;});
 function confirmNewSeason(){return window.confirm("Start a new game? Current decisions and progress will be reset.");}
-$("season-summary").addEventListener("click",e=>{if(e.target.closest("#summary-restart")){$("start-screen").hidden=false;}});$("start-game").addEventListener("click",()=>{$("start-screen").hidden=true;changeSeason();});
+$("season-summary").addEventListener("click",e=>{if(e.target.closest("#review-next")){if(!G.finished&&current().impact!==null){G.slot++;$("message").textContent="A new cyclone is developing. Your remaining budget carries forward.";render();}return;}if(e.target.closest("#summary-restart")){$("start-screen").hidden=false;}});$("start-game").addEventListener("click",()=>{$("start-screen").hidden=true;changeSeason();});
 changeSeason();
 })();
 </script></body></html>
