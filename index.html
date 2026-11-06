@@ -43,7 +43,7 @@ footer{margin-top:12px;color:#5f7780;font-size:12px;line-height:1.5}
 </head>
 <body>
 <header><div><h1>Madagascar Cyclone Decision Game</h1><small>Can you protect communities without exhausting your seasonal budget?</small></div><button class="btn alt" id="restart">New game</button></header>
-<section id="start-screen"><div class="intro"><h2>Madagascar Cyclone Anticipatory Action Game</h2><p>Manage a shared budget to prepare for cyclones approaching Madagascar. Interpret the latest forecast, decide whether and where to preposition or distribute emergency kits, and learn about decisions under uncertainty.</p><p>Play one storm or an unknown number of storms in a fictional season. Real identities are revealed only at the end. Daily briefings are training simulations based on WATTCH hindcasts.</p><h3>How long would you like to play?</h3><div class="choice-grid" role="group" aria-label="Game length"><label><input type="radio" name="game-length" value="single"><span><strong>Play one storm</strong>Follow one cyclone through to its historical reveal</span></label><label><input type="radio" name="game-length" value="season" checked><span><strong>Play a whole season</strong>Manage several cyclones with one shared budget, without knowing how many are coming</span></label></div><h3>Difficulty</h3><div class="choice-grid difficulty-grid" role="group" aria-label="Difficulty"><label><input type="radio" name="difficulty" value="3"><span><strong>Easy</strong>Preposition at least 3 days before</span></label><label><input type="radio" name="difficulty" value="4" checked><span><strong>Medium</strong>At least 4 days before</span></label><label><input type="radio" name="difficulty" value="5"><span><strong>Hard</strong>At least 5 days before</span></label></div><p class="subtle">Distribute closer to landfall, once kits have been prepositioned. The budget is shared across all storms in a season.</p><button type="button" class="btn" id="start-game">Start game</button><p class="image-credit">Background: NASA Terra/MODIS image of Cyclone Bingiza approaching Madagascar (13 February 2011), Jeff Schmaltz / NASA GSFC, CC BY 2.0. <a href="https://earthobservatory.nasa.gov/images/49250/tropical-cyclone-bingiza" target="_blank" rel="noopener noreferrer">Image source</a> · <a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener noreferrer">Licence</a>.</p></div></section><main>
+<section id="start-screen"><div class="intro"><h2>Madagascar Cyclone Anticipatory Action Game</h2><p>Manage a shared budget for cyclone anticipatory action. Decide when to keep monitoring, pre-activate preparedness, and fully activate early actions in threatened areas.</p><p>Play one storm or an unknown number of storms in a fictional season. Real identities are revealed only at the end. Daily briefings are training simulations based on WATTCH hindcasts.</p><h3>How long would you like to play?</h3><div class="choice-grid" role="group" aria-label="Game length"><label><input type="radio" name="game-length" value="single"><span><strong>Play one storm</strong>Follow one cyclone through to its historical reveal</span></label><label><input type="radio" name="game-length" value="season" checked><span><strong>Play a whole season</strong>Manage several cyclones with one shared budget, without knowing how many are coming</span></label></div><h3>Difficulty</h3><div class="choice-grid difficulty-grid" role="group" aria-label="Difficulty"><label><input type="radio" name="difficulty" value="3"><span><strong>Easy</strong>Pre-activate at least 3 days before</span></label><label><input type="radio" name="difficulty" value="4" checked><span><strong>Medium</strong>Pre-activate 4+ days before</span></label><label><input type="radio" name="difficulty" value="5"><span><strong>Hard</strong>Pre-activate 5+ days before</span></label></div><p class="subtle">Pre-activation is possible within 7 days; full activation in the last 3 days if an area is prepared. The forecast trigger signals are illustrative training guidance, not official DGM forecasts.</p><button type="button" class="btn" id="start-game">Start game</button><p class="image-credit">Background: NASA Terra/MODIS image of Cyclone Bingiza approaching Madagascar (13 February 2011), Jeff Schmaltz / NASA GSFC, CC BY 2.0. <a href="https://earthobservatory.nasa.gov/images/49250/tropical-cyclone-bingiza" target="_blank" rel="noopener noreferrer">Image source</a> · <a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener noreferrer">Licence</a>.</p></div></section><main>
 <div class="stats">
 <div class="stat"><div class="k">Season progress</div><div class="v" id="seasonstat">—</div></div>
 <div class="stat"><div class="k">Remaining budget</div><div class="v" id="budgetstat">—</div></div>
@@ -56,7 +56,7 @@ footer{margin-top:12px;color:#5f7780;font-size:12px;line-height:1.5}
 <div class="panel">
 <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap"><h2 id="stormtitle">Loading…</h2><span class="pill" id="datepill">Forecast briefing</span></div>
 <div id="map" role="img" aria-label="Map of Madagascar with forecast tracks and warehouse locations"></div>
-<div class="subtle" style="margin-top:10px">Blue lines: all ensemble members · Dashed red: ensemble median · Coloured points: median forecast wind · Warehouse dots: red = not stocked, green = prepositioned</div>
+<div class="subtle" style="margin-top:10px">Blue lines: all ensemble members · Dashed red: ensemble median · Coloured points: median forecast wind · Warehouses: red = not prepared, green = pre-activated, dark green = fully activated</div>
 <details><summary>About these forecasts</summary>Each storm uses a distinct WATTCH ensemble hindcast. Daily training updates are constructed from the archived ensemble and a reference track, not genuine successive operational forecasts. All available ensemble-member tracks are displayed, alongside an illustrative median-based training forecast.</details>
 </div>
 <div class="panel"><h3>Met Service · WhatsApp update</h3><div id="brief"></div><div class="subtle" id="forecastsource"></div></div>
@@ -65,8 +65,8 @@ footer{margin-top:12px;color:#5f7780;font-size:12px;line-height:1.5}
 <div class="panel"><h2>Your decision</h2><div class="subtle" id="leadtime"></div>
 <div class="actions" id="actions">
 <button type="button" data-action="monitor" class="action">👀 <strong>Keep monitoring</strong><div class="subtle">CHF 0 · Wait for the next forecast</div></button>
-<button type="button" data-action="preposition" class="action">📦 <strong>Preposition Kits</strong><div class="subtle">CHF 20,000 per warehouse · Deadline depends on difficulty</div></button>
-<button type="button" data-action="distribute" class="action">🤝 <strong>Distribute Kits</strong><div class="subtle">CHF 8,000 per warehouse · Stock must be in place · After prepositioning deadline</div></button>
+<button type="button" data-action="preposition" class="action">📦 <strong>Pre-activation</strong><div class="subtle">CHF 20,000 per area · Prepare within 7 days, before your difficulty deadline</div></button>
+<button type="button" data-action="distribute" class="action">🤝 <strong>Full activation</strong><div class="subtle">CHF 8,000 per area · Requires pre-activation · Last 3 days</div></button>
 </div>
 <div id="warehouses" class="wh"></div><div id="cost" class="subtle">Select an action above.</div>
 <div id="message" aria-live="polite"></div>
@@ -85,13 +85,13 @@ footer{margin-top:12px;color:#5f7780;font-size:12px;line-height:1.5}
 "use strict";
 // Game logic and scenario library are maintained independently.
 // Both files are loaded before any game state is initialized.
-let catalogue, historical;
+let catalogue, historical, feedbackLibrary;
 try {
-  const [scenariosResponse, historicalResponse] = await Promise.all([
-    fetch("./data/scenarios.json"), fetch("./data/historical.json")
+  const [scenariosResponse, historicalResponse, feedbackResponse] = await Promise.all([
+    fetch("./data/scenarios.json"), fetch("./data/historical.json"), fetch("./data/feedback.json")
   ]);
-  if (!scenariosResponse.ok || !historicalResponse.ok) throw new Error("Could not load the scenario library.");
-  [catalogue, historical] = await Promise.all([scenariosResponse.json(), historicalResponse.json()]);
+  if (!scenariosResponse.ok || !historicalResponse.ok || !feedbackResponse.ok) throw new Error("Could not load the scenario library.");
+  [catalogue, historical, feedbackLibrary] = await Promise.all([scenariosResponse.json(), historicalResponse.json(), feedbackResponse.json()]);
 } catch (error) {
   const panel = document.querySelector("#start-screen .intro");
   if (panel) panel.insertAdjacentHTML("beforeend", '<p role="alert" style="color:#9b2525;font-weight:700">The scenario library could not be loaded. Please refresh the page. If you opened this as a local file, use a local web server instead.</p>');
@@ -102,6 +102,7 @@ try {
 const ibtracsMatches={"2003_tr0031":"2003313S05079","2003_tr0034":"2003338S09065","2004_tr0009":"2004025S16044","2004_tr0014":"2004061S12072","2004_tr0025":"2004325S06078","2005_tr0009":"2005017S09061","2005_tr0013":"2005026S20040","2006_tr0006":"2006021S11053","2006_tr0014":"2006060S13058","2006_tr0020":"2006094S08087","2006_tr0025":"2006330S06049","2006_tr0027":"2006350S07071","2006_tr0029":"2006364S12058","2007_tr0011":"2007037S19050","2007_tr0012":"2007043S11071","2007_tr0013":"2007050S16079","2007_tr0017":"2007066S12066","2007_tr0018":"2007085S11085","2007_tr0027":"2007322S06075","2007_tr0029":"2007346S12073","2007_tr0033":"2007363S20043","2008_tr0013":"2008023S10050","2008_tr0014":"2008037S10055","2008_tr0010":"2008033S11083","2008_tr0019":"2008062S10064","2008_tr0026":"2008290S05071","2008_tr0029":"2008348S10077","2009_tr0008":"2009017S20043","2009_tr0022":"2009093S12062","2009_tr0027":"2009325S12066","2009_tr0031":"2009346S07086","2010_tr0005":"2010002S09096","2010_tr0006":"2010032S20042","2010_tr0013":"2010046S10058","2010_tr0017":"2010066S19050","2010_tr0025":"2010143S20035","2011_tr0013":"2011038S11062","2011_tr0029":"2012010S24049","2012_tr0006":"2012010S24049","2012_tr0009":"2012018S16041","2012_tr0014":"2012039S14075","2012_tr0016":"2012056S13057","2012_tr0024":"2012285S04077","2012_tr0032":"2012362S08071","2013_tr0014":"2013046S20042","2013_tr0020":"2013093S08074","2013_tr0026":"2013348S10082","2014_tr0006":"2014015S16043","2014_tr0015":"2014048S16039","2014_tr0025":"2014319S06066","2015_tr0003":"2015013S18038","2015_tr0015":"2015064S14052","2015_tr0017":"2015092S18074","2016_tr0007":"2016039S14061","2016_tr0018":"2016195S06076","2017_tr0003":"2017033S14056","2017_tr0005":"2017043S19040","2017_tr0009":"2017061S11063","2017_tr0026":"2017364S12065","2018_tr0013":"2018073S12057","2018_tr0020":"2018111S07055","2019_tr0008":"2019023S21041","2019_tr0013":"2019063S18038","2019_tr0026":"2019336S06055","2020_tr0009":"2020022S17043","2020_tr0013":"2020034S13063","2020_tr0028":"2020332S11091","2020_tr0033":"2020355S11065","2020_tr0034":"2020366S12073","2021_tr0010":"2021012S12086","2021_tr0019":"2021035S11080","2021_tr0025":"2021062S18040","2022_tr0006":"2022020S13060","2022_tr0007":"2022024S09090","2022_tr0009":"2022034S16082","2022_tr0014":"2022042S12063","2022_tr0019":"2022065S16055","2022_tr0025":"2022110S12051","2023_tr0004":"2023013S08081","2023_tr0007":"2023032S12091","2023_tr0009":"2023036S12117","2023_tr0020":"2023364S19035","2024_tr0012":"2024049S17052","2024_tr0015":"2024061S11062","2024_tr0018":"2024082S08054","2024_tr0025":"2024313S06092","2024_tr0027":"2024341S12086"};
 const hubs=[{id:"N",name:"Antsiranana",lon:49.29,lat:-12.27},{id:"NE",name:"Sambava",lon:50.17,lat:-14.27},{id:"NW",name:"Mahajanga",lon:46.32,lat:-15.72},{id:"E",name:"Toamasina",lon:49.4,lat:-18.15},{id:"SE",name:"Mananjary",lon:48.33,lat:-21.23},{id:"SW",name:"Toliara",lon:43.67,lat:-23.36}];
 const cost={preposition:20000,distribute:8000};
+const PRE_WINDOW=7,ACT_WINDOW=3,STRONG_WIND=118,STORM_WIND=63;
 const $=id=>document.getElementById(id);
 const date=x=>{const s=String(x).trim().replace(" ","T");return new Date((/^\d{4}-\d{2}-\d{2}$/.test(s)?s+"T00:00:00":s)+"Z");};
 const dayMs=86400000, money=x=>"CHF "+Math.round(x).toLocaleString("en-GB");
@@ -118,8 +119,8 @@ function current(){return G.storms[G.slot];}
 function issueTime(){const st=current();return new Date(+st.start+st.day*dayMs);}
 function displayTime(){const st=current();return addDays(st.simStart,st.day);}
 function remainingDays(){return Math.ceil((current().event-issueTime())/dayMs);}
-function canPrep(){return remainingDays()>=G.prepDays;}
-function canDist(){const d=remainingDays();return d>=0&&d<G.prepDays&&[...current().stock].some(x=>!current().distributed.has(x));}
+function canPrep(){const d=remainingDays();return d>=G.prepDays&&d<=PRE_WINDOW;}
+function canDist(){const d=remainingDays();return d>=0&&d<=ACT_WINDOW&&[...current().stock].some(x=>!current().distributed.has(x));}
 function changeSeason(){
  const mode=document.querySelector('input[name="game-length"]:checked')?.value==="single"?"single":"season";
  const n=mode==="single"?1:stormCount(),chosen=[],seen=new Set();for(const s of shuffle(catalogue.scenarios)){const key=ibtracsMatches[s.event_id]||s.event_id;if(seen.has(key))continue;seen.add(key);chosen.push(s);if(chosen.length>=n)break;}
@@ -220,10 +221,10 @@ $("datepill").textContent=t.toLocaleDateString("en-GB",{day:"numeric",month:"lon
 $("map").innerHTML=mapSvg(rows);
 $("brief").textContent=last?"The storm has passed. Reviewing impacts and expenditure.":forecastMessage(rows);
 const windAtLandfall=forecastLandfall(rows);$("forecastsource").textContent="Simulated daily update · WATTCH hindcast · Forecast landfall: "+(windAtLandfall===null?"not indicated":windAtLandfall+" km/h (model 10-m wind; averaging period unverified)")+" · Identity revealed after the storm";
-$("leadtime").textContent=last?"Storm completed":remaining>=0?"Approximate event window: "+remaining+" day(s) remaining · prepositioning requires "+G.prepDays+"+ days":"Event window has passed";
-$("stockstat").textContent="Prepositioned: "+([...st.stock].map(id=>hubs.find(h=>h.id===id)?.name).join(", ")||"None")+" · Distributed: "+([...st.distributed].map(id=>hubs.find(h=>h.id===id)?.name).join(", ")||"None");
+$("leadtime").textContent=last?"Storm completed":remaining>=0?"Approximate event window: "+remaining+" day(s) remaining · pre-activation: "+G.prepDays+"–7 days · full activation: 0–3 days":"Event window has passed";
+$("stockstat").textContent="Pre-activated: "+([...st.stock].map(id=>hubs.find(h=>h.id===id)?.name).join(", ")||"None")+" · Fully activated: "+([...st.distributed].map(id=>hubs.find(h=>h.id===id)?.name).join(", ")||"None");
 $("progressbar").style.width=(100*(st.day+1)/(st.duration+1)).toFixed(0)+"%";
-$("feedback").textContent=last?"“"+(st.distributed.size?"You acted ahead of the storm. Let's review whether we spent in the right places.":"We need to think carefully about our readiness before the next storm.")+"”":st.history.length?"“"+st.history.at(-1)+"”":"“We have one budget for the whole season. Think carefully about when and where we act.”";
+$("feedback").textContent=last?"“"+(st.finalFeedback?.boss||"We should review this storm and our resources.")+"”":st.history.length?"“"+st.history.at(-1)+"”":"“We have one budget for the whole season. Think carefully about when and where we act.”";
 const actions=$("actions").querySelectorAll("[data-action]");
 for(const btn of actions){const a=btn.dataset.action;btn.disabled=st.acted||last||(a==="preposition"&&!canPrep())||(a==="distribute"&&!canDist());btn.classList.toggle("selected",st.choice===a);}
 $("warehouses").style.display=!st.acted&&!last&&["preposition","distribute"].includes(st.choice)?"grid":"none";
@@ -285,17 +286,17 @@ function evaluateDecision(st){
  const timely=observations.some(x=>x.action==="preposition"&&x.lead>=G.prepDays)&&observations.some(x=>x.action==="distribute"&&x.lead<G.prepDays&&x.lead>=0);
  const signal=observations.some(x=>x.forecastSignal);const actionable=st.decisionLog.some(x=>x.lead>=G.prepDays&&x.forecastSignal);
  const parts=[];
- if(covered.length)parts.push(covered.length+" affected warehouse area(s) received advance distribution.");
+ if(covered.length)parts.push(covered.length+" affected warehouse area(s) received full activation.");
  if(uncovered.length)parts.push(uncovered.length+" affected area(s) did not receive advance distribution.");
  if(!affected.size)parts.push("No warehouse area met the game's illustrative impact threshold.");
  if(distributed.some(id=>!affected.has(id)))parts.push("Distribution was also made in unaffected warehouse areas.");
-  if(extra.length)parts.push("Kits were also prepositioned at "+extra.length+" location(s) outside the modelled impact footprint.");
- if(stocked.length===hubs.length)parts.push("You prepositioned at every warehouse, using substantial resources regardless of the eventual track.");
+  if(extra.length)parts.push("Kits were also pre-activated at "+extra.length+" location(s) outside the modelled impact footprint.");
+ if(stocked.length===hubs.length)parts.push("You pre-activated every warehouse area, using substantial resources regardless of the eventual track.");
  if(covered.length&&!signal)parts.push("Your action reached affected areas, but the recorded briefing did not provide a clear supporting landfall signal; this may have been a correct outcome for the wrong reasons.");
  if(covered.length&&signal)parts.push("Your action was consistent with a landfall signal in the training guidance.");
  if(!covered.length&&affected.size&&!actionable)parts.push("The recorded briefings did not show a clear landfall signal; this was a forecast-limited situation in the illustrative game, not proof that operational action was impossible.");
  if(!covered.length&&affected.size&&actionable)parts.push("A landfall signal appeared in the training guidance, but no affected area received kits.");
- if(stocked.length&&!distributed.length)parts.push("Prepositioned kits were not distributed.");
+ if(stocked.length&&!distributed.length)parts.push("Pre-activation was not followed by full activation.");
  parts.push("Expenditure: "+money(observations.reduce((sum,x)=>sum+(x.locations?.length||0)*(cost[x.action]||0),0))+"; "+stocked.length+" stocked and "+distributed.length+" distributed locations. This evaluation uses simplified forecast signals and impact thresholds, not a calibrated forecast-skill assessment.");return parts.join(" ");
 }
 function seasonSummary(onlyCurrent=false){
@@ -331,7 +332,7 @@ function seasonSummary(onlyCurrent=false){
      '<p>'+archiveOutcome(st.data)+'</p>'+ibLink+evidence+intensity+
      '<p><strong>Your decisions:</strong> '+assessment+'</p>'+
      '<p><a href="'+wiki+'" target="_blank" rel="noopener noreferrer">Look up historical impacts on Wikipedia</a> · <a href="https://www.ncei.noaa.gov/products/international-best-track-archive" target="_blank" rel="noopener noreferrer">IBTrACS source</a> · <a href="https://zenodo.org/records/20446920" target="_blank" rel="noopener noreferrer">WATTCH source</a>. Archive-level historical figures are unverified unless independently documented above.</p>'+
-     '<p><strong>Game outcome:</strong> '+impacted.length+' modelled warehouse areas affected; '+helped.length+' received kits in advance. Prepositioned at '+st.stock.size+' sites; distributed at '+st.distributed.size+' sites.</p>'+
+     '<p><strong>Game outcome:</strong> '+impacted.length+' modelled warehouse areas affected; '+helped.length+' received kits in advance. Pre-activated at '+st.stock.size+' sites; fully activated at '+st.distributed.size+' sites.</p>'+
      '<p class="subtle">'+esc(spending||"No expenditure.")+'</p></article>';
  }).join("");
  if(onlyCurrent)return '<h2>Storm outcome</h2><p>The historical identity is revealed after your decisions. Review the storm and your actions before continuing.</p>'+cards+'<button type="button" class="btn" id="review-next">Continue to next storm →</button>';
@@ -349,7 +350,7 @@ function seasonSummary(onlyCurrent=false){
 function forecastEvidence(st,day){const original=st.day;st.day=day;const guidance=forecast(st);st.day=original;return guidance.some(p=>p.lat>=-26&&p.lat<=-11&&p.lon>=43&&p.lon<=52);}
 function forecastLandfall(rows){for(let i=1;i<rows.length;i++){const a=rows[i-1],b=rows[i];if(!inIsland(a.lat,a.lon)&&inIsland(b.lat,b.lon)){let lo=0,hi=1;for(let z=0;z<18;z++){const f=(lo+hi)/2;if(inIsland(a.lat+(b.lat-a.lat)*f,a.lon+(b.lon-a.lon)*f))hi=f;else lo=f;}return Math.round(a.wind+(b.wind-a.wind)*hi);}}return null;}
 function selectAction(a){const st=current();if(st.acted||st.impact!==null)return;if(a==="preposition"&&!canPrep()||a==="distribute"&&!canDist())return;st.choice=a;st.chosen.clear();$("message").textContent="";render();}
-function confirm(){const st=current(),a=st.choice,selected=[...st.chosen];if(st.acted||!a)return;const n=selected.length*cost[a]||0;if((a!=="monitor"&&!selected.length)||n>G.budget)return;G.budget-=n;st.decisionLog.push({action:a,lead:remainingDays(),locations:selected.slice(),forecastSignal:forecast(st).some(p=>p.lon>=43&&p.lon<=52&&p.lat>=-26&&p.lat<=-11&&p.wind>=63)});if(a==="preposition")selected.forEach(x=>st.stock.add(x));if(a==="distribute"){selected.forEach(x=>st.distributed.add(x));G.people+=0;}st.history.push(a==="monitor"?"Keep monitoring: no funds committed.":a==="preposition"?"Prepositioned at "+selected.join(", ")+"; "+money(n)+" committed.":"Distributed at "+selected.join(", ")+"; "+money(n)+" committed.");st.acted=true;render();$("message").textContent="Decision saved. Advance to the next briefing.";}
+function confirm(){const st=current(),a=st.choice,selected=[...st.chosen];if(st.acted||!a)return;const n=selected.length*cost[a]||0;if((a!=="monitor"&&!selected.length)||n>G.budget)return;G.budget-=n;st.decisionLog.push({action:a,lead:remainingDays(),locations:selected.slice(),forecastSignal:forecast(st).some(p=>p.lon>=43&&p.lon<=52&&p.lat>=-26&&p.lat<=-11&&p.wind>=63)});if(a==="preposition")selected.forEach(x=>st.stock.add(x));if(a==="distribute"){selected.forEach(x=>st.distributed.add(x));G.people+=0;}st.history.push(a==="monitor"?"Keep monitoring: no funds committed.":a==="preposition"?"Prepositioned at "+selected.join(", ")+"; "+money(n)+" committed.":"Fully activated at "+selected.join(", ")+"; "+money(n)+" committed.");st.acted=true;render();$("message").textContent="Decision saved. Advance to the next briefing.";}
 $("actions").addEventListener("click",e=>{const b=e.target.closest("[data-action]");if(b&&!b.disabled)selectAction(b.dataset.action);});
 $("warehouses").addEventListener("change",e=>{const box=e.target.closest("[data-hub]");if(!box)return;const st=current();if(box.checked)st.chosen.add(box.dataset.hub);else st.chosen.delete(box.dataset.hub);render();});
 $("confirm").addEventListener("click",confirm);
