@@ -167,7 +167,7 @@ function forecastMembers(st){
   for(let d=0;d<=7;d+=0.25){
    const p=pt(m.points,addDays(issue,d));if(!p)continue;
    const shift=actual&&median?Math.exp(-d/2.5):0;
-   points.push({lat:p[0]+(actual?actual[0]-median[0]:0)*shift,lon:p[1]+(actual?actual[1]-median[1]:0)*shift,wind:p[2]*3.6});
+   points.push({lat:p[0]+(actual&&median?actual[0]-median[0]:0)*shift,lon:p[1]+(actual&&median?actual[1]-median[1]:0)*shift,wind:p[2]*3.6});
   }
   return points;
  }).filter(t=>t.length>1);
