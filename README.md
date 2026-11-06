@@ -2,22 +2,21 @@
 
 ## Play the games
 
-- **`index.html` — Full-season training game:** Choose **one storm** or a **full season of 2–7 storms**, sampled from **94 usable WATTCH scenarios**, with a shared CHF 150,000 season budget, daily decision opportunities, forecast-track display, warehouse prepositioning/distribution restrictions, and Chef (boss) feedback. Players do not see the total number of storms or historical storm identities until the season ends.
+- **`index.html` — Full-season training game:** Choose **one storm** or a **full season of 2–7 storms**, sampled from **94 usable WATTCH scenarios**, with a shared CHF 150,000 season budget, daily decision opportunities, forecast-track display, pre-activation/full-activation restrictions, and Chef (boss) feedback. Historical identities are hidden until each storm outcome screen; season players do not know the number of future storms.
 - **`jokwe.html` — Approved single-storm Jokwe prototype:** Preserved separately, including its detailed daily RSMC-style forecast images and enlarged warehouse markers.
 
 Play via GitHub Pages. The game loads its scenario and historical data as separate JSON files, so opening `index.html` directly from a local file may not work; use a local web server for offline development.
 
 ## Training-game rules
 
-- On the start screen, choose **Play one storm** or **Play a whole season**, then Easy (3-day prepositioning deadline), Medium (4-day deadline) or Hard (5-day deadline). One-storm mode ends after the first storm with the same decision assessment and historical reveal; season mode retains the unknown 2–7 storm count and shared budget.
-- Decide daily: **Keep monitoring**, **Preposition Kits**, or **Distribute Kits**.
-- Preposition costs CHF 20,000 per warehouse; the deadline depends on the chosen mode (Easy: 3+ days, Medium: 4+ days, Hard: 5+ days before the approximate event window).
-- Distribute costs CHF 8,000 per stocked warehouse and is allowed from the end of the prepositioning window until the event (0 to fewer than 3/4/5 days remaining, by difficulty).
-- Stock is storm-specific; the **budget, Chef happiness, and cumulative reach** are carried across the season.
-- The season ends after its sampled 2–7 storms. The results screen reveals historical WATTCH storm names, years, geographic reference-track context and game outcomes. Select **New season** for another random selection.
-- Warehouse markers start red, turn green when kits are prepositioned and darken when kits have been distributed.
-- A fixed-coordinate Madagascar coastline replaces the earlier schematic outline; the map scale stays fixed rather than changing between forecast briefings.
-- Players see fictional dates during a single **December–April 2026–27** training season. The historical forecast times remain internal for dataset interpolation and are revealed with the storm identities after the season.
+- Choose **Play one storm** or **Play a whole season** (2–7 randomly sampled storms). Difficulty controls the latest permitted pre-activation day: **Easy 3 days, Medium 4 days, Hard 5 days** before the modelled event. These are game constraints rather than official EAP deadlines.
+- Three daily options: **Keep monitoring** (CHF 0); **Pre-activation** (CHF 20,000 per selected warehouse area, only with 3–7, 4–7, or 5–7 days remaining); and **Full activation** (CHF 8,000 per prepared area, within 0–3 days remaining). Full activation is impossible without pre-activation in that area.
+- The real Madagascar cyclone EAP has a **pre-activation stage** when any DGM, RSMC La Réunion or ECMWF forecast indicates >50% probability of tropical-storm-strength landfall within 7 days, and **full activation** when DGM forecasts >118 km/h landfall within 48–72 hours. The game **does not have calibrated operational DGM warnings**, and uses a labelled illustrative ensemble-member fraction and wind indicator. Players can act without a simulated signal so that lucky decisions and defensible false alarms remain possible; the simulation judges decisions in context.
+- No stop/reassessment action is implemented.
+- Warehouse markers remain red until pre-activation, turn green when prepared, and dark green when fully activated. Stocks are storm-specific; CHF budget, Chef score and people reached carry across storms.
+- Fictional dates are shown during play in December–April 2026–27; historical identity/date and the final feedback are revealed after each storm.
+- Feedback is derived from **`data/feedback.json`**, a snapshot of the user-editable [Google Feedback Library](https://docs.google.com/spreadsheets/d/1kEIwFSZOG8nxThiheJkO-Tgtqn97HmlrawF9-gbB9FQ/edit), containing 20 objective outcomes (F01–F20) and 20 Boss variants (B01–B20). The objective row is assigned from the forecast, actual illustrative threshold, coverage, and spending, and the Boss row is selected separately so the Boss can react differently to the objective outcome.
+- **Editing Google Sheets does not automatically refresh the website.** The current game serves the versioned JSON snapshot in GitHub; it must be re-exported after changes in Sheets. Some feedback rows describe circumstances not yet represented by the game's simplified mechanics, and are reserved for future use.
 
 ## Source and limitations
 
@@ -44,3 +43,9 @@ The summaries currently contain **10 source-checked RSMC La Réunion near-landfa
 ## One-storm mode check (4 November 2026)
 
 Added a start-page game-length selector to the existing `index.html`, leaving forecast generation, warehouse actions, and season progression shared. Automated DOM-mocked regression checks completed 90 games (15 per each combination of one storm/season and Easy/Medium/Hard) successfully, including the correct end-summary wording and single-storm termination. These are logic checks, not visual in-browser testing.
+
+## EAP and feedback update (6 November 2026)
+
+Retained the one-storm/season selector, fixed map and three difficulty options. Replaced the user-facing Preposition/Distribute options with Pre-activation/Full activation, with costed geographically targeted actions and no stop mechanism. Added separately rendered, spreadsheet-derived Objective Feedback and Chef feedback on every storm-completion card. The full 40-row feedback text snapshot is stored at `data/feedback.json` and includes source IDs. The wording remains editable in Google Sheets but is not live-synchronised. Current objective outcomes are illustrative because the simplified reference-track threshold and model ensemble approach probability are not operationally calibrated DGM warnings. Fixed an existing late-forecast null-median crash.
+
+Automated DOM-mocked testing completed 72 playthroughs across the six combinations of game length and difficulty; the test runner exercised selecting Pre-activation, Full activation, budget carry-over and moving between storms, with no functional errors when respecting the current budget. This is not in-browser visual testing. Source of official EAP triggers: IFRC/CRM `MDRMG025 EAP Cyclone Summary`, dated 16 September 2025, page 3.
