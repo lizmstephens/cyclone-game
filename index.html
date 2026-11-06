@@ -209,9 +209,83 @@ for(const h of hubs){const stocked=current().stock.has(h.id),delivered=current()
 svg+='</svg>';return svg;
 }
 function coordsPixel(p){return p.map(v=>v[0].toFixed(1)+","+v[1].toFixed(1)).join(" ");}
+
+function trainingSignals(st){
+ const now=issueTime(),members=st.data.forecast_tracks||[];
+ let near=0,strong=0;
+ for(const member of members){
+  let hit=false,intense=false;
+  for(let n=0;n<=PRE_WINDOW*4;n++){
+   const p=pt(member.points,addDays(now,n/4));if(!p)continue;
+   const mad=p[0]>=-26&&p[0]<=-11&&p[1]>=43&&p[1]<=52;
+   if(mad&&p[2]*3.6>=STORM_WIND)hit=true;
+   if(mad&&n<=ACT_WINDOW*4&&p[2]*3.6>STRONG_WIND)intense=true;
+  }
+  if(hit)near++;if(intense)strong++;
+ }
+ return {members:members.length,probability:members.length?near/members.length:0,
+ preSignal:members.length>0&&near/members.length>.5,
+ activation:members.length>0&&strong/members.length>.5};
+}
+function thresholdExceeded(st){
+ return (st.data.reference_track||[]).some(p=>{
+  const lat=+p[1],lon=+p[2],wind=+p[3]*3.6;
+  return wind>STRONG_WIND&&(inIsland(lat,lon)||hubs.some(h=>dist([lat,lon],[h.lat,h.lon])<175));
+ });
+}
+function fillFeedback(template,people){
+ return String(template||"").replace(/\{people_reached\}/g,people.toLocaleString("en-GB"));
+}
+function selectFeedback(st){
+ const affected=new Set(st.impact||[]),stock=[...st.stock],distributed=[...st.distributed],logs=st.decisionLog||[];
+ const reached=distributed.filter(id=>affected.has(id)).length,uncovered=[...affected].filter(id=>!st.distributed.has(id)).length;
+ const unnecessary=distributed.some(id=>!affected.has(id)),all=stock.length===hubs.length,above=thresholdExceeded(st);
+ const warning=logs.some(x=>x.preSignal&&x.lead>=G.prepDays&&x.lead<=PRE_WINDOW);
+ const activation=logs.some(x=>x.activationSignal&&x.lead>=0&&x.lead<=ACT_WINDOW);
+ const credible=warning&&activation,none=stock.length===0&&distributed.length===0;
+ let id;
+ if(above){
+  if(reached){
+   if(!credible)id="F08";
+   else if(all)id="F05";
+   else if(uncovered)id="F04";
+   else if(G.budget<cost.preposition)id="F20";
+   else id="F01";
+  }else if(!warning)id="F07";
+  else if(!activation)id="F06";
+  else if(distributed.length)id="F18";
+  else if(stock.length)id="F02";
+  else id="F03";
+ }else{
+  if(distributed.length)id=warning||activation?"F14":"F12";
+  else if(stock.length)id=warning?"F13":"F12";
+  else id=warning?"F15":"F11";
+ }
+ const objective=feedbackLibrary.objective.find(x=>x.ID===id);
+ const people=reached*1000,reach=people===0?"None":uncovered?"Some":"High";
+ const budget=G.budget===0?"Exhausted":G.budget<45000?"Low":"Healthy";
+ const decision=above?(credible&&reached?"Good":!warning&&!reached?"Good":"Poor"):(distributed.length&&!warning?"Poor":"Good");
+ const outlook=above?(!warning?"Underforecast":distributed.length&&!reached?"Track error":"Accurate"):warning?"Overforecast":"Accurate";
+ const variants=feedbackLibrary.boss.map(b=>({b,score:
+ (b["People helped"]===reach?5:0)+(b["Decision quality"]===decision?3:0)+(b["Forecast outcome"]===outlook?3:0)+(b["Budget remaining"]===budget?2:0)
+ })).sort((a,b)=>b.score-a.score);
+ const boss=variants[0]?.b;
+ return {id,bossId:boss?.Boss_ID||"",objective:fillFeedback(objective?.Feedback_O||"Review forecast evidence and decision timing.",people),
+ boss:fillFeedback(boss?.Feedback_B||objective?.Feedback_B||"We need to reflect on this storm.",people),
+ threshold:above,forecast:outlook,decisionQuality:decision,people};
+}
+
 function forecastMessage(rows){if(!rows.length)return "We're monitoring this system. The archived ensemble provides no further track guidance at this point; the location and intensity remain uncertain.";const hits=rows.filter(p=>p.lon>=43&&p.lon<=52&&p.lat>=-26&&p.lat<=-11);if(!hits.length)return "We're monitoring the system. There is uncertainty about whether it will make landfall in Madagascar. We will keep checking the forecast.";const p=hits[0],strength=p.wind>=118?"cyclone-strength":p.wind>=63?"tropical-storm-strength":"weaker";return "We're monitoring. The current training guidance suggests possible landfall in around "+p.day+" day"+(p.day===1?"":"s")+", with winds near "+Math.round(p.wind/5)*5+" km/h ("+strength+"). The location and intensity remain uncertain.";}
 function impact(st){const ref=st.data.reference_track;const hits=[];for(const h of hubs){let best=null;for(const p of ref){const t=date(p[0]);if(t<st.start||t>addDays(st.event,2))continue;const km=dist([h.lat,h.lon],[+p[1],+p[2]]);if(!best||km<best.km)best={km,wind:+p[3]*3.6};}if(best&&best.km<175&&best.wind>=63)hits.push(h.id);}return hits;}
-function finishStorm(){const st=current(),imp=impact(st),helped=imp.filter(x=>st.distributed.has(x));let lost=imp.filter(x=>!st.distributed.has(x));G.people+=helped.length*1000;G.chef=clamp(G.chef+helped.length*13-lost.length*17-st.distributed.size*2-st.stock.size*2,0,100);st.impact=imp;st.history.push("Outcome: "+imp.length+" warehouse area(s) within illustrative impact radius; "+helped.length+" protected by distribution.");st.acted=true;G.finished=G.slot===G.storms.length-1;render();$("message").textContent="Storm completed. "+helped.length+" impacted areas received advance distribution."; }
+function finishStorm(){
+ const st=current(),imp=impact(st),helped=imp.filter(id=>st.distributed.has(id)),lost=imp.filter(id=>!st.distributed.has(id));
+ G.people+=helped.length*1000;
+ G.chef=clamp(G.chef+helped.length*13-lost.length*17-st.distributed.size*2-st.stock.size*2,0,100);
+ st.impact=imp;st.finalFeedback=selectFeedback(st);
+ st.history.push("Outcome: "+imp.length+" modelled areas affected; "+helped.length+" received full activation.");
+ st.acted=true;G.finished=G.slot===G.storms.length-1;render();
+ $("message").textContent="Storm completed. "+helped.length+" affected areas received full activation.";
+}
 function render(){
 const st=current(),t=displayTime(),remaining=remainingDays(),rows=forecast(st),last=st.impact!==null;
 $("seasonstat").textContent=G.mode==="single"?"One storm · In progress":"Storm "+(G.slot+1)+" · Season underway";
@@ -220,7 +294,7 @@ $("stormtitle").textContent="Storm "+(G.slot+1)+" · Tropical system";
 $("datepill").textContent=t.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"});
 $("map").innerHTML=mapSvg(rows);
 $("brief").textContent=last?"The storm has passed. Reviewing impacts and expenditure.":forecastMessage(rows);
-const windAtLandfall=forecastLandfall(rows);$("forecastsource").textContent="Simulated daily update · WATTCH hindcast · Forecast landfall: "+(windAtLandfall===null?"not indicated":windAtLandfall+" km/h (model 10-m wind; averaging period unverified)")+" · Identity revealed after the storm";
+const windAtLandfall=forecastLandfall(rows),signals=trainingSignals(st);$("forecastsource").textContent="WATTCH training forecast · Landfall wind: "+(windAtLandfall===null?"not indicated":windAtLandfall+" km/h (10-m model wind; averaging period unverified)")+" · Illustrative pre-activation signal: "+Math.round(signals.probability*100)+"% of "+signals.members+" ensemble tracks indicate Madagascar approach in 7 days"+(signals.activation?" · Full-activation intensity signal >118 km/h":"")+". Not an official DGM forecast.";
 $("leadtime").textContent=last?"Storm completed":remaining>=0?"Approximate event window: "+remaining+" day(s) remaining · pre-activation: "+G.prepDays+"–7 days · full activation: 0–3 days":"Event window has passed";
 $("stockstat").textContent="Pre-activated: "+([...st.stock].map(id=>hubs.find(h=>h.id===id)?.name).join(", ")||"None")+" · Fully activated: "+([...st.distributed].map(id=>hubs.find(h=>h.id===id)?.name).join(", ")||"None");
 $("progressbar").style.width=(100*(st.day+1)/(st.duration+1)).toFixed(0)+"%";
@@ -350,7 +424,20 @@ function seasonSummary(onlyCurrent=false){
 function forecastEvidence(st,day){const original=st.day;st.day=day;const guidance=forecast(st);st.day=original;return guidance.some(p=>p.lat>=-26&&p.lat<=-11&&p.lon>=43&&p.lon<=52);}
 function forecastLandfall(rows){for(let i=1;i<rows.length;i++){const a=rows[i-1],b=rows[i];if(!inIsland(a.lat,a.lon)&&inIsland(b.lat,b.lon)){let lo=0,hi=1;for(let z=0;z<18;z++){const f=(lo+hi)/2;if(inIsland(a.lat+(b.lat-a.lat)*f,a.lon+(b.lon-a.lon)*f))hi=f;else lo=f;}return Math.round(a.wind+(b.wind-a.wind)*hi);}}return null;}
 function selectAction(a){const st=current();if(st.acted||st.impact!==null)return;if(a==="preposition"&&!canPrep()||a==="distribute"&&!canDist())return;st.choice=a;st.chosen.clear();$("message").textContent="";render();}
-function confirm(){const st=current(),a=st.choice,selected=[...st.chosen];if(st.acted||!a)return;const n=selected.length*cost[a]||0;if((a!=="monitor"&&!selected.length)||n>G.budget)return;G.budget-=n;st.decisionLog.push({action:a,lead:remainingDays(),locations:selected.slice(),forecastSignal:forecast(st).some(p=>p.lon>=43&&p.lon<=52&&p.lat>=-26&&p.lat<=-11&&p.wind>=63)});if(a==="preposition")selected.forEach(x=>st.stock.add(x));if(a==="distribute"){selected.forEach(x=>st.distributed.add(x));G.people+=0;}st.history.push(a==="monitor"?"Keep monitoring: no funds committed.":a==="preposition"?"Prepositioned at "+selected.join(", ")+"; "+money(n)+" committed.":"Fully activated at "+selected.join(", ")+"; "+money(n)+" committed.");st.acted=true;render();$("message").textContent="Decision saved. Advance to the next briefing.";}
+function confirm(){
+ const st=current(),a=st.choice,selected=[...st.chosen];if(st.acted||!a)return;
+ if(a==="preposition"&&!canPrep()||a==="distribute"&&!canDist())return;
+ const amount=selected.length*(cost[a]||0);
+ if(a!=="monitor"&&!selected.length)return;
+ if(amount>G.budget){$("message").textContent="Insufficient budget.";return;}
+ const signals=trainingSignals(st),lead=remainingDays();
+ st.decisionLog.push({action:a,lead,locations:selected.slice(),cost:amount,forecastSignal:signals.preSignal||signals.activation,preSignal:signals.preSignal,activationSignal:signals.activation,ensembleFraction:signals.probability});
+ G.budget-=amount;
+ if(a==="preposition")selected.forEach(id=>st.stock.add(id));
+ if(a==="distribute")selected.forEach(id=>st.distributed.add(id));
+ st.history.push(a==="monitor"?"Keep monitoring: no funds committed.":a==="preposition"?"Pre-activated at "+selected.join(", ")+"; "+money(amount)+" committed.":"Fully activated at "+selected.join(", ")+"; "+money(amount)+" committed.");
+ st.acted=true;render();$("message").textContent="Decision saved. Advance to the next briefing.";
+}
 $("actions").addEventListener("click",e=>{const b=e.target.closest("[data-action]");if(b&&!b.disabled)selectAction(b.dataset.action);});
 $("warehouses").addEventListener("change",e=>{const box=e.target.closest("[data-hub]");if(!box)return;const st=current();if(box.checked)st.chosen.add(box.dataset.hub);else st.chosen.delete(box.dataset.hub);render();});
 $("confirm").addEventListener("click",confirm);
