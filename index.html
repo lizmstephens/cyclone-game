@@ -60,8 +60,8 @@ footer{margin-top:12px;color:#5f7780;font-size:12px;line-height:1.5}
 </style>
 </head>
 <body>
-<header><div><h1>Madagascar Cyclone Decision Game</h1><small>Can you protect communities without exhausting your seasonal budget?</small></div><button class="btn alt" id="restart">New game</button></header>
-<section id="start-screen"><div class="intro"><h2>Madagascar Cyclone Anticipatory Action Game</h2><p>Manage a shared budget for cyclone anticipatory action. Decide when to keep monitoring, pre-activate preparedness, and fully activate early actions in threatened areas.</p><p>Play one storm or an unknown number of storms in a fictional season. Real identities are revealed only at the end. Daily briefings are training simulations based on WATTCH hindcasts.</p><h3>How long would you like to play?</h3><div class="choice-grid" role="group" aria-label="Game length"><label><input type="radio" name="game-length" value="single"><span><strong>Play one storm</strong>Follow one cyclone through to its historical reveal</span></label><label><input type="radio" name="game-length" value="season" checked><span><strong>Play a whole season</strong>Manage several cyclones with one shared budget, without knowing how many are coming</span></label></div><h3>Difficulty</h3><div class="choice-grid difficulty-grid" role="group" aria-label="Difficulty"><label><input type="radio" name="difficulty" value="3"><span><strong>Easy</strong>Pre-activate at least 3 days before</span></label><label><input type="radio" name="difficulty" value="4" checked><span><strong>Medium</strong>Pre-activate 4+ days before</span></label><label><input type="radio" name="difficulty" value="5"><span><strong>Hard</strong>Pre-activate 5+ days before</span></label></div><p class="subtle">Pre-activation is possible within 7 days; full activation in the last 3 days if an area is prepared. The EAP uses a >50% pre-activation forecast signal within 7 days, and DGM >118 km/h at 48–72 h for full activation. Game indicators are illustrative and are not official DGM forecasts.</p><button type="button" class="btn" id="start-game">Start game</button><p class="image-credit">Background: NASA Terra/MODIS image of Cyclone Bingiza approaching Madagascar (13 February 2011), Jeff Schmaltz / NASA GSFC, CC BY 2.0. <a href="https://earthobservatory.nasa.gov/images/49250/tropical-cyclone-bingiza" target="_blank" rel="noopener noreferrer">Image source</a> · <a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener noreferrer">Licence</a>.</p></div></section><main>
+<header><div><h1 data-front-key="header_title">Madagascar Cyclone Decision Game</h1><small data-front-key="header_tagline">Can you protect communities without exhausting your seasonal budget?</small></div><button class="btn alt" id="restart" data-front-key="new_game_button">New game</button></header>
+<section id="start-screen"><div class="intro"><h2 data-front-key="front_title">Madagascar Cyclone Anticipatory Action Game</h2><p data-front-key="front_intro">Manage a shared budget for cyclone anticipatory action. Decide when to keep monitoring, pre-activate preparedness, and fully activate early actions in threatened areas.</p><p data-front-key="front_explainer">Play one storm or an unknown number of storms in a fictional season. Real identities are revealed only at the end. Daily briefings are training simulations based on WATTCH hindcasts.</p><h3 data-front-key="game_length_heading">How long would you like to play?</h3><div class="choice-grid" role="group" aria-label="Game length"><label><input type="radio" name="game-length" value="single"><span><strong data-front-key="single_title">Play one storm</strong><span data-front-key="single_description">Follow one cyclone through to its historical reveal</span></span></label><label><input type="radio" name="game-length" value="season" checked><span><strong data-front-key="season_title">Play a whole season</strong><span data-front-key="season_description">Manage several cyclones with one shared budget, without knowing how many are coming</span></span></label></div><h3 data-front-key="difficulty_heading">Difficulty</h3><div class="choice-grid difficulty-grid" role="group" aria-label="Difficulty"><label><input type="radio" name="difficulty" value="3"><span><strong data-front-key="easy_title">Easy</strong><span data-front-key="easy_description">Pre-activate at least 3 days before</span></span></label><label><input type="radio" name="difficulty" value="4" checked><span><strong data-front-key="medium_title">Medium</strong><span data-front-key="medium_description">Pre-activate 4+ days before</span></span></label><label><input type="radio" name="difficulty" value="5"><span><strong data-front-key="hard_title">Hard</strong><span data-front-key="hard_description">Pre-activate 5+ days before</span></span></label></div><p class="subtle" data-front-key="front_rules">Pre-activation is possible within 7 days; full activation in the last 3 days if an area is prepared. The EAP uses a >50% pre-activation forecast signal within 7 days, and DGM >118 km/h at 48–72 h for full activation. Game indicators are illustrative and are not official DGM forecasts.</p><button type="button" class="btn" id="start-game" data-front-key="start_button">Start game</button><p class="image-credit"><span data-front-key="image_credit">Background: NASA Terra/MODIS image of Cyclone Bingiza approaching Madagascar (13 February 2011), Jeff Schmaltz / NASA GSFC, CC BY 2.0.</span> <a href="https://earthobservatory.nasa.gov/images/49250/tropical-cyclone-bingiza" target="_blank" rel="noopener noreferrer" data-front-key="image_source_link_text">Image source</a> · <a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener noreferrer" data-front-key="image_licence_link_text">Licence</a>.</p></div></section><main>
 <div class="stats">
 <div class="stat"><div class="k">Season progress</div><div class="v" id="seasonstat">—</div></div>
 <div class="stat"><div class="k">Remaining budget</div><div class="v" id="budgetstat">—</div></div>
@@ -99,6 +99,40 @@ footer{margin-top:12px;color:#5f7780;font-size:12px;line-height:1.5}
 <footer>This is a training prototype. Warehouse positions, budgets, indicative reach, Chef scoring, and impact exposure are simplified game assumptions, not verified operational Red Cross data. Some sampled storms may not cause damaging landfall. <a href="./jokwe.html">Play the original Jokwe prototype</a>.</footer>
 </main>
 <script>
+
+// Optional read-only front-page copy from Google Sheets (only the published "Front page" tab).
+// Until that tab is individually published, the existing HTML copy remains as the fallback.
+async function loadEditableFrontPageCopy(){
+ const spreadsheet="1kEIwFSZOG8nxThiheJkO-Tgtqn97HmlrawF9-gbB9FQ";
+ const sheetGid="20261106";
+ const url="https://docs.google.com/spreadsheets/d/"+spreadsheet+"/gviz/tq?gid="+sheetGid+"&range=A1%3AB24&tqx=out%3Ajson&headers=1&_="+Date.now();
+ try{
+  const response=await fetch(url,{cache:"no-store"});
+  if(!response.ok) return;
+  const raw=await response.text();
+  const start=raw.indexOf("google.visualization.Query.setResponse(");
+  if(start<0)return;
+  const jsonStart=start+"google.visualization.Query.setResponse(".length;
+  const jsonEnd=raw.lastIndexOf(");");
+  if(jsonEnd<jsonStart)return;
+  const data=JSON.parse(raw.slice(jsonStart,jsonEnd));
+  if(data.status!=="ok"||!data.table?.rows)return;
+  const values=new Map();
+  for(const row of data.table.rows){
+   const key=row.c?.[0]?.v,value=row.c?.[1]?.v;
+   if(typeof key==="string"&&typeof value==="string"&&value.trim())values.set(key,value);
+  }
+  document.querySelectorAll("[data-front-key]").forEach(el=>{
+   const value=values.get(el.dataset.frontKey);
+   if(value!==undefined)el.textContent=value;
+  });
+ }catch(error){
+  // Keep safe checked-in fallback copy; Google Sheets may be private or unavailable.
+  console.info("Using built-in front-page copy.",error);
+ }
+}
+loadEditableFrontPageCopy();
+
 (async()=>{
 "use strict";
 // Game logic and scenario library are maintained independently.
