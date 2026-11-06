@@ -219,7 +219,7 @@ function trainingSignals(st){
    const p=pt(member.points,addDays(now,n/4));if(!p)continue;
    const mad=p[0]>=-26&&p[0]<=-11&&p[1]>=43&&p[1]<=52;
    if(mad&&p[2]*3.6>=STORM_WIND)hit=true;
-   if(mad&&n<=ACT_WINDOW*4&&p[2]*3.6>STRONG_WIND)intense=true;
+   if(mad&&n>=8&&n<=ACT_WINDOW*4&&p[2]*3.6>STRONG_WIND)intense=true;
   }
   if(hit)near++;if(intense)strong++;
  }
@@ -358,7 +358,7 @@ function evaluateDecision(st){
  const covered=distributed.filter(id=>affected.has(id)),uncovered=[...affected].filter(id=>!st.distributed.has(id));
  const extra=stocked.filter(id=>!affected.has(id));
  const observations=st.decisionLog||[];
- const timely=observations.some(x=>x.action==="preposition"&&x.lead>=G.prepDays)&&observations.some(x=>x.action==="distribute"&&x.lead<G.prepDays&&x.lead>=0);
+ const timely=observations.some(x=>x.action==="preposition"&&x.lead>=G.prepDays&&x.lead<=PRE_WINDOW)&&observations.some(x=>x.action==="distribute"&&x.lead<=ACT_WINDOW&&x.lead>=0);
  const signal=observations.some(x=>x.forecastSignal);const actionable=st.decisionLog.some(x=>x.lead>=G.prepDays&&x.forecastSignal);
  const parts=[];
  if(covered.length)parts.push(covered.length+" affected warehouse area(s) received full activation.");
@@ -372,7 +372,7 @@ function evaluateDecision(st){
  if(!covered.length&&affected.size&&!actionable)parts.push("The recorded briefings did not show a clear landfall signal; this was a forecast-limited situation in the illustrative game, not proof that operational action was impossible.");
  if(!covered.length&&affected.size&&actionable)parts.push("A landfall signal appeared in the training guidance, but no affected area received kits.");
  if(stocked.length&&!distributed.length)parts.push("Pre-activation was not followed by full activation.");
- parts.push("Expenditure: "+money(observations.reduce((sum,x)=>sum+(x.locations?.length||0)*(cost[x.action]||0),0))+"; "+stocked.length+" stocked and "+distributed.length+" distributed locations. This evaluation uses simplified forecast signals and impact thresholds, not a calibrated forecast-skill assessment.");return parts.join(" ");
+ parts.push("Expenditure: "+money(observations.reduce((sum,x)=>sum+(x.locations?.length||0)*(cost[x.action]||0),0))+"; "+stocked.length+" pre-activated and "+distributed.length+" fully activated locations. This evaluation uses simplified forecast signals and impact thresholds, not a calibrated forecast-skill assessment.");return parts.join(" ");
 }
 function seasonSummary(onlyCurrent=false){
  const spent=150000-G.budget;
