@@ -1,0 +1,350 @@
+{
+  "source": "Madagascar Cyclone Game — Feedback Library",
+  "sourceUrl": "https://docs.google.com/spreadsheets/d/1kEIwFSZOG8nxThiheJkO-Tgtqn97HmlrawF9-gbB9FQ/edit",
+  "snapshotDate": "2026-11-06",
+  "notes": "Snapshot of editable Google Sheet. Updating the sheet does not automatically update this file.",
+  "objective": [
+    {
+      "ID": "F01",
+      "Threshold": "Above",
+      "Forecast": "Good",
+      "Action": "Preposition + distribute",
+      "Context": "Targeted, on time",
+      "Feedback_O": "The forecast was good and the cyclone exceeded the threshold. You acted in time and reached the affected communities.",
+      "Feedback_B": "We helped {people_reached} people before landfall. The donor is delighted!"
+    },
+    {
+      "ID": "F02",
+      "Threshold": "Above",
+      "Forecast": "Good",
+      "Action": "Preposition only",
+      "Context": "Not distributed",
+      "Feedback_O": "The threshold was exceeded, but supplies were not distributed before landfall.",
+      "Feedback_B": "We moved supplies but did not get them to families."
+    },
+    {
+      "ID": "F03",
+      "Threshold": "Above",
+      "Forecast": "Good",
+      "Action": "No action",
+      "Context": "Action possible",
+      "Feedback_O": "The warning justified action. You missed an opportunity to help.",
+      "Feedback_B": "We had warning and did nothing!"
+    },
+    {
+      "ID": "F04",
+      "Threshold": "Above",
+      "Forecast": "Good",
+      "Action": "Preposition + distribute",
+      "Context": "Partial coverage",
+      "Feedback_O": "You acted in time but left some affected areas uncovered.",
+      "Feedback_B": "We helped {people_reached} people, but why not the others?"
+    },
+    {
+      "ID": "F05",
+      "Threshold": "Above",
+      "Forecast": "Good",
+      "Action": "Preposition + distribute",
+      "Context": "Every warehouse",
+      "Feedback_O": "The intervention reached people, but distributing everywhere was unnecessarily expensive.",
+      "Feedback_B": "The donor is happy, but our budget is nearly gone."
+    },
+    {
+      "ID": "F06",
+      "Threshold": "Above",
+      "Forecast": "Poor/late",
+      "Action": "No action",
+      "Context": "Impossible lead time",
+      "Feedback_O": "The warning came too late for the required action. This was not a preventable failure by the player.",
+      "Feedback_B": "The storm caught us out. We need better forecasts."
+    },
+    {
+      "ID": "F07",
+      "Threshold": "Above",
+      "Forecast": "Underforecast",
+      "Action": "No action",
+      "Context": "Threshold not forecast",
+      "Feedback_O": "The threshold was exceeded but the forecast did not justify action. Your restraint was defensible.",
+      "Feedback_B": "The donor will be unhappy, but we did not see this coming."
+    },
+    {
+      "ID": "F08",
+      "Threshold": "Above",
+      "Forecast": "Underforecast",
+      "Action": "Preposition + distribute",
+      "Context": "Lucky success",
+      "Feedback_O": "People were helped, but the available forecast did not justify the action. A good outcome is not necessarily a good decision.",
+      "Feedback_B": "We helped {people_reached} people! Quite a gamble."
+    },
+    {
+      "ID": "F09",
+      "Threshold": "Above",
+      "Forecast": "Good",
+      "Action": "Preposition + distribute",
+      "Context": "Too late",
+      "Feedback_O": "Action was initiated too late to complete distribution before impact.",
+      "Feedback_B": "We spent money and still missed the window."
+    },
+    {
+      "ID": "F10",
+      "Threshold": "Above",
+      "Forecast": "Good",
+      "Action": "Preposition + distribute",
+      "Context": "Wrong area",
+      "Feedback_O": "Assistance was delivered away from the areas actually affected.",
+      "Feedback_B": "We distributed kits in the wrong places."
+    },
+    {
+      "ID": "F11",
+      "Threshold": "Below",
+      "Forecast": "Good",
+      "Action": "No action",
+      "Context": "Correct restraint",
+      "Feedback_O": "The threshold was not exceeded and the forecast did not justify activation. Conserving funds was appropriate.",
+      "Feedback_B": "Good. We saved our budget."
+    },
+    {
+      "ID": "F12",
+      "Threshold": "Below",
+      "Forecast": "Good",
+      "Action": "Preposition + distribute",
+      "Context": "Unnecessary action",
+      "Feedback_O": "The forecast did not justify action and the threshold was not exceeded.",
+      "Feedback_B": "Why did we distribute kits when the trigger was not met?"
+    },
+    {
+      "ID": "F13",
+      "Threshold": "Below",
+      "Forecast": "Overforecast",
+      "Action": "Preposition only",
+      "Context": "Reasonable precaution",
+      "Feedback_O": "The threshold was not exceeded, but prepositioning was justified by the available warning.",
+      "Feedback_B": "An expensive false alarm, but I understand why you acted."
+    },
+    {
+      "ID": "F14",
+      "Threshold": "Below",
+      "Forecast": "Overforecast",
+      "Action": "Preposition + distribute",
+      "Context": "Reasonable false alarm",
+      "Feedback_O": "The forecast justified activation, even though the storm ultimately stayed below threshold.",
+      "Feedback_B": "The donor is asking about costs. I will explain the warning."
+    },
+    {
+      "ID": "F15",
+      "Threshold": "Below",
+      "Forecast": "Overforecast",
+      "Action": "No action",
+      "Context": "Lucky restraint",
+      "Feedback_O": "The outcome was benign, but the warning suggested action. You may have been lucky.",
+      "Feedback_B": "We got away with that one."
+    },
+    {
+      "ID": "F16",
+      "Threshold": "Above",
+      "Forecast": "Good",
+      "Action": "No action",
+      "Context": "Budget exhausted",
+      "Feedback_O": "The threshold was exceeded, but earlier spending left no money for this response.",
+      "Feedback_B": "A serious storm and nothing left to spend!"
+    },
+    {
+      "ID": "F17",
+      "Threshold": "Above",
+      "Forecast": "Rapid intensification",
+      "Action": "No action",
+      "Context": "Impossible lead time",
+      "Feedback_O": "Rapid intensification left too little time to complete the required intervention.",
+      "Feedback_B": "We need to talk to our forecasting partners about this."
+    },
+    {
+      "ID": "F18",
+      "Threshold": "Above",
+      "Forecast": "Track error",
+      "Action": "Preposition + distribute",
+      "Context": "Wrong forecast area",
+      "Feedback_O": "The forecast displaced the impact area, so even reasonable targeting missed affected communities.",
+      "Feedback_B": "We followed the forecast and still missed people."
+    },
+    {
+      "ID": "F19",
+      "Threshold": "Above",
+      "Forecast": "Mixed",
+      "Action": "Preposition + distribute",
+      "Context": "Targeted, timely",
+      "Feedback_O": "You acted decisively under uncertainty and reached affected areas.",
+      "Feedback_B": "We reached {people_reached} people. This is what the programme is for."
+    },
+    {
+      "ID": "F20",
+      "Threshold": "Above",
+      "Forecast": "Good",
+      "Action": "Preposition + distribute",
+      "Context": "Budget-limited",
+      "Feedback_O": "Your response was well targeted but budget constraints limited coverage.",
+      "Feedback_B": "We helped {people_reached} people. I wish we could have done more."
+    }
+  ],
+  "boss": [
+    {
+      "Boss_ID": "B01",
+      "People helped": "High",
+      "Decision quality": "Good",
+      "Forecast outcome": "Accurate",
+      "Budget remaining": "Healthy",
+      "Feedback_B": "We helped {people_reached} people before the storm. The donor is delighted!"
+    },
+    {
+      "Boss_ID": "B02",
+      "People helped": "High",
+      "Decision quality": "Poor",
+      "Forecast outcome": "Accurate",
+      "Budget remaining": "Low",
+      "Feedback_B": "We helped {people_reached} people! But I am worried about what we have left for the next storm."
+    },
+    {
+      "Boss_ID": "B03",
+      "People helped": "High",
+      "Decision quality": "Poor",
+      "Forecast outcome": "Underforecast",
+      "Budget remaining": "Healthy",
+      "Feedback_B": "Well, that gamble paid off! I hope you are not planning to rely on luck all season."
+    },
+    {
+      "Boss_ID": "B04",
+      "People helped": "High",
+      "Decision quality": "Good",
+      "Forecast outcome": "Accurate",
+      "Budget remaining": "Low",
+      "Feedback_B": "Excellent work, but have we spent too much of the season's budget?"
+    },
+    {
+      "Boss_ID": "B05",
+      "People helped": "None",
+      "Decision quality": "Good",
+      "Forecast outcome": "Underforecast",
+      "Budget remaining": "Healthy",
+      "Feedback_B": "People were affected and we did nothing. The donor is furious, whatever the forecast said."
+    },
+    {
+      "Boss_ID": "B06",
+      "People helped": "None",
+      "Decision quality": "Good",
+      "Forecast outcome": "Underforecast",
+      "Budget remaining": "Low",
+      "Feedback_B": "We could not have anticipated this, but it is still very difficult to explain."
+    },
+    {
+      "Boss_ID": "B07",
+      "People helped": "None",
+      "Decision quality": "Poor",
+      "Forecast outcome": "Accurate",
+      "Budget remaining": "Healthy",
+      "Feedback_B": "We had a warning and we failed to act. I need an explanation."
+    },
+    {
+      "Boss_ID": "B08",
+      "People helped": "None",
+      "Decision quality": "Poor",
+      "Forecast outcome": "Overforecast",
+      "Budget remaining": "Healthy",
+      "Feedback_B": "No impact in the end, and we saved money. Perhaps you knew something I didn't!"
+    },
+    {
+      "Boss_ID": "B09",
+      "People helped": "None",
+      "Decision quality": "Good",
+      "Forecast outcome": "Accurate",
+      "Budget remaining": "Healthy",
+      "Feedback_B": "Good restraint. We can keep our resources for the next storm."
+    },
+    {
+      "Boss_ID": "B10",
+      "People helped": "None",
+      "Decision quality": "Good",
+      "Forecast outcome": "Overforecast",
+      "Budget remaining": "Healthy",
+      "Feedback_B": "I understand why you acted, but the donor is asking why we spent money on a near miss."
+    },
+    {
+      "Boss_ID": "B11",
+      "People helped": "None",
+      "Decision quality": "Good",
+      "Forecast outcome": "Overforecast",
+      "Budget remaining": "Low",
+      "Feedback_B": "That false alarm has cost us dearly. How are we going to manage the rest of the season?"
+    },
+    {
+      "Boss_ID": "B12",
+      "People helped": "Some",
+      "Decision quality": "Good",
+      "Forecast outcome": "Accurate",
+      "Budget remaining": "Healthy",
+      "Feedback_B": "We reached {people_reached} people. Good work, although some communities were missed."
+    },
+    {
+      "Boss_ID": "B13",
+      "People helped": "Some",
+      "Decision quality": "Poor",
+      "Forecast outcome": "Accurate",
+      "Budget remaining": "Low",
+      "Feedback_B": "At least some people received help, but the spending and targeting are hard to defend."
+    },
+    {
+      "Boss_ID": "B14",
+      "People helped": "None",
+      "Decision quality": "Good",
+      "Forecast outcome": "Track error",
+      "Budget remaining": "Healthy",
+      "Feedback_B": "We followed the warning, but the cyclone struck somewhere else. The donor will want answers."
+    },
+    {
+      "Boss_ID": "B15",
+      "People helped": "None",
+      "Decision quality": "Good",
+      "Forecast outcome": "Rapid intensification",
+      "Budget remaining": "Healthy",
+      "Feedback_B": "How could the storm intensify so quickly? We need a better system."
+    },
+    {
+      "Boss_ID": "B16",
+      "People helped": "High",
+      "Decision quality": "Good",
+      "Forecast outcome": "Accurate",
+      "Budget remaining": "Exhausted",
+      "Feedback_B": "A great result for this storm. But what happens if another one comes?"
+    },
+    {
+      "Boss_ID": "B17",
+      "People helped": "None",
+      "Decision quality": "Poor",
+      "Forecast outcome": "Accurate",
+      "Budget remaining": "Exhausted",
+      "Feedback_B": "We have spent the budget and still failed to reach people. This is serious."
+    },
+    {
+      "Boss_ID": "B18",
+      "People helped": "High",
+      "Decision quality": "Poor",
+      "Forecast outcome": "Accurate",
+      "Budget remaining": "Healthy",
+      "Feedback_B": "The donor is pleased with the result. I am less convinced by how we got there."
+    },
+    {
+      "Boss_ID": "B19",
+      "People helped": "None",
+      "Decision quality": "Good",
+      "Forecast outcome": "Accurate",
+      "Budget remaining": "Low",
+      "Feedback_B": "You made a sensible call, but I am still worried about the money we have left."
+    },
+    {
+      "Boss_ID": "B20",
+      "People helped": "Some",
+      "Decision quality": "Good",
+      "Forecast outcome": "Underforecast",
+      "Budget remaining": "Low",
+      "Feedback_B": "You did what you could with the warning we had. Unfortunately the outcome looks poor."
+    }
+  ]
+}
