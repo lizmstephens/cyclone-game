@@ -306,7 +306,7 @@ $("warehouses").innerHTML=hubs.map(h=>{const blocked=st.choice==="preposition"?s
 const n=st.chosen.size*cost[st.choice]||0;
 $("cost").textContent=st.acted?"Decision confirmed for today.":st.choice==="monitor"?"No cost.":st.choice?"Cost: "+money(n)+(n>G.budget?" — insufficient budget":""):"Choose one of the three actions.";
 $("confirm").disabled=st.acted||last||!st.choice||(["preposition","distribute"].includes(st.choice)&&!n)||n>G.budget;
-$("advance").style.display=st.acted&&!last?"inline-block":"none";$("advance").textContent=st.day+1>=st.duration?"Complete storm and continue season →":"Next forecast →";
+$("advance").style.display=st.acted&&!last?"inline-block":"none";$("advance").textContent=st.day+1>=st.duration?"Complete storm →":"Next forecast →";
 $("nextstorm").style.display=last&&!G.finished?"inline-block":"none";
 if(G.finished){
  $("message").textContent="Season complete.";
@@ -384,6 +384,7 @@ function seasonSummary(onlyCurrent=false){
    const crossing=crossingIntensity(st.data.reference_track);
    const intensity=crossing?'<p><strong>Archive reference-track crossing (not independently verified observed landfall):</strong> '+crossing.when.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"})+'; interpolated wind '+Math.round(crossing.wind)+' km/h (archive 10-m wind estimate; sustained-wind averaging period unverified).</p>':'<p><strong>Landfall intensity:</strong> No Madagascar crossing established in the reference track; verified historical landfall wind not available in this game dataset.</p>';
    const assessment=esc(evaluateDecision(st));
+    const scored=st.finalFeedback;
     const verified=historical[st.data.event_id]||null;
     // The former manual event_id-to-IBTrACS table has not been validated against
     // the WATTCH ERA5/IBTrACS match metadata. Do not expose its links as facts.
@@ -404,7 +405,10 @@ function seasonSummary(onlyCurrent=false){
      '<p class="subtle" style="margin:0 0 10px">Game date: '+st.simStart.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"})+
      ' · Original WATTCH initialization: '+esc(st.data.initialization)+'.</p>'+
      '<p>'+archiveOutcome(st.data)+'</p>'+ibLink+evidence+intensity+
-     '<p><strong>Your decisions:</strong> '+assessment+'</p>'+
+     '<p><strong>Objective feedback'+(scored?' ('+esc(scored.id)+')':'')+':</strong> '+esc(scored?.objective||"Not yet evaluated")+'</p>'+
+     '<p><strong>Chef (boss)'+(scored?' ('+esc(scored.bossId)+')':'')+':</strong> “'+esc(scored?.boss||"No comment recorded.")+'”</p>'+
+     '<p><strong>Decision context:</strong> '+esc(scored?("Illustrative >118 km/h impact threshold "+(scored.threshold?"exceeded":"not exceeded")+"; forecast "+scored.forecast+"; decision "+scored.decisionQuality+"."):"Not yet evaluated")+'</p>'+
+     '<p class="subtle"><strong>Additional assessment:</strong> '+assessment+'</p>'+
      '<p><a href="'+wiki+'" target="_blank" rel="noopener noreferrer">Look up historical impacts on Wikipedia</a> · <a href="https://www.ncei.noaa.gov/products/international-best-track-archive" target="_blank" rel="noopener noreferrer">IBTrACS source</a> · <a href="https://zenodo.org/records/20446920" target="_blank" rel="noopener noreferrer">WATTCH source</a>. Archive-level historical figures are unverified unless independently documented above.</p>'+
      '<p><strong>Game outcome:</strong> '+impacted.length+' modelled warehouse areas affected; '+helped.length+' received kits in advance. Pre-activated at '+st.stock.size+' sites; fully activated at '+st.distributed.size+' sites.</p>'+
      '<p class="subtle">'+esc(spending||"No expenditure.")+'</p></article>';
