@@ -398,12 +398,11 @@ function actualStormSentence(st,verified){
  const year=st.data.initialization.slice(0,4);
  if(verified&&verified.location&&verified.landfallDate){
    const when=new Date(verified.landfallDate+"T00:00:00Z").toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"});
-   const wind=verified.ibtracsFix?" A nearby RSMC La Réunion best-track fix estimated "+verified.ibtracsFix.kmh+" km/h (10-minute sustained), not necessarily at the precise crossing;":"";
    const effect=verified.fatalities?" reported fatalities: "+verified.fatalities:verified.damageUSDm?" reported economic damage of approximately US$"+verified.damageUSDm+" million":" historical fatalities and economic damage have not yet been verified";
-   return name+" ("+year+") "+(verified.location.toLowerCase().includes("not mainland")?"passed through "+verified.location:"made a documented landfall at "+verified.location)+" on "+when+";"+effect+".";
+   return name+" ("+year+") "+(verified.location.toLowerCase().includes("not mainland")?"made landfall in "+verified.location.replace(/, not mainland Madagascar/i," (outside mainland Madagascar)"):"made landfall "+(/^(near|in|at|between|on)\b/i.test(verified.location)?"":"at ")+verified.location)+" on "+when+";"+effect+".";
  }
  const outcome=archiveOutcome(st.data);
- return name+" ("+year+"): "+outcome+" Historical landfall impacts have not yet been independently verified.";
+ return name+" ("+year+"): "+outcome.replace(/[.]$/,"")+"; landfall impacts have not yet been independently verified.";
 }
 function playerDecisionSentence(st){
  const names=set=>[...set].map(id=>hubs.find(h=>h.id===id)?.name||id);
