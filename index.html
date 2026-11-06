@@ -43,7 +43,7 @@ footer{margin-top:12px;color:#5f7780;font-size:12px;line-height:1.5}
 </head>
 <body>
 <header><div><h1>Madagascar Cyclone Decision Game</h1><small>Can you protect communities without exhausting your seasonal budget?</small></div><button class="btn alt" id="restart">New game</button></header>
-<section id="start-screen"><div class="intro"><h2>Madagascar Cyclone Anticipatory Action Game</h2><p>Manage a shared budget for cyclone anticipatory action. Decide when to keep monitoring, pre-activate preparedness, and fully activate early actions in threatened areas.</p><p>Play one storm or an unknown number of storms in a fictional season. Real identities are revealed only at the end. Daily briefings are training simulations based on WATTCH hindcasts.</p><h3>How long would you like to play?</h3><div class="choice-grid" role="group" aria-label="Game length"><label><input type="radio" name="game-length" value="single"><span><strong>Play one storm</strong>Follow one cyclone through to its historical reveal</span></label><label><input type="radio" name="game-length" value="season" checked><span><strong>Play a whole season</strong>Manage several cyclones with one shared budget, without knowing how many are coming</span></label></div><h3>Difficulty</h3><div class="choice-grid difficulty-grid" role="group" aria-label="Difficulty"><label><input type="radio" name="difficulty" value="3"><span><strong>Easy</strong>Pre-activate at least 3 days before</span></label><label><input type="radio" name="difficulty" value="4" checked><span><strong>Medium</strong>Pre-activate 4+ days before</span></label><label><input type="radio" name="difficulty" value="5"><span><strong>Hard</strong>Pre-activate 5+ days before</span></label></div><p class="subtle">Pre-activation is possible within 7 days; full activation in the last 3 days if an area is prepared. The forecast trigger signals are illustrative training guidance, not official DGM forecasts.</p><button type="button" class="btn" id="start-game">Start game</button><p class="image-credit">Background: NASA Terra/MODIS image of Cyclone Bingiza approaching Madagascar (13 February 2011), Jeff Schmaltz / NASA GSFC, CC BY 2.0. <a href="https://earthobservatory.nasa.gov/images/49250/tropical-cyclone-bingiza" target="_blank" rel="noopener noreferrer">Image source</a> · <a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener noreferrer">Licence</a>.</p></div></section><main>
+<section id="start-screen"><div class="intro"><h2>Madagascar Cyclone Anticipatory Action Game</h2><p>Manage a shared budget for cyclone anticipatory action. Decide when to keep monitoring, pre-activate preparedness, and fully activate early actions in threatened areas.</p><p>Play one storm or an unknown number of storms in a fictional season. Real identities are revealed only at the end. Daily briefings are training simulations based on WATTCH hindcasts.</p><h3>How long would you like to play?</h3><div class="choice-grid" role="group" aria-label="Game length"><label><input type="radio" name="game-length" value="single"><span><strong>Play one storm</strong>Follow one cyclone through to its historical reveal</span></label><label><input type="radio" name="game-length" value="season" checked><span><strong>Play a whole season</strong>Manage several cyclones with one shared budget, without knowing how many are coming</span></label></div><h3>Difficulty</h3><div class="choice-grid difficulty-grid" role="group" aria-label="Difficulty"><label><input type="radio" name="difficulty" value="3"><span><strong>Easy</strong>Pre-activate at least 3 days before</span></label><label><input type="radio" name="difficulty" value="4" checked><span><strong>Medium</strong>Pre-activate 4+ days before</span></label><label><input type="radio" name="difficulty" value="5"><span><strong>Hard</strong>Pre-activate 5+ days before</span></label></div><p class="subtle">Pre-activation is possible within 7 days; full activation in the last 3 days if an area is prepared. The EAP uses a >50% pre-activation forecast signal within 7 days, and DGM >118 km/h at 48–72 h for full activation. Game indicators are illustrative and are not official DGM forecasts.</p><button type="button" class="btn" id="start-game">Start game</button><p class="image-credit">Background: NASA Terra/MODIS image of Cyclone Bingiza approaching Madagascar (13 February 2011), Jeff Schmaltz / NASA GSFC, CC BY 2.0. <a href="https://earthobservatory.nasa.gov/images/49250/tropical-cyclone-bingiza" target="_blank" rel="noopener noreferrer">Image source</a> · <a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener noreferrer">Licence</a>.</p></div></section><main>
 <div class="stats">
 <div class="stat"><div class="k">Season progress</div><div class="v" id="seasonstat">—</div></div>
 <div class="stat"><div class="k">Remaining budget</div><div class="v" id="budgetstat">—</div></div>
@@ -248,12 +248,13 @@ function selectFeedback(st){
   if(reached){
    if(!credible)id="F08";
    else if(all)id="F05";
-   else if(uncovered)id="F04";
-   else if(G.budget<cost.preposition)id="F20";
+   else if(uncovered)id=G.budget<cost.preposition?"F20":"F04";
+   else if(uncovered&&G.budget<cost.preposition)id="F20";
    else id="F01";
   }else if(!warning)id="F07";
+  else if(distributed.length)id=activation?"F18":"F10";
   else if(!activation)id="F06";
-  else if(distributed.length)id="F18";
+  else if(G.budget<cost.preposition)id="F16";
   else if(stock.length)id="F02";
   else id="F03";
  }else{
@@ -303,7 +304,7 @@ const actions=$("actions").querySelectorAll("[data-action]");
 for(const btn of actions){const a=btn.dataset.action;btn.disabled=st.acted||last||(a==="preposition"&&!canPrep())||(a==="distribute"&&!canDist());btn.classList.toggle("selected",st.choice===a);}
 $("warehouses").style.display=!st.acted&&!last&&["preposition","distribute"].includes(st.choice)?"grid":"none";
 $("warehouses").innerHTML=hubs.map(h=>{const blocked=st.choice==="preposition"?st.stock.has(h.id):!st.stock.has(h.id)||st.distributed.has(h.id);return '<label class="'+(blocked?"disabled":"")+'"><input type="checkbox" data-hub="'+h.id+'" '+(blocked?"disabled":"")+' '+(st.chosen.has(h.id)?"checked":"")+'>'+h.name+'</label>';}).join("");
-const n=st.chosen.size*cost[st.choice]||0;
+const n=st.chosen.size*(cost[st.choice]||0);
 $("cost").textContent=st.acted?"Decision confirmed for today.":st.choice==="monitor"?"No cost.":st.choice?"Cost: "+money(n)+(n>G.budget?" — insufficient budget":""):"Choose one of the three actions.";
 $("confirm").disabled=st.acted||last||!st.choice||(["preposition","distribute"].includes(st.choice)&&!n)||n>G.budget;
 $("advance").style.display=st.acted&&!last?"inline-block":"none";$("advance").textContent=st.day+1>=st.duration?"Complete storm →":"Next forecast →";
@@ -363,7 +364,7 @@ function evaluateDecision(st){
  if(covered.length)parts.push(covered.length+" affected warehouse area(s) received full activation.");
  if(uncovered.length)parts.push(uncovered.length+" affected area(s) did not receive advance distribution.");
  if(!affected.size)parts.push("No warehouse area met the game's illustrative impact threshold.");
- if(distributed.some(id=>!affected.has(id)))parts.push("Distribution was also made in unaffected warehouse areas.");
+ if(distributed.some(id=>!affected.has(id)))parts.push("Full activation also occurred in unaffected warehouse areas.");
   if(extra.length)parts.push("Kits were also pre-activated at "+extra.length+" location(s) outside the modelled impact footprint.");
  if(stocked.length===hubs.length)parts.push("You pre-activated every warehouse area, using substantial resources regardless of the eventual track.");
  if(covered.length&&!signal)parts.push("Your action reached affected areas, but the recorded briefing did not provide a clear supporting landfall signal; this may have been a correct outcome for the wrong reasons.");
