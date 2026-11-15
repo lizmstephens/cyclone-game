@@ -269,35 +269,63 @@ svg+='</svg>';return svg;
 }
 function coordsPixel(p){return p.map(v=>v[0].toFixed(1)+","+v[1].toFixed(1)).join(" ");}
 
+// Detect coastline crossings of mainland Madagascar, not proximity inside
+// the much larger geographic box. Coordinates are [latitude, longitude, wind m/s].
+// This is a simplified polygon; tiny offshore islands are not represented.
+function coastalLandfalls(points){
+ const hits=[];
+ for(let i=1;i<points.length;i++){
+  const a=points[i-1],b=points[i];
+  if(!a||!b||![...a,...b].every(Number.isFinite))continue;
+  const x=a[1],y=a[0],dx=b[1]-x,dy=b[0]-y;
+  if(inIsland(y,x))continue; // Only genuine sea-to-land entries.
+  for(let j=1;j<coast.length;j++){
+   const c=coast[j-1],d=coast[j],ex=d[0]-c[0],ey=d[1]-c[1];
+   const cross=dx*ey-dy*ex;
+   if(Math.abs(cross)<1e-12)continue;
+   const qx=c[0]-x,qy=c[1]-y;
+   const t=(qx*ey-qy*ex)/cross,u=(qx*dy-qy*dx)/cross;
+   if(t<0||t>1||u<0||u>1)continue;
+   const ahead=Math.min(1,t+1e-5);
+   if(!inIsland(y+ahead*dy,x+ahead*dx))continue;
+   hits.push({fraction:i-1+t,wind:(a[2]+t*(b[2]-a[2]))*3.6});
+   break;
+  }
+ }
+ return hits;
+}
+function forecastCrossings(track,now,days){
+ const samples=[];
+ for(let n=0;n<=days*4;n++){
+  const p=pt(track,addDays(now,n/4));
+  samples.push(p&&p.every(Number.isFinite)?p:null);
+ }
+ const hits=[];
+ // No crossing inferred through gaps in available forecast track points.
+ for(let n=1;n<samples.length;n++){
+  if(!samples[n-1]||!samples[n])continue;
+  for(const h of coastalLandfalls([samples[n-1],samples[n]]))
+   hits.push({day:(n-1+h.fraction)/4,wind:h.wind});
+ }
+ return hits;
+}
 function trainingSignals(st){
  const now=issueTime(),members=st.data.forecast_tracks||[];
- let near=0,strong=0;
+ let storm=0,strong=0;
  for(const member of members){
-  let hit=false,intense=false;
-  for(let n=0;n<=PRE_WINDOW*4;n++){
-   const p=pt(member.points,addDays(now,n/4));if(!p)continue;
-   const mad=p[0]>=-26&&p[0]<=-11&&p[1]>=43&&p[1]<=52;
-   if(mad&&p[2]*3.6>=STORM_WIND)hit=true;
-   if(mad&&n>=8&&n<=ACT_WINDOW*4&&p[2]*3.6>STRONG_WIND)intense=true;
-  }
-  if(hit)near++;if(intense)strong++;
+  const crossings=forecastCrossings(member.points,now,PRE_WINDOW);
+  if(crossings.some(x=>x.wind>=STORM_WIND))storm++;
+  if(crossings.some(x=>x.day>=2&&x.day<=ACT_WINDOW&&x.wind>STRONG_WIND))strong++;
  }
- return {members:members.length,probability:members.length?near/members.length:0,
- preSignal:members.length>0&&near/members.length>.5,
- activation:members.length>0&&strong/members.length>.5};
+ return {members:members.length,probability:members.length?storm/members.length:0,
+  preSignal:members.length>0&&storm/members.length>.5,
+  activation:members.length>0&&strong/members.length>.5};
 }
 function observedThresholds(st){
- // Both stages use the same approximate geographic test, but different wind thresholds.
- // These are WATTCH reference-track outcomes, not verified wind observations.
- let pre=false,full=false;
- for(const p of st.data.reference_track||[]){
-  const lat=+p[1],lon=+p[2],wind=+p[3]*3.6;
-  const nearMadagascar=inIsland(lat,lon)||hubs.some(h=>dist([lat,lon],[h.lat,h.lon])<175);
-  if(!nearMadagascar)continue;
-  if(wind>=STORM_WIND)pre=true;
-  if(wind>STRONG_WIND)full=true;
- }
- return {pre,full};
+ // WATTCH reference track, not a verified historical IBTrACS outcome.
+ const points=(st.data.reference_track||[]).map(p=>[+p[1],+p[2],+p[3]]);
+ const hits=coastalLandfalls(points);
+ return {pre:hits.some(x=>x.wind>=STORM_WIND),full:hits.some(x=>x.wind>STRONG_WIND)};
 }
 function thresholdExceeded(st){return observedThresholds(st).full;}
 function stageClassification(forecastIssued,forecastPositive,outcomeReached){
@@ -384,7 +412,7 @@ $("stormtitle").textContent="Storm "+(G.slot+1)+" · Tropical system";
 $("datepill").textContent=t.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"});
 $("map").innerHTML=mapSvg(rows);
 $("brief").textContent=last?"The storm has passed. Reviewing impacts and expenditure.":forecastMessage(rows);
-const windAtLandfall=forecastLandfall(rows),signals=trainingSignals(st);$("forecastsource").textContent="Training estimate · Tropical-storm approach: "+Math.round(signals.probability*100)+"% of ensemble tracks · Cyclone-strength signal: "+(signals.activation?"yes":"not indicated")+" · Not an official forecast.";
+const windAtLandfall=forecastLandfall(rows),signals=trainingSignals(st);$("forecastsource").textContent="Training estimate · Tropical-storm-strength mainland landfall: "+Math.round(signals.probability*100)+"% of ensemble tracks · Cyclone-strength signal: "+(signals.activation?"yes":"not indicated")+" · Not an official forecast.";
 $("leadtime").textContent=last?"Storm completed":remaining>=0?"Approximate event window: "+remaining+" day(s) remaining · pre-activation: "+G.prepDays+"–7 days · full activation: 0–3 days":"Event window has passed";
 $("stockstat").textContent="Pre-activated: "+([...st.stock].map(id=>hubs.find(h=>h.id===id)?.name).join(", ")||"None")+" · Fully activated: "+([...st.distributed].map(id=>hubs.find(h=>h.id===id)?.name).join(", ")||"None");
 $("progressbar").style.width=(100*(st.day+1)/(st.duration+1)).toFixed(0)+"%";
