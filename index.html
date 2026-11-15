@@ -537,7 +537,7 @@ function stormReview(st,index){
  const spend=observations.reduce((n,x)=>n+(x.cost||0),0);
  const reached=(st.impact||[]).filter(id=>st.distributed.has(id)).length*1000;
  return '<article class="storm-review">'+
-   '<h3>Storm '+index+' · '+esc(st.data.storm_name||"Unnamed system")+'</h3>'+
+   '<h3>Storm '+index+' · '+esc(st.data.storm_name||"Unnamed system")+' ('+esc(st.data.initialization.slice(0,4))+')</h3>'+
    '<div class="review-facts"><p><strong>Actual storm:</strong> '+esc(actualStormSentence(st,verified,impacts))+'</p>'+
    '<p><strong>Your decision:</strong> '+esc(playerDecisionSentence(st))+'</p></div>'+
    '<div class="review-voices">'+
