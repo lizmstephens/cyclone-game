@@ -2,7 +2,7 @@
 
 ## Play the games
 
-- **`index.html` — Full-season training game:** Choose **one storm** or a **full season of 2–7 storms**, sampled from **94 usable WATTCH scenarios**, with a shared CHF 150,000 season budget, daily decision opportunities, forecast-track display, pre-activation/full-activation restrictions, and Boss (boss) feedback. Historical identities are hidden until each storm outcome screen; season players do not know the number of future storms.
+- **`index.html` — Full-season training game:** Choose **one storm** or a **full season of 2–7 storms**, sampled from **86 named WATTCH scenarios**, with a shared CHF 150,000 season budget, daily decision opportunities, forecast-track display, pre-activation/full-activation restrictions, and Boss (boss) feedback. Historical identities are hidden until each storm outcome screen; season players do not know the number of future storms.
 - **`jokwe.html` — Approved single-storm Jokwe prototype:** Preserved separately, including its detailed daily RSMC-style forecast images and enlarged warehouse markers.
 
 Play via GitHub Pages. The game loads its scenario and historical data as separate JSON files, so opening `index.html` directly from a local file may not work; use a local web server for offline development.
@@ -67,3 +67,11 @@ The review now classifies forecast predictions **separately** at the two thresho
 The existing F01–F20 objective feedback rows still use the game's simplified overall impact classification (full-activation threshold), and the Boss matching now uses the full-activation forecast classification rather than conflating it with the pre-activation forecast. Wording in Google Sheets may need further editorial review for some combinations. The current output reflects the stored feedback JSON snapshot, not live sheet edits.
 
 DOM-mocked regression testing completed 48 full game playthroughs across the six combinations of storm/season and difficulty with no failures, and found both stage classifications available for every completed storm. This does not replace visual testing in a browser.
+
+## Historical impacts catalogue integration (15 November 2026)
+
+The storm-end one-sentence historical description now prioritises `data/verified_impacts.json`, a read-only exported snapshot of the [Madagascar Cyclone Game – Verified Storm Impacts spreadsheet](https://docs.google.com/spreadsheets/d/1gIZZ_wpC0yXadie5wqWFOBNfKdGN8dy6fH8qiOSIiWw/edit#gid=1464705366). The source spreadsheet has 94 WATTCH event-ID rows, 86 with non-empty Madagascar impact summaries; the playable scenario file has 86 named scenarios. The old `data/historical.json` supplies additional verified information and a fallback for records without a catalogue impact summary.
+
+The corrected Cela (`2003_tr0034`) review reads: “Cela brought widespread rainfall to Madagascar, including 317 mm in 24 hours at Morombe.” Its source sheet records a near-Vohémar landfall in December 2003 but the exact date is marked as unconfirmed; the game does not invent one. A WATTCH reference track passing close to Madagascar is not grounds for overriding historical reported impacts.
+
+**Maintenance:** Updates to the Google Sheet do not automatically update `data/verified_impacts.json` and require regeneration of that versioned snapshot. The original 13-record `data/historical.json` remains unchanged. Avoid changing scenario inclusion when correcting impact lookup.
