@@ -20,7 +20,7 @@ h2{font-size:19px;margin:0 0 10px}h3{font-size:15px;margin:0 0 9px}
 .actions{display:grid;gap:9px}.action{width:100%;padding:12px;background:#f5f8f9;border:1px solid #cbd9df;border-radius:9px;text-align:left;cursor:pointer}.action.selected{border:2px solid #277d91;background:#e7f6f8;padding:11px}.action:disabled{opacity:.45;cursor:not-allowed}
 .wh{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:12px 0}.wh label{padding:8px;border:1px solid #dee6e8;border-radius:7px;font-size:14px;cursor:pointer;display:flex;align-items:center;gap:5px}.wh label.disabled{opacity:.42}.wh input{accent-color:#277d91}
 .btn{border:0;border-radius:8px;background:#17667b;color:white;padding:12px 16px;font-weight:650;cursor:pointer}.btn.alt{background:#e9f1f4;color:#1e5868}.btn:disabled{opacity:.4;cursor:not-allowed}
-#feedback{margin-top:13px;background:#fff7e3;border:1px solid #efdfb2;border-radius:8px;padding:12px;line-height:1.45}
+.wind-legend{display:flex;align-items:center;flex-wrap:wrap;gap:7px 13px;margin-top:12px;font-size:12px;color:#445e68}.wind-legend .legend-entry{display:inline-flex;align-items:center;gap:5px}.wind-legend .wind-dot{display:inline-block;width:12px;height:12px;border-radius:50%;border:1px solid #224650;flex:none}.wind-legend .line-sample{display:inline-block;width:20px;border-top:3px solid #416b89;flex:none}.wind-legend .line-sample.median{border-top:3px dashed #c74c44}.status-line{margin:7px 0;line-height:1.45}
 #message{min-height:22px;font-weight:650;color:#356976;margin:9px 0}
 details{margin-top:10px;color:#526b77;font-size:13px}details summary{cursor:pointer}
 .progress{height:7px;background:#d7e4e7;border-radius:10px;overflow:hidden;margin-top:8px}.progress span{display:block;height:100%;background:#4ca0b2}
@@ -78,7 +78,7 @@ footer{margin-top:12px;color:#5f7780;font-size:12px;line-height:1.5}
 <div class="panel">
 <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap"><h2 id="stormtitle">Loading…</h2><span class="pill" id="datepill">Forecast briefing</span></div>
 <div id="map" role="img" aria-label="Map of Madagascar with forecast tracks and warehouse locations"></div>
-<div class="subtle" style="margin-top:10px">Blue lines: all ensemble members · Dashed red: ensemble median · Coloured points: median forecast wind · Warehouses: red = not prepared, green = pre-activated, dark green = fully activated</div>
+<div class="wind-legend" aria-label="Forecast map key"><span class="legend-entry"><span class="wind-dot" style="background:#61b7db"></span>&lt;63 km/h</span><span class="legend-entry"><span class="wind-dot" style="background:#36b99b"></span>63–88 km/h</span><span class="legend-entry"><span class="wind-dot" style="background:#ebca55"></span>89–117 km/h</span><span class="legend-entry"><span class="wind-dot" style="background:#f39a4b"></span>118–165 km/h</span><span class="legend-entry"><span class="wind-dot" style="background:#cf4b4b"></span>≥166 km/h</span></div><div class="wind-legend"><span class="legend-entry"><span class="line-sample"></span>Ensemble members</span><span class="legend-entry"><span class="line-sample median"></span>Median track</span><span>Coloured dots show median-track wind strength, not observed intensity</span></div><div class="subtle" style="margin-top:7px">Warehouses: red = not mobilised; green = mobilised; dark green = fully activated. Winds are approximate 10 m model winds; averaging period unverified.</div>
 <details><summary>About these forecasts</summary>Illustrative daily forecast tracks from the WATTCH archive; not successive operational forecasts. <a href="./about.html">How the game was constructed</a>.</details>
 </div>
 <div class="panel"><h3>Met Service · WhatsApp update</h3><div id="brief"></div><div class="subtle" id="forecastsource"></div></div>
@@ -96,8 +96,7 @@ footer{margin-top:12px;color:#5f7780;font-size:12px;line-height:1.5}
 <button id="advance" class="btn alt" style="display:none">Next forecast →</button>
 <button id="nextstorm" class="btn alt" style="display:none">Next storm →</button>
 </div>
-<div class="panel"><h3>Boss</h3><div id="feedback">“I want us to be ready, but we can't afford to waste our money.”</div></div>
-<div class="panel"><h3>Operational position</h3><div id="stockstat" class="subtle"></div><div class="progress"><span id="progressbar" style="width:0%"></span></div></div>
+<div class="panel"><h3>Current status</h3><div id="stockstat" aria-live="polite"></div><div class="progress"><span id="progressbar" style="width:0%"></span></div></div>
 </aside>
 </div>
 <footer>Training game using simplified assumptions; not an operational forecast. <a href="./about.html">About the game and data</a> · <a href="./jokwe.html">Original Jokwe prototype</a>.</footer>
@@ -421,9 +420,10 @@ $("map").innerHTML=mapSvg(rows);
 $("brief").textContent=last?"The storm has passed. Reviewing impacts and expenditure.":forecastMessage(rows);
 const windAtLandfall=forecastLandfall(rows),signals=trainingSignals(st);$("forecastsource").textContent="Training estimate · Tropical-storm-strength mainland landfall: "+Math.round(signals.probability*100)+"% of ensemble tracks · Cyclone-strength signal: "+(signals.activation?"yes":"not indicated")+" · Not an official forecast.";
 $("leadtime").textContent=last?"Storm completed":remaining>=0?"Approximate event window: "+remaining+" day(s) remaining · pre-activation: "+G.prepDays+"–7 days · full activation: 0–3 days":"Event window has passed";
-$("stockstat").textContent="Pre-activated: "+([...st.stock].map(id=>hubs.find(h=>h.id===id)?.name).join(", ")||"None")+" · Fully activated: "+([...st.distributed].map(id=>hubs.find(h=>h.id===id)?.name).join(", ")||"None");
+const names=ids=>[...ids].map(id=>hubs.find(h=>h.id===id)?.name||id).join(", ")||"None";
+ $("stockstat").innerHTML='<div class="status-line"><strong>Mobilised:</strong> '+esc(names(st.stock))+'</div><div class="status-line"><strong>Fully activated:</strong> '+esc(names(st.distributed))+'</div>';
 $("progressbar").style.width=(100*(st.day+1)/(st.duration+1)).toFixed(0)+"%";
-$("feedback").textContent=last?"“"+(st.finalFeedback?.boss||"We should review this storm and our resources.")+"”":st.history.length?"“"+st.history.at(-1)+"”":"“We have one budget for the whole season. Think carefully about when and where we act.”";
+
 const actions=$("actions").querySelectorAll("[data-action]");
 for(const btn of actions){const a=btn.dataset.action;btn.disabled=st.acted||last||(a==="preposition"&&!canPrep())||(a==="distribute"&&!canDist());btn.classList.toggle("selected",st.choice===a);}
 $("warehouses").style.display=!st.acted&&!last&&["preposition","distribute"].includes(st.choice)?"grid":"none";
