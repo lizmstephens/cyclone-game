@@ -141,13 +141,16 @@ loadEditableFrontPageCopy();
 "use strict";
 // Game logic and scenario library are maintained independently.
 // Both files are loaded before any game state is initialized.
-let catalogue, historical, feedbackLibrary;
+let catalogue, historical, verifiedImpacts, feedbackLibrary;
 try {
-  const [scenariosResponse, historicalResponse, feedbackResponse] = await Promise.all([
-    fetch("./data/scenarios.json"), fetch("./data/historical.json"), fetch("./data/feedback.json")
+  const [scenariosResponse, historicalResponse, impactsResponse, feedbackResponse] = await Promise.all([
+    fetch("./data/scenarios.json"), fetch("./data/historical.json"),
+    fetch("./data/verified_impacts.json"), fetch("./data/feedback.json")
   ]);
-  if (!scenariosResponse.ok || !historicalResponse.ok || !feedbackResponse.ok) throw new Error("Could not load the scenario library.");
-  [catalogue, historical, feedbackLibrary] = await Promise.all([scenariosResponse.json(), historicalResponse.json(), feedbackResponse.json()]);
+  if (!scenariosResponse.ok || !historicalResponse.ok || !impactsResponse.ok || !feedbackResponse.ok) throw new Error("Could not load the scenario library.");
+  [catalogue, historical, verifiedImpacts, feedbackLibrary] = await Promise.all([
+    scenariosResponse.json(), historicalResponse.json(), impactsResponse.json(), feedbackResponse.json()
+  ]);
 } catch (error) {
   const panel = document.querySelector("#start-screen .intro");
   if (panel) panel.insertAdjacentHTML("beforeend", '<p role="alert" style="color:#9b2525;font-weight:700">The scenario library could not be loaded. Please refresh the page. If you opened this as a local file, use a local web server instead.</p>');
@@ -461,16 +464,22 @@ function evaluateDecision(st){
  parts.push("Expenditure: "+money(observations.reduce((sum,x)=>sum+(x.locations?.length||0)*(cost[x.action]||0),0))+"; "+stocked.length+" pre-activated and "+distributed.length+" fully activated locations. This evaluation uses simplified forecast signals and impact thresholds, not a calibrated forecast-skill assessment.");return parts.join(" ");
 }
 
-function actualStormSentence(st,verified){
+function actualStormSentence(st,verified,impacts){
  const name=st.data.storm_name||"Unnamed system";
  const year=st.data.initialization.slice(0,4);
+ // The dedicated verified impact catalogue is the authoritative source for the
+ // one-sentence historical summary. Never infer an observed landfall from the
+ // geometry of the WATTCH reference track, nor invent a day from a partial date.
+ if(impacts?.impact_summary?.trim()){
+  return impacts.impact_summary.trim();
+ }
  if(verified&&verified.location&&verified.landfallDate){
    const when=new Date(verified.landfallDate+"T00:00:00Z").toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"});
    const effect=verified.fatalities?" reported fatalities: "+verified.fatalities:verified.damageUSDm?" reported economic damage of approximately US$"+verified.damageUSDm+" million":" historical fatalities and economic damage have not yet been verified";
    return name+" ("+year+") "+(verified.location.toLowerCase().includes("not mainland")?"made landfall in "+verified.location.replace(/, not mainland Madagascar/i," (outside mainland Madagascar)"):"made landfall "+(/^(near|in|at|between|on)\b/i.test(verified.location)?"":"at ")+verified.location)+" on "+when+";"+effect+".";
  }
  const outcome=archiveOutcome(st.data);
- return name+" ("+year+"): "+outcome.replace(/[.]$/,"")+"; landfall impacts have not yet been independently verified.";
+ return name+" ("+year+"): "+outcome.replace(/[.]$/,"")+"; historical Madagascar impacts are not yet recorded in the game catalogue.";
 }
 function playerDecisionSentence(st){
  const names=set=>[...set].map(id=>hubs.find(h=>h.id===id)?.name||id);
@@ -482,16 +491,19 @@ function playerDecisionSentence(st){
 }
 function stormReview(st,index){
  const verified=historical[st.data.event_id]||null;
+ const impacts=verifiedImpacts?.by_event_id?.[st.data.event_id]||null;
  const scored=st.finalFeedback||{};
  const crossing=crossingIntensity(st.data.reference_track);
  const intensity=crossing?'<p><strong>Archive reference-track crossing estimate:</strong> '+crossing.when.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"})+'; '+Math.round(crossing.wind)+' km/h (10-m model wind; averaging period unverified, not observed landfall intensity).</p>':'<p>Reference-track Madagascar crossing wind unavailable.</p>';
- const sources=verified?.sources?.length?'<p><strong>Historical sources:</strong> '+verified.sources.map(v=>'<a href="'+esc(v[1])+'" target="_blank" rel="noopener noreferrer">'+esc(v[0])+'</a>').join(' · ')+'</p>':'<p>Historical impact sources are not yet verified for this storm.</p>';
+ const catalogueSource=impacts?.impact_source||impacts?.season_page;
+ const sources=catalogueSource?'<p><strong>Historical impact source:</strong> <a href="'+esc(catalogueSource)+'" target="_blank" rel="noopener noreferrer">Wikipedia cyclone-season entry</a> · <a href="https://docs.google.com/spreadsheets/d/1gIZZ_wpC0yXadie5wqWFOBNfKdGN8dy6fH8qiOSIiWw/edit#gid=1464705366" target="_blank" rel="noopener noreferrer">Verified storm impact catalogue</a></p>':
+ verified?.sources?.length?'<p><strong>Historical sources:</strong> '+verified.sources.map(v=>'<a href="'+esc(v[1])+'" target="_blank" rel="noopener noreferrer">'+esc(v[0])+'</a>').join(' · ')+'</p>':'<p>Historical impact sources are not yet verified for this storm.</p>';
  const observations=st.decisionLog||[];
  const spend=observations.reduce((n,x)=>n+(x.cost||0),0);
  const reached=(st.impact||[]).filter(id=>st.distributed.has(id)).length*1000;
  return '<article class="storm-review">'+
    '<h3>Storm '+index+' · '+esc(st.data.storm_name||"Unnamed system")+'</h3>'+
-   '<div class="review-facts"><p><strong>Actual storm:</strong> '+esc(actualStormSentence(st,verified))+'</p>'+
+   '<div class="review-facts"><p><strong>Actual storm:</strong> '+esc(actualStormSentence(st,verified,impacts))+'</p>'+
    '<p><strong>Your decision:</strong> '+esc(playerDecisionSentence(st))+'</p></div>'+
    '<div class="review-voices">'+
      '<section class="review-bubble scientist" aria-label="Scientist objective feedback"><h4>Scientist</h4><p>'+esc(scored.objective||"Objective feedback unavailable.")+'</p></section>'+
@@ -500,6 +512,9 @@ function stormReview(st,index){
    '<details class="review-details"><summary>Sources and detailed review</summary>'+
    '<p>Feedback library: Scientist '+esc(scored.id||"unavailable")+'; Boss '+esc(scored.bossId||"unavailable")+'. Game outcome: '+(st.impact||[]).length+' modelled affected areas, '+reached.toLocaleString("en-GB")+' people reached (illustrative); '+money(spend)+' spent.</p>'+
    (verified?.ibtracsFix?'<p><strong>Near-landfall best-track fix:</strong> '+esc(verified.ibtracsFix.kmh)+' km/h, 10-minute sustained, at '+esc(verified.ibtracsFix.utc)+'. This may not be the exact coastline-crossing wind.</p>':'')+
+   (impacts?.landfall_date_text?'<p><strong>Historical landfall date in impact catalogue:</strong> '+esc(impacts.landfall_date_text)+'; <strong>reported location:</strong> '+esc(impacts.landfall_area||"Not specified")+'.</p>':'')+
+   (impacts?.observed_landfall_wind_kmh?'<p><strong>Reported near-landfall intensity:</strong> '+esc(impacts.observed_landfall_wind_kmh)+' km/h'+(impacts.wind_averaging_period?" ("+esc(impacts.wind_averaging_period)+")":"")+'.</p>':'')+
+   (impacts?.verification_notes?'<p><strong>Verification note:</strong> '+esc(impacts.verification_notes)+'</p>':'')+
    (verified?.windNote?'<p>'+esc(verified.windNote)+'</p>':'')+
    '<p><strong>Forecast verification (illustrative):</strong> Pre-activation (≥63 km/h): '+esc(scored.stages?.pre||"Not assessable")+'; full activation (>118 km/h): '+esc(scored.stages?.full||"Not assessable")+'. Both compared separately with the WATTCH reference track, not observed winds.</p>'+
    '<p><strong>Additional decision assessment:</strong> '+esc(evaluateDecision(st))+'</p>'+intensity+sources+
