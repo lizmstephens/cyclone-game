@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>About the game · Madagascar Cyclone Decision Game</title>
+<style>
+:root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#19394a;background:#edf3f4}
+*{box-sizing:border-box}body{margin:0}header{background:#173e51;color:white;padding:20px max(20px,calc((100vw - 920px)/2))}
+header a{color:white;text-decoration:none;font-weight:650}main{max-width:920px;margin:0 auto;padding:26px 18px 60px}
+h1{font-size:clamp(27px,4vw,38px);line-height:1.15;margin:14px 0}h2{font-size:22px;margin:0 0 13px}h3{font-size:16px;margin:0 0 8px}p{line-height:1.65;margin:9px 0 14px}a{color:#126781}a:hover{text-decoration:underline}
+.card{background:white;border:1px solid #d5e1e5;border-radius:16px;padding:clamp(18px,3vw,30px);margin:18px 0}
+.lede{font-size:18px;color:#385867}.eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:12px;font-weight:700;color:#477384}
+.button{display:inline-block;background:#17667b;color:white;border-radius:10px;padding:12px 19px;font-weight:650;text-decoration:none}.button:hover{background:#114e61;text-decoration:none}
+.trigger-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:18px 0}
+.trigger{border:1px solid #bed5dc;background:#f2f8fa;padding:18px;border-radius:13px}
+.trigger strong{font-size:18px}.trigger .when{font-size:13px;font-weight:700;color:#547586;margin-bottom:8px}
+.notice{background:#fff7e8;border-left:4px solid #dfbb73;padding:13px 16px;border-radius:7px}
+.small{font-size:13px;color:#586f7b}ul{padding-left:22px;line-height:1.7}
+@media(max-width:650px){.trigger-grid{grid-template-columns:1fr}.card{padding:18px}}
+</style>
+</head>
+<body>
+<header><a href="./index.html">← Back to the cyclone game</a></header>
+<main>
+<p class="eyebrow">Behind the game</p>
+<h1>About the Madagascar Cyclone Decision Game</h1>
+<p class="lede">A decision-making exercise about whether, when and where to take anticipatory action as cyclone forecasts evolve and uncertainty remains.</p>
+<a class="button" href="./index.html">Play the game</a>
+<section class="card">
+<h2>What are you trying to do?</h2>
+<p>You are responsible for making simplified anticipatory-action decisions for six warehouse areas in Madagascar. Each simulated forecast briefing lets you keep monitoring, pre-activate preparedness in selected areas, or fully activate early actions in areas already prepared. In a whole-season game, you must manage a limited shared budget without knowing how many storms lie ahead.</p>
+<p>This is an educational prototype, not an operational forecast, a simulation of the full Malagasy Red Cross programme, or a test of individual forecasting skill.</p>
+</section>
+<section class="card">
+<h2>The Madagascar cyclone Early Action Protocol</h2>
+<p>The game draws on the Malagasy Red Cross cyclone Early Action Protocol (EAP2025MG01 / MDRMG025), which distinguishes two decisions with different forecast thresholds and lead times.</p>
+<div class="trigger-grid">
+<div class="trigger"><div class="when">About 5–7 days before potential landfall</div><strong>Pre-activation</strong>
+<p>Can be triggered when at least one forecast from DGM, RSMC La Réunion or ECMWF indicates a <strong>greater than 50% probability of tropical-storm-strength or stronger landfall</strong> in Madagascar, within the seven-day window.</p></div>
+<div class="trigger"><div class="when">About 2–3 days before potential landfall</div><strong>Full activation</strong>
+<p>Can be triggered when the Madagascar meteorological service (DGM) forecasts cyclone-strength landfall, with winds <strong>above 118 km/h</strong>, within approximately 48–72 hours.</p></div>
+</div>
+<p>These are distinct warnings: a forecast may meet the pre-activation threshold without meeting the full-activation threshold, and it may be correct for one stage but wrong for the other.</p>
+<p><a href="https://go-api.ifrc.org/api/downloadfile/94300/MDRMG025%20EAP%20Cyclone%20Summary" target="_blank" rel="noopener noreferrer">Read the official Madagascar cyclone EAP summary (IFRC PDF)</a> — especially page 3 for the triggers and page 4 for planned early actions.</p>
+<p class="small">The EAP summary also describes discretionary expert judgement and a possible stop mechanism. The stop mechanism is intentionally omitted from this simplified game.</p>
+</section>
+<section class="card">
+<h2>Where do the cyclone scenarios come from?</h2>
+<p>The storm tracks and forecast ensembles originate from the open-access <strong>WATTCH Southern Hemisphere tropical-cyclone archive</strong>. The game maintains its playable scenarios in <code>data/scenarios.json</code>, separate from the game interface and historical annotations.</p>
+<p>At the time of this version the playable file includes <strong>94 WATTCH cases</strong>. These are simulated, independently selected historical cases rather than a reconstruction of one real cyclone season. You can play a single cyclone or a fictional sequence of 2–7 storms.</p>
+<p>For each case, the archive used here supplies a forecast initialisation, ensemble-member tracks and a reference track. The game interpolates these tracks and constructs <strong>illustrative successive daily briefings</strong>; it does not contain genuine independently issued operational forecasts for each simulated day. The original historical storm name and year are only revealed after the decision exercise.</p>
+<p><a href="https://zenodo.org/records/20446920" target="_blank" rel="noopener noreferrer">WATTCH data and documentation (Zenodo)</a> · <a href="https://github.com/lizmstephens/cyclone-game/tree/main/data" target="_blank" rel="noopener noreferrer">Game scenario files</a></p>
+</section>
+<section class="card">
+<h2>How are forecasts and outcomes assessed?</h2>
+<p>We compare two forecast signals independently against two simulated observed outcomes:</p>
+<ul>
+<li><strong>Pre-activation:</strong> whether a forecast indicated a sufficiently likely tropical-storm-strength approach, compared with whether the reference track actually reached tropical-storm strength near Madagascar.</li>
+<li><strong>Full activation:</strong> whether a forecast indicated cyclone-strength landfall during the activation window, compared with whether the reference track exceeded 118 km/h near Madagascar.</li>
+</ul>
+<p>Each stage can be correctly anticipated, overforecast or underforecast. A pre-activation forecast can therefore be correct even if the stronger full-activation threshold is not reached.</p>
+<p class="notice">The game currently approximates forecast likelihood using the <em>fraction of WATTCH ensemble tracks</em> that meet a geographic and wind-speed test. This fraction is not a calibrated probability, and it is <strong>not</strong> an official forecast issued by DGM or RSMC La Réunion. The model's 10-m wind means wind height, not a 10-minute averaging period.</p>
+<p>The illustrative impact areas are based on proximity to the game's six warehouses and the reference track, rather than documented damage to specific communities. People's reach and expenditure are simplified training assumptions. The Scientist evaluates decisions against information available at the time; the Boss expresses a separate, sometimes less objective, reaction.</p>
+</section>
+<section class="card">
+<h2>Historical storms and limitations</h2>
+<p>The end-of-storm review reveals the historical identity and, where sourced, a short landfall and impact summary. Historical facts are recorded separately from game-generated outcomes. Some storms do not make damaging landfall in Madagascar; some identities, landfall winds and impacts still require verification.</p>
+<p>Agency best-track winds must be interpreted carefully: different agencies can use different averaging periods. An interpolated reference-track crossing speed is not an observed landfall wind.</p>
+<p><a href="https://www.ncei.noaa.gov/products/international-best-track-archive" target="_blank" rel="noopener noreferrer">NOAA IBTrACS background</a> · <a href="https://github.com/lizmstephens/cyclone-game" target="_blank" rel="noopener noreferrer">Game source code</a></p>
+</section>
+<section class="card">
+<h2>Technical and editorial notes</h2>
+<p>The fictional game starts with CHF 150,000. Preparing one selected warehouse area costs CHF 20,000 and fully activating one prepared area costs CHF 8,000. These, the six locations, the simplified area-reach model and the Easy/Medium/Hard pre-activation deadlines are game design choices, <strong>not the approved EAP's operating budget or official trigger requirements</strong>.</p>
+<p>The game separates scenario data, historical descriptions and spreadsheet-derived Scientist/Boss feedback. The wording library is maintained in a <a href="https://docs.google.com/spreadsheets/d/1kEIwFSZOG8nxThiheJkO-Tgtqn97HmlrawF9-gbB9FQ/edit" target="_blank" rel="noopener noreferrer">Google Sheet</a>; some text is served as a versioned GitHub snapshot rather than a live sheet connection.</p>
+</section>
+<p><a class="button" href="./index.html">Return to the game</a></p>
+</main>
+</body>
+</html>
