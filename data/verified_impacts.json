@@ -1004,10 +1004,10 @@
       "wind_averaging_period": null,
       "category": null,
       "fatalities": "21",
-      "impact_summary": "Eliakim made landfall in Madagascar and caused widespread flooding that killed at least 21 people and left 19,400 homeless.",
-      "wind_source": "https://en.wikipedia.org/wiki/2017%E2%80%9318_South-West_Indian_Ocean_cyclone_season",
+      "impact_summary": "Although Eliakim's reported maximum winds were about 111 km/h, below the game's 118 km/h full-activation threshold, the storm brought severe flooding to Madagascar, reportedly killing at least 21 people and leaving 19,400 homeless; the exact observed wind at landfall remains unverified.",
+      "wind_source": "https://gdacs.org/report.aspx?episodeid=23&eventid=1000441&eventtype=TC",
       "impact_source": "https://en.wikipedia.org/wiki/2017%E2%80%9318_South-West_Indian_Ocean_cyclone_season",
-      "verification_notes": "Peak wind is not necessarily landfall wind.",
+      "verification_notes": "GDACS reports 111 km/h as maximum storm wind, NOT verified coastal landfall intensity; observed_landfall_wind_kmh intentionally left null. Fatalities/homeless figures retained from season summary; wind averaging convention not verified.",
       "season_page": "https://en.wikipedia.org/wiki/2017%E2%80%9318_South-West_Indian_Ocean_cyclone_season",
       "name_check": "name listed in wikipedia season"
     },
