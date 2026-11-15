@@ -393,7 +393,14 @@ function selectFeedback(st){
  threshold:above,forecast:outlook,decisionQuality:decision,people,stages};
 }
 
-function forecastMessage(rows){if(!rows.length)return "We're monitoring this system. The archived ensemble provides no further track guidance at this point; the location and intensity remain uncertain.";const hits=rows.filter(p=>p.lon>=43&&p.lon<=52&&p.lat>=-26&&p.lat<=-11);if(!hits.length)return "We're monitoring the system. There is uncertainty about whether it will make landfall in Madagascar. We will keep checking the forecast.";const p=hits[0],strength=p.wind>=118?"cyclone-strength":p.wind>=63?"tropical-storm-strength":"weaker";return "We're monitoring. The current training guidance suggests possible landfall in around "+p.day+" day"+(p.day===1?"":"s")+", with winds near "+Math.round(p.wind/5)*5+" km/h ("+strength+"). The location and intensity remain uncertain.";}
+function forecastMessage(rows){
+ if(!rows.length)return "We're monitoring this system. The archived ensemble provides no further track guidance at this point; the location and intensity remain uncertain.";
+ const crossings=coastalLandfalls(rows.map(p=>[p.lat,p.lon,p.wind/3.6]));
+ if(!crossings.length)return "We're monitoring the system. The central training track does not cross mainland Madagascar, but individual ensemble members may still indicate landfall. We will keep checking the forecast.";
+ const h=crossings[0],left=rows[Math.floor(h.fraction)],right=rows[Math.min(rows.length-1,Math.ceil(h.fraction))],day=left.day+(h.fraction-Math.floor(h.fraction))*(right.day-left.day);
+ const strength=h.wind>=118?"cyclone-strength":h.wind>=63?"tropical-storm-strength":"weaker";
+ return "We're monitoring. The central training track indicates possible mainland landfall in around "+Math.round(day)+" day(s), with winds near "+Math.round(h.wind/5)*5+" km/h ("+strength+"). The location and intensity remain uncertain.";
+}
 function impact(st){const ref=st.data.reference_track;const hits=[];for(const h of hubs){let best=null;for(const p of ref){const t=date(p[0]);if(t<st.start||t>addDays(st.event,2))continue;const km=dist([h.lat,h.lon],[+p[1],+p[2]]);if(!best||km<best.km)best={km,wind:+p[3]*3.6};}if(best&&best.km<175&&best.wind>=63)hits.push(h.id);}return hits;}
 function finishStorm(){
  const st=current(),imp=impact(st),helped=imp.filter(id=>st.distributed.has(id)),lost=imp.filter(id=>!st.distributed.has(id));
