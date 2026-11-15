@@ -38,6 +38,10 @@ footer{margin-top:12px;color:#5f7780;font-size:12px;line-height:1.5}
 #start-screen .image-credit{font-size:11px;margin:15px 0 0;color:#274a58}
 #start-screen .image-credit a{color:inherit}
 #start-screen #start-game{background:#fff;color:#155a6e;border:2px solid #155a6e}
+#start-screen .start-actions{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+#start-screen .start-actions .btn{min-width:160px;text-align:center}
+#start-screen .about-link{display:inline-block;text-decoration:none;background:#fff;color:#155a6e;border:2px solid #155a6e;border-radius:8px;padding:12px 16px;font-weight:650}
+#start-screen .about-link:hover{background:#e6f5f9}
 @media(max-width:520px){#start-screen{padding:10px;place-items:start center}#start-screen .intro{padding:17px}#start-screen label{font-size:12px;padding:10px 7px;gap:5px}#start-screen .choice-grid{gap:6px}#start-screen h2{font-size:19px}}
 
 /* Compact storm debrief: facts and decisions first, then two distinct voices. */
@@ -61,7 +65,7 @@ footer{margin-top:12px;color:#5f7780;font-size:12px;line-height:1.5}
 </head>
 <body>
 <header><div><h1 data-front-key="header_title">Madagascar Cyclone Decision Game</h1><small data-front-key="header_tagline">Can you protect communities without exhausting your seasonal budget?</small></div><button class="btn alt" id="restart" data-front-key="new_game_button">New game</button></header>
-<section id="start-screen"><div class="intro"><h2 data-front-key="front_title">Madagascar Cyclone Anticipatory Action Game</h2><p data-front-key="front_intro">Manage a shared budget for cyclone anticipatory action. Decide when to keep monitoring, pre-activate preparedness, and fully activate early actions in threatened areas.</p><p data-front-key="front_explainer">Play one storm or an unknown number of storms in a fictional season. Real identities are revealed only at the end. Daily briefings are training simulations based on WATTCH hindcasts.</p><h3 data-front-key="game_length_heading">How long would you like to play?</h3><div class="choice-grid" role="group" aria-label="Game length"><label><input type="radio" name="game-length" value="single"><span><strong data-front-key="single_title">Play one storm</strong><span data-front-key="single_description">Follow one cyclone through to its historical reveal</span></span></label><label><input type="radio" name="game-length" value="season" checked><span><strong data-front-key="season_title">Play a whole season</strong><span data-front-key="season_description">Manage several cyclones with one shared budget, without knowing how many are coming</span></span></label></div><h3 data-front-key="difficulty_heading">Difficulty</h3><div class="choice-grid difficulty-grid" role="group" aria-label="Difficulty"><label><input type="radio" name="difficulty" value="3"><span><strong data-front-key="easy_title">Easy</strong><span data-front-key="easy_description">Pre-activate at least 3 days before</span></span></label><label><input type="radio" name="difficulty" value="4" checked><span><strong data-front-key="medium_title">Medium</strong><span data-front-key="medium_description">Pre-activate 4+ days before</span></span></label><label><input type="radio" name="difficulty" value="5"><span><strong data-front-key="hard_title">Hard</strong><span data-front-key="hard_description">Pre-activate 5+ days before</span></span></label></div><p class="subtle" data-front-key="front_rules">Pre-activation is possible within 7 days; full activation in the last 3 days if an area is prepared. The EAP uses a >50% pre-activation forecast signal within 7 days, and DGM >118 km/h at 48–72 h for full activation. Game indicators are illustrative and are not official DGM forecasts.</p><button type="button" class="btn" id="start-game" data-front-key="start_button">Start game</button><p class="image-credit"><span data-front-key="image_credit">Background: NASA Terra/MODIS image of Cyclone Bingiza approaching Madagascar (13 February 2011), Jeff Schmaltz / NASA GSFC, CC BY 2.0.</span> <a href="https://earthobservatory.nasa.gov/images/49250/tropical-cyclone-bingiza" target="_blank" rel="noopener noreferrer" data-front-key="image_source_link_text">Image source</a> · <a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener noreferrer" data-front-key="image_licence_link_text">Licence</a>.</p></div></section><main>
+<section id="start-screen"><div class="intro"><h2 data-front-key="front_title">Madagascar Cyclone Anticipatory Action Game</h2><p data-front-key="front_intro">Manage a shared budget for cyclone anticipatory action. Decide when to keep monitoring, pre-activate preparedness, and fully activate early actions in threatened areas.</p><p data-front-key="front_explainer">Play one storm or an unknown number of storms in a fictional season. Real identities are revealed only at the end. Daily briefings are training simulations based on WATTCH hindcasts.</p><h3 data-front-key="game_length_heading">How long would you like to play?</h3><div class="choice-grid" role="group" aria-label="Game length"><label><input type="radio" name="game-length" value="single"><span><strong data-front-key="single_title">Play one storm</strong><span data-front-key="single_description">Follow one cyclone through to its historical reveal</span></span></label><label><input type="radio" name="game-length" value="season" checked><span><strong data-front-key="season_title">Play a whole season</strong><span data-front-key="season_description">Manage several cyclones with one shared budget, without knowing how many are coming</span></span></label></div><h3 data-front-key="difficulty_heading">Difficulty</h3><div class="choice-grid difficulty-grid" role="group" aria-label="Difficulty"><label><input type="radio" name="difficulty" value="3"><span><strong data-front-key="easy_title">Easy</strong><span data-front-key="easy_description">Pre-activate at least 3 days before</span></span></label><label><input type="radio" name="difficulty" value="4" checked><span><strong data-front-key="medium_title">Medium</strong><span data-front-key="medium_description">Pre-activate 4+ days before</span></span></label><label><input type="radio" name="difficulty" value="5"><span><strong data-front-key="hard_title">Hard</strong><span data-front-key="hard_description">Pre-activate 5+ days before</span></span></label></div><p class="subtle" data-front-key="front_rules">Pre-activate to prepare an area; full activation is possible closer to landfall in an area you have prepared.</p><div class="start-actions"><button type="button" class="btn" id="start-game" data-front-key="start_button">Start game</button><a class="about-link" href="./about.html">About the game</a></div><p class="image-credit"><span data-front-key="image_credit">Background: NASA Terra/MODIS image of Cyclone Bingiza approaching Madagascar (13 February 2011), Jeff Schmaltz / NASA GSFC, CC BY 2.0.</span> <a href="https://earthobservatory.nasa.gov/images/49250/tropical-cyclone-bingiza" target="_blank" rel="noopener noreferrer" data-front-key="image_source_link_text">Image source</a> · <a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener noreferrer" data-front-key="image_licence_link_text">Licence</a>.</p></div></section><main>
 <div class="stats">
 <div class="stat"><div class="k">Season progress</div><div class="v" id="seasonstat">—</div></div>
 <div class="stat"><div class="k">Remaining budget</div><div class="v" id="budgetstat">—</div></div>
@@ -75,7 +79,7 @@ footer{margin-top:12px;color:#5f7780;font-size:12px;line-height:1.5}
 <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap"><h2 id="stormtitle">Loading…</h2><span class="pill" id="datepill">Forecast briefing</span></div>
 <div id="map" role="img" aria-label="Map of Madagascar with forecast tracks and warehouse locations"></div>
 <div class="subtle" style="margin-top:10px">Blue lines: all ensemble members · Dashed red: ensemble median · Coloured points: median forecast wind · Warehouses: red = not prepared, green = pre-activated, dark green = fully activated</div>
-<details><summary>About these forecasts</summary>Each storm uses a distinct WATTCH ensemble hindcast. Daily training updates are constructed from the archived ensemble and a reference track, not genuine successive operational forecasts. All available ensemble-member tracks are displayed, alongside an illustrative median-based training forecast.</details>
+<details><summary>About these forecasts</summary>Illustrative daily forecast tracks from the WATTCH archive; not successive operational forecasts. <a href="./about.html">How the game was constructed</a>.</details>
 </div>
 <div class="panel"><h3>Met Service · WhatsApp update</h3><div id="brief"></div><div class="subtle" id="forecastsource"></div></div>
 </section>
@@ -96,7 +100,7 @@ footer{margin-top:12px;color:#5f7780;font-size:12px;line-height:1.5}
 <div class="panel"><h3>Operational position</h3><div id="stockstat" class="subtle"></div><div class="progress"><span id="progressbar" style="width:0%"></span></div></div>
 </aside>
 </div>
-<footer>This is a training prototype. Warehouse positions, budgets, indicative reach, Chef scoring, and impact exposure are simplified game assumptions, not verified operational Red Cross data. Some sampled storms may not cause damaging landfall. <a href="./jokwe.html">Play the original Jokwe prototype</a>.</footer>
+<footer>Training game using simplified assumptions; not an operational forecast. <a href="./about.html">About the game and data</a> · <a href="./jokwe.html">Original Jokwe prototype</a>.</footer>
 </main>
 <script>
 
@@ -154,7 +158,7 @@ try {
 const ibtracsMatches={"2003_tr0031":"2003313S05079","2003_tr0034":"2003338S09065","2004_tr0009":"2004025S16044","2004_tr0014":"2004061S12072","2004_tr0025":"2004325S06078","2005_tr0009":"2005017S09061","2005_tr0013":"2005026S20040","2006_tr0006":"2006021S11053","2006_tr0014":"2006060S13058","2006_tr0020":"2006094S08087","2006_tr0025":"2006330S06049","2006_tr0027":"2006350S07071","2006_tr0029":"2006364S12058","2007_tr0011":"2007037S19050","2007_tr0012":"2007043S11071","2007_tr0013":"2007050S16079","2007_tr0017":"2007066S12066","2007_tr0018":"2007085S11085","2007_tr0027":"2007322S06075","2007_tr0029":"2007346S12073","2007_tr0033":"2007363S20043","2008_tr0013":"2008023S10050","2008_tr0014":"2008037S10055","2008_tr0010":"2008033S11083","2008_tr0019":"2008062S10064","2008_tr0026":"2008290S05071","2008_tr0029":"2008348S10077","2009_tr0008":"2009017S20043","2009_tr0022":"2009093S12062","2009_tr0027":"2009325S12066","2009_tr0031":"2009346S07086","2010_tr0005":"2010002S09096","2010_tr0006":"2010032S20042","2010_tr0013":"2010046S10058","2010_tr0017":"2010066S19050","2010_tr0025":"2010143S20035","2011_tr0013":"2011038S11062","2011_tr0029":"2012010S24049","2012_tr0006":"2012010S24049","2012_tr0009":"2012018S16041","2012_tr0014":"2012039S14075","2012_tr0016":"2012056S13057","2012_tr0024":"2012285S04077","2012_tr0032":"2012362S08071","2013_tr0014":"2013046S20042","2013_tr0020":"2013093S08074","2013_tr0026":"2013348S10082","2014_tr0006":"2014015S16043","2014_tr0015":"2014048S16039","2014_tr0025":"2014319S06066","2015_tr0003":"2015013S18038","2015_tr0015":"2015064S14052","2015_tr0017":"2015092S18074","2016_tr0007":"2016039S14061","2016_tr0018":"2016195S06076","2017_tr0003":"2017033S14056","2017_tr0005":"2017043S19040","2017_tr0009":"2017061S11063","2017_tr0026":"2017364S12065","2018_tr0013":"2018073S12057","2018_tr0020":"2018111S07055","2019_tr0008":"2019023S21041","2019_tr0013":"2019063S18038","2019_tr0026":"2019336S06055","2020_tr0009":"2020022S17043","2020_tr0013":"2020034S13063","2020_tr0028":"2020332S11091","2020_tr0033":"2020355S11065","2020_tr0034":"2020366S12073","2021_tr0010":"2021012S12086","2021_tr0019":"2021035S11080","2021_tr0025":"2021062S18040","2022_tr0006":"2022020S13060","2022_tr0007":"2022024S09090","2022_tr0009":"2022034S16082","2022_tr0014":"2022042S12063","2022_tr0019":"2022065S16055","2022_tr0025":"2022110S12051","2023_tr0004":"2023013S08081","2023_tr0007":"2023032S12091","2023_tr0009":"2023036S12117","2023_tr0020":"2023364S19035","2024_tr0012":"2024049S17052","2024_tr0015":"2024061S11062","2024_tr0018":"2024082S08054","2024_tr0025":"2024313S06092","2024_tr0027":"2024341S12086"};
 const hubs=[{id:"N",name:"Antsiranana",lon:49.29,lat:-12.27},{id:"NE",name:"Sambava",lon:50.17,lat:-14.27},{id:"NW",name:"Mahajanga",lon:46.32,lat:-15.72},{id:"E",name:"Toamasina",lon:49.4,lat:-18.15},{id:"SE",name:"Mananjary",lon:48.33,lat:-21.23},{id:"SW",name:"Toliara",lon:43.67,lat:-23.36}];
 const cost={preposition:20000,distribute:8000};
-const PRE_WINDOW=7,ACT_WINDOW=3,STRONG_WIND=118,STORM_WIND=63;
+const PRE_WINDOW=7,ACT_WINDOW=3,STRONG_WIND=118,STORM_WIND=63,PRE_TRIGGER_MIN_DAYS=5;
 const $=id=>document.getElementById(id);
 const date=x=>{const s=String(x).trim().replace(" ","T");return new Date((/^\d{4}-\d{2}-\d{2}$/.test(s)?s+"T00:00:00":s)+"Z");};
 const dayMs=86400000, money=x=>"CHF "+Math.round(x).toLocaleString("en-GB");
@@ -279,11 +283,38 @@ function trainingSignals(st){
  preSignal:members.length>0&&near/members.length>.5,
  activation:members.length>0&&strong/members.length>.5};
 }
-function thresholdExceeded(st){
- return (st.data.reference_track||[]).some(p=>{
+function observedThresholds(st){
+ // Both stages use the same approximate geographic test, but different wind thresholds.
+ // These are WATTCH reference-track outcomes, not verified wind observations.
+ let pre=false,full=false;
+ for(const p of st.data.reference_track||[]){
   const lat=+p[1],lon=+p[2],wind=+p[3]*3.6;
-  return wind>STRONG_WIND&&(inIsland(lat,lon)||hubs.some(h=>dist([lat,lon],[h.lat,h.lon])<175));
- });
+  const nearMadagascar=inIsland(lat,lon)||hubs.some(h=>dist([lat,lon],[h.lat,h.lon])<175);
+  if(!nearMadagascar)continue;
+  if(wind>=STORM_WIND)pre=true;
+  if(wind>STRONG_WIND)full=true;
+ }
+ return {pre,full};
+}
+function thresholdExceeded(st){return observedThresholds(st).full;}
+function stageClassification(forecastIssued,forecastPositive,outcomeReached){
+ if(!forecastIssued)return "Not assessable";
+ if(forecastPositive&&outcomeReached)return "Correct warning";
+ if(forecastPositive&&!outcomeReached)return "Overforecast";
+ if(!forecastPositive&&outcomeReached)return "Underforecast";
+ return "Correct non-warning";
+}
+function forecastAssessment(st){
+ const logs=st.decisionLog||[],observed=observedThresholds(st);
+ const preSamples=logs.filter(x=>x.lead>=PRE_TRIGGER_MIN_DAYS&&x.lead<=PRE_WINDOW);
+ const fullSamples=logs.filter(x=>x.lead>=2&&x.lead<=ACT_WINDOW);
+ const prePredicted=preSamples.some(x=>x.preSignal);
+ const fullPredicted=fullSamples.some(x=>x.activationSignal);
+ return {
+  observed,prePredicted,fullPredicted,
+  pre:stageClassification(preSamples.length>0,prePredicted,observed.pre),
+  full:stageClassification(fullSamples.length>0,fullPredicted,observed.full)
+ };
 }
 function fillFeedback(template,people){
  return String(template||"").replace(/\{people_reached\}/g,people.toLocaleString("en-GB"));
@@ -292,8 +323,9 @@ function selectFeedback(st){
  const affected=new Set(st.impact||[]),stock=[...st.stock],distributed=[...st.distributed],logs=st.decisionLog||[];
  const reached=distributed.filter(id=>affected.has(id)).length,uncovered=[...affected].filter(id=>!st.distributed.has(id)).length;
  const unnecessary=distributed.some(id=>!affected.has(id)),all=stock.length===hubs.length,above=thresholdExceeded(st);
- const warning=logs.some(x=>x.preSignal&&x.lead>=G.prepDays&&x.lead<=PRE_WINDOW);
- const activation=logs.some(x=>x.activationSignal&&x.lead>=0&&x.lead<=ACT_WINDOW);
+ const stages=forecastAssessment(st);
+ const warning=stages.prePredicted;
+ const activation=stages.fullPredicted;
  const credible=warning&&activation,none=stock.length===0&&distributed.length===0;
  let id;
  if(above){
@@ -318,14 +350,16 @@ function selectFeedback(st){
  const people=reached*1000,reach=people===0?"None":uncovered?"Some":"High";
  const budget=G.budget===0?"Exhausted":G.budget<45000?"Low":"Healthy";
  const decision=above?(credible&&reached?"Good":!warning&&!reached?"Good":"Poor"):(distributed.length&&!warning?"Poor":"Good");
- const outlook=above?(!warning?"Underforecast":distributed.length&&!reached?"Track error":"Accurate"):warning?"Overforecast":"Accurate";
+ // Boss feedback's legacy one-word forecast label uses the full-activation
+ // comparison; the two separate forecast classifications are retained below.
+ const outlook=stages.full==="Overforecast"?"Overforecast":stages.full==="Underforecast"?"Underforecast":distributed.length&&!reached&&above?"Track error":"Accurate";
  const variants=feedbackLibrary.boss.map(b=>({b,score:
  (b["People helped"]===reach?5:0)+(b["Decision quality"]===decision?3:0)+(b["Forecast outcome"]===outlook?3:0)+(b["Budget remaining"]===budget?2:0)
  })).sort((a,b)=>b.score-a.score);
  const boss=variants[0]?.b;
  return {id,bossId:boss?.Boss_ID||"",objective:fillFeedback(objective?.Feedback_O||"Review forecast evidence and decision timing.",people),
  boss:fillFeedback(boss?.Feedback_B||objective?.Feedback_B||"We need to reflect on this storm.",people),
- threshold:above,forecast:outlook,decisionQuality:decision,people};
+ threshold:above,forecast:outlook,decisionQuality:decision,people,stages};
 }
 
 function forecastMessage(rows){if(!rows.length)return "We're monitoring this system. The archived ensemble provides no further track guidance at this point; the location and intensity remain uncertain.";const hits=rows.filter(p=>p.lon>=43&&p.lon<=52&&p.lat>=-26&&p.lat<=-11);if(!hits.length)return "We're monitoring the system. There is uncertainty about whether it will make landfall in Madagascar. We will keep checking the forecast.";const p=hits[0],strength=p.wind>=118?"cyclone-strength":p.wind>=63?"tropical-storm-strength":"weaker";return "We're monitoring. The current training guidance suggests possible landfall in around "+p.day+" day"+(p.day===1?"":"s")+", with winds near "+Math.round(p.wind/5)*5+" km/h ("+strength+"). The location and intensity remain uncertain.";}
@@ -467,6 +501,7 @@ function stormReview(st,index){
    '<p>Feedback library: Scientist '+esc(scored.id||"unavailable")+'; Boss '+esc(scored.bossId||"unavailable")+'. Game outcome: '+(st.impact||[]).length+' modelled affected areas, '+reached.toLocaleString("en-GB")+' people reached (illustrative); '+money(spend)+' spent.</p>'+
    (verified?.ibtracsFix?'<p><strong>Near-landfall best-track fix:</strong> '+esc(verified.ibtracsFix.kmh)+' km/h, 10-minute sustained, at '+esc(verified.ibtracsFix.utc)+'. This may not be the exact coastline-crossing wind.</p>':'')+
    (verified?.windNote?'<p>'+esc(verified.windNote)+'</p>':'')+
+   '<p><strong>Forecast verification (illustrative):</strong> Pre-activation (≥63 km/h): '+esc(scored.stages?.pre||"Not assessable")+'; full activation (>118 km/h): '+esc(scored.stages?.full||"Not assessable")+'. Both compared separately with the WATTCH reference track, not observed winds.</p>'+
    '<p><strong>Additional decision assessment:</strong> '+esc(evaluateDecision(st))+'</p>'+intensity+sources+
    '<p><strong>Original WATTCH initialisation:</strong> '+esc(st.data.initialization)+' · <a href="https://www.ncei.noaa.gov/products/international-best-track-archive" target="_blank" rel="noopener noreferrer">IBTrACS</a> · <a href="https://zenodo.org/records/20446920" target="_blank" rel="noopener noreferrer">WATTCH</a></p>'+
    '</details></article>';
