@@ -256,15 +256,22 @@ function issueTime(){const st=current();return new Date(+st.start+st.day*dayMs);
 function displayTime(){const st=current();return addDays(st.simStart,st.day);}
 // In-game planning windows use the scenario clock; the visible landfall
 // countdown below is recalculated from the CURRENT ensemble, not this clock.
-function remainingDays(){return Math.ceil((current().event-issueTime())/dayMs);}
+function remainingDays(){
+ const estimate=predictedLandfallCountdown(current());
+ // Fallback keeps the training scenario playable when the ensemble has no
+ // coastline crossing at all. It is NOT shown as a forecast.
+ return estimate?Math.ceil(estimate.days):Math.ceil((current().event-issueTime())/dayMs);
+}
 function predictedLandfallCountdown(st){
+ if(st.forecastClockDay===st.day)return st.forecastClock;
  const issued=issueTime(),leadTimes=[],members=st.data.forecast_tracks||[];
  for(const m of members){
   const hits=forecastCrossings(m.points,issued,7);
   if(hits.length)leadTimes.push(Math.min(...hits.map(h=>h.day)));
  }
- if(!leadTimes.length)return null;
- return {days:Math.round(midpoint(leadTimes)*10)/10,fraction:leadTimes.length/members.length};
+ st.forecastClockDay=st.day;
+ st.forecastClock=leadTimes.length?{days:Math.round(midpoint(leadTimes)*10)/10,fraction:leadTimes.length/members.length}:null;
+ return st.forecastClock;
 }
 function canPrep(){const d=remainingDays();return d>=G.prepDays&&d<=PRE_WINDOW;}
 function canDist(){const d=remainingDays();return d>=2&&d<=ACT_WINDOW&&[...current().stock].some(x=>!current().distributed.has(x));}
@@ -492,7 +499,6 @@ function classifyLocationAction(chosen,affected){
 function activationForecastWarehouses(st){
  const logs=(st.decisionLog||[]).filter(x=>x.lead>=2&&x.lead<=ACT_WINDOW);
  if(!logs.length)return [];
- const issued=new Date(+st.start+st.day*dayMs);
  // Use first briefing within the activation decision window, regardless of
  // whether the player activated. Never use the eventual reference track here.
  const briefing=logs[0],at=addDays(st.event,-briefing.lead),members=st.data.forecast_tracks||[];
@@ -605,7 +611,7 @@ $("brief").textContent=last?"The storm has passed. Reviewing impacts and expendi
 const windAtLandfall=forecastLandfall(rows),signals=trainingSignals(st);$("forecastsource").textContent="Training estimate · Tropical-storm-strength mainland landfall: "+Math.round(signals.probability*100)+"% of ensemble tracks · Cyclone-strength signal: "+(signals.activation?"yes":"not indicated")+" · Not an official forecast.";
 const landfallForecast=predictedLandfallCountdown(st);
 $("leadtime").textContent=last?"Storm completed":
- landfallForecast?"Forecast mainland landfall in approximately "+landfallForecast.days+" day(s) ("+Math.round(landfallForecast.fraction*100)+"% of ensemble members show a crossing).":
+ landfallForecast?(landfallForecast.fraction>.5?"Forecast mainland landfall in approximately ":"Possible mainland landfall in around ")+landfallForecast.days+" day(s) ("+Math.round(landfallForecast.fraction*100)+"% of ensemble members show a crossing).":
  "No forecast mainland landfall in the next 7 days.";
 
 const names=ids=>[...ids].map(id=>hubs.find(h=>h.id===id)?.name||id).join(", ")||"None";
