@@ -40,7 +40,7 @@ function draw(f,data){
  const coast=[[49.4,-12.0],[50.2,-14.7],[49.9,-16.0],[49.4,-18.2],[48.3,-21.2],[47.5,-24.8],[45.1,-25.7],[43.3,-22.2],[43.7,-19.8],[44.4,-16.8],[46.2,-15.7],[47.8,-14.6]];
  svg.appendChild(el("polygon",{points:coast.map(p=>lonScale(p[0])+","+latScale(p[1])).join(" "),fill:"#eee9d8",stroke:"#7c968e","stroke-width":2}));
  if(data.reference_track)line(data.reference_track,"#20282f",3,0.8,"8 5");
- for(const m of f.members)line(m.points,"#3378a8",2,0.56);
+ const issueTs=Date.parse(f.issue_date+"T00:00:00Z"),maxTs=issueTs+7*86400000;for(const m of f.members)line(m.points.filter(p=>{const t=Date.parse(p[0].replace(" ","T")+"Z");return t>=issueTs&&t<=maxTs;}),"#3378a8",2,0.56);
  if(f.reference_start){const c=el("circle",{cx:lonScale(f.reference_start[1]),cy:latScale(f.reference_start[0]),r:7,fill:"#df722a",stroke:"#fff","stroke-width":2});svg.appendChild(c);}
  let count=f.members.length,pts=f.members.reduce((n,m)=>n+m.points.length,0);
  details.textContent=f.issue_date+" · "+(f.type==="original"?"Original WATTCH forecast":"Synthetic daily reconstruction between "+f.bracketing_initializations.join(" and "))+" · "+count+" ensemble members · "+pts+" track positions";
