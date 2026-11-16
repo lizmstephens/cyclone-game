@@ -79,7 +79,7 @@ footer{margin-top:12px;color:#5f7780;font-size:12px;line-height:1.5}
 <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap"><h2 id="stormtitle">Loading…</h2><span class="pill" id="datepill">Forecast briefing</span></div>
 <div id="map" role="img" aria-label="Map of Madagascar with forecast tracks and warehouse locations"></div>
 <div class="wind-legend" aria-label="Forecast map key"><span class="legend-entry"><span class="wind-dot" style="background:#61b7db"></span>&lt;63 km/h</span><span class="legend-entry"><span class="wind-dot" style="background:#36b99b"></span>63–88 km/h</span><span class="legend-entry"><span class="wind-dot" style="background:#ebca55"></span>89–117 km/h</span><span class="legend-entry"><span class="wind-dot" style="background:#f39a4b"></span>118–165 km/h</span><span class="legend-entry"><span class="wind-dot" style="background:#cf4b4b"></span>≥166 km/h</span></div><div class="wind-legend"><span class="legend-entry"><span class="line-sample"></span>Ensemble members</span><span class="legend-entry"><span class="line-sample median"></span>Median track</span><span>Coloured dots show median-track wind strength, not observed intensity</span></div><div class="subtle" style="margin-top:7px">Warehouses: red = not mobilised; green = mobilised; dark green = fully activated. Winds are approximate 10 m model winds; averaging period unverified.</div>
-<details><summary>About these forecasts</summary>Illustrative daily forecast tracks from the WATTCH archive; not successive operational forecasts. <a href="./about.html">How the game was constructed</a>.</details>
+
 </div>
 <div class="panel"><h3>Met Service · WhatsApp update</h3><div id="brief"></div><div class="subtle" id="forecastsource"></div></div>
 </section>
@@ -254,7 +254,18 @@ function startScenario(s,simStart){const t=date(s.initialization),event=eventDat
 function current(){return G.storms[G.slot];}
 function issueTime(){const st=current();return new Date(+st.start+st.day*dayMs);}
 function displayTime(){const st=current();return addDays(st.simStart,st.day);}
+// In-game planning windows use the scenario clock; the visible landfall
+// countdown below is recalculated from the CURRENT ensemble, not this clock.
 function remainingDays(){return Math.ceil((current().event-issueTime())/dayMs);}
+function predictedLandfallCountdown(st){
+ const issued=issueTime(),leadTimes=[],members=st.data.forecast_tracks||[];
+ for(const m of members){
+  const hits=forecastCrossings(m.points,issued,7);
+  if(hits.length)leadTimes.push(Math.min(...hits.map(h=>h.day)));
+ }
+ if(!leadTimes.length)return null;
+ return {days:Math.round(midpoint(leadTimes)*10)/10,fraction:leadTimes.length/members.length};
+}
 function canPrep(){const d=remainingDays();return d>=G.prepDays&&d<=PRE_WINDOW;}
 function canDist(){const d=remainingDays();return d>=2&&d<=ACT_WINDOW&&[...current().stock].some(x=>!current().distributed.has(x));}
 function changeSeason(){
@@ -606,7 +617,11 @@ $("datepill").textContent=t.toLocaleDateString("en-GB",{day:"numeric",month:"lon
 $("map").innerHTML=mapSvg(rows);
 $("brief").textContent=last?"The storm has passed. Reviewing impacts and expenditure.":forecastMessage(rows);
 const windAtLandfall=forecastLandfall(rows),signals=trainingSignals(st);$("forecastsource").textContent="Training estimate · Tropical-storm-strength mainland landfall: "+Math.round(signals.probability*100)+"% of ensemble tracks · Cyclone-strength signal: "+(signals.activation?"yes":"not indicated")+" · Not an official forecast.";
-$("leadtime").textContent=last?"Storm completed":remaining>=0?"Approximate event window: "+remaining+" day(s) remaining · Mobilise: "+G.prepDays+"–7 days · Full activation: 3- and 2-day briefings":"Event window has passed";
+const landfallForecast=predictedLandfallCountdown(st);
+$("leadtime").textContent=last?"Storm completed":
+ landfallForecast?"Forecast mainland landfall in approximately "+landfallForecast.days+" day(s) ("+Math.round(landfallForecast.fraction*100)+"% of ensemble members show a crossing).":
+ "No forecast mainland landfall in the next 7 days.";
+
 const names=ids=>[...ids].map(id=>hubs.find(h=>h.id===id)?.name||id).join(", ")||"None";
  $("stockstat").innerHTML='<div class="status-line"><strong>Mobilised:</strong> '+esc(names(st.stock))+'</div><div class="status-line"><strong>Fully activated:</strong> '+esc(names(st.distributed))+'</div>';
 $("progressbar").style.width=(100*(st.day+1)/(st.duration+1)).toFixed(0)+"%";
