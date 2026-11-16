@@ -290,8 +290,10 @@ function changeSeason(){
  }});
  const st=startScenario(scenario,new Date("2026-12-01T00:00:00Z"));
  st.start=date("2007-02-18");
- st.event=date("2007-03-05");
- st.duration=16; // 18 February to 5 March, inclusive
+ // End the playable threat on 28 February, when Gamede was moving south
+ // away from Madagascar. Do not follow the cyclone to its final dissipation.
+ st.event=date("2007-02-28");
+ st.duration=11; // Briefings 18–28 February; review after the final briefing.
  G={storms:[st],slot:0,budget:150000,people:0,boss:60,finished:false,mode:"single",prepDays:Number(document.querySelector('input[name="difficulty"]:checked')?.value||4)};
  render();
 }
