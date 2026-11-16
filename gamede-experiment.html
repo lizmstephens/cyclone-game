@@ -1,1 +1,53 @@
-<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Gamede 2007 — experimental daily forecasts</title><style>body{font:16px system-ui;margin:24px;max-width:1100px}svg{width:100%;height:auto;background:#edf5f8;border:1px solid #c9d4db}select{font:inherit;padding:6px}p{line-height:1.5}.warn{background:#fff3da;padding:12px}</style><h1>Gamede (2007): daily forecast experiment</h1><p class="warn">Experimental synthetic forecasts, not original WATTCH initialisations. These reconstructions use future reference-track positions and must not be interpreted as genuine forecast skill.</p><label>Issue date: <select id="issue"></select></label><p id="info"></p><svg id="chart" viewBox="0 0 950 550" aria-label="Gamede reference and synthetic ensemble tracks"></svg><p>Blue: synthetic ensemble members. Black dashed: reference track. Orange: forecast issue location. The source scenario is unchanged.</p><script type="module">import {buildGamedeDailyForecasts} from './js/gamede-experiment.js';const data=await (await fetch('./data/scenarios.json')).json(),s=data.scenarios.find(x=>x.event_id==='2007_tr0013');if(!s)throw Error('Gamede not found');const result=buildGamedeDailyForecasts(s),select=document.querySelector('#issue');result.forecasts.forEach((f,i)=>select.add(new Option(f.issue_time.slice(0,10),i)));const x=lon=>50+(lon-30)/60*850,y=lat=>35+(-lat-5)/40*470;const path=p=>p.map((a,i)=>(i?'L':'M')+x(a[2]).toFixed(1)+' '+y(a[1]).toFixed(1)).join(' ');function render(){const f=result.forecasts[+select.value||0],svg=document.querySelector('#chart');svg.innerHTML='<path d="'+path(s.reference_track)+'" fill="none" stroke="#222" stroke-width="3" stroke-dasharray="8 5"/>'+f.forecast_tracks.map(m=>'<path d="'+path(m.points)+'" fill="none" stroke="#2878ac" stroke-opacity=".5" stroke-width="2"/>').join('')+'<circle cx="'+x(f.reference_position[1])+'" cy="'+y(f.reference_position[0])+'" r="7" fill="#d75d29"/>';document.querySelector('#info').textContent=f.forecast_tracks.length+' members · '+f.source+' · original WATTCH issue: '+s.initialization;}select.addEventListener('change',render);render();</script></html>
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gamede (2007) — WATTCH daily forecast comparison</title>
+<style>
+:root{font:16px system-ui,sans-serif;color:#193948;background:#edf3f4}
+body{margin:0}header{background:#173e51;color:white;padding:18px max(20px,calc((100vw - 1100px)/2))}
+header a{color:white}main{max-width:1100px;padding:25px 16px 55px;margin:auto}
+h1{font-size:clamp(25px,4vw,37px)}p{line-height:1.55}.box{background:white;border:1px solid #cddde4;border-radius:14px;padding:18px;margin:16px 0}
+.notice{background:#fff6df;border-left:4px solid #d4a13c;padding:12px}
+select{font:inherit;padding:9px;border:1px solid #aebfc7;border-radius:7px;max-width:100%}
+svg{width:100%;height:auto;display:block;background:#e9f4fa;border-radius:10px}
+.legend{display:flex;gap:20px;flex-wrap:wrap;margin:12px 0;color:#395966;font-size:14px}
+.chip{display:inline-block;width:19px;height:3px;vertical-align:middle;margin-right:5px}
+small{color:#486575}
+</style>
+<header><a href="./about.html">← About the game</a></header>
+<main><h1>Gamede (2007): original and reconstructed daily forecasts</h1>
+<p>This test uses the newly recovered WATTCH forecast runs, rather than the single initialisation previously stored in the main game.</p>
+<p class="notice"><strong>Original</strong> means a WATTCH hindcast initialisation. <strong>Synthetic</strong> means a missing daily briefing reconstructed retrospectively from the preceding and following original initialisations; it is not a genuine issued forecast. The game itself is unchanged.</p>
+<div class="box">
+<label for="issue"><strong>Forecast initialisation:</strong></label> <select id="issue"></select>
+<p id="details" aria-live="polite"></p>
+<svg id="chart" viewBox="0 0 1080 650" role="img" aria-label="WATTCH ensemble cyclone tracks around Madagascar"></svg>
+<div class="legend"><span><i class="chip" style="background:#3378a8"></i>Ensemble members</span><span><i class="chip" style="background:#20282f"></i>Historical reference track</span><span><i class="chip" style="background:#df722a"></i>Reference position at forecast issue</span></div>
+<p><small>Map shows latitude/longitude. This is an experimental track viewer; the reference line is shown for retrospective comparison and is not displayed to players.</small></p>
+</div>
+<h2>Method</h2><p>The missing daily forecasts are calculated by blending each matched member's <em>lead-time-relative displacement</em> and intensity change from the two surrounding WATTCH initialisations. Synthetic members start at the reference-track position on the issue date and fan out as lead time increases. Genuine forecasts are preserved unchanged.</p>
+<p>The reconstruction uses a later WATTCH forecast, which would not have been available on the synthetic issue date; this is a training reconstruction, not a historical real-time prediction. The earliest WATTCH runs precede the available reference track and are displayed without a reference-anchored start marker.</p>
+</main>
+<script>
+const svg=document.querySelector("#chart"),select=document.querySelector("#issue"),details=document.querySelector("#details");
+const lonScale=lon=>65+(lon-20)/75*950,latScale=lat=>44+(-lat+3)/53*560;
+const ns="http://www.w3.org/2000/svg";
+const el=(tag,attrs)=>{const e=document.createElementNS(ns,tag);for(const [k,v] of Object.entries(attrs))e.setAttribute(k,v);return e;};
+const line=(pts,color,width,opacity,dash)=>{if(pts.length<2)return;const d=pts.map((p,i)=>(i?"L":"M")+lonScale(p[2]).toFixed(1)+" "+latScale(p[1]).toFixed(1)).join(" ");svg.appendChild(el("path",{d,fill:"none",stroke:color,"stroke-width":width,"stroke-opacity":opacity,...(dash?{"stroke-dasharray":dash}:{})}));};
+function draw(f,data){
+ svg.replaceChildren();
+ for(let lon=20;lon<=95;lon+=10){svg.appendChild(el("line",{x1:lonScale(lon),y1:32,x2:lonScale(lon),y2:605,stroke:"#c4dce7","stroke-dasharray":"3 5"}));const t=el("text",{x:lonScale(lon)+3,y:628,fill:"#567887","font-size":16});t.textContent=lon+"°E";svg.appendChild(t);}
+ for(let lat=-50;lat<=0;lat+=10){svg.appendChild(el("line",{x1:45,y1:latScale(lat),x2:1030,y2:latScale(lat),stroke:"#c4dce7","stroke-dasharray":"3 5"}));const t=el("text",{x:7,y:latScale(lat)-4,fill:"#567887","font-size":15});t.textContent=Math.abs(lat)+"°S";svg.appendChild(t);}
+ const coast=[[49.4,-12.0],[50.2,-14.7],[49.9,-16.0],[49.4,-18.2],[48.3,-21.2],[47.5,-24.8],[45.1,-25.7],[43.3,-22.2],[43.7,-19.8],[44.4,-16.8],[46.2,-15.7],[47.8,-14.6]];
+ svg.appendChild(el("polygon",{points:coast.map(p=>lonScale(p[0])+","+latScale(p[1])).join(" "),fill:"#eee9d8",stroke:"#7c968e","stroke-width":2}));
+ if(data.reference_track)line(data.reference_track,"#20282f",3,0.8,"8 5");
+ for(const m of f.members)line(m.points,"#3378a8",2,0.56);
+ if(f.reference_start){const c=el("circle",{cx:lonScale(f.reference_start[1]),cy:latScale(f.reference_start[0]),r:7,fill:"#df722a",stroke:"#fff","stroke-width":2});svg.appendChild(c);}
+ let count=f.members.length,pts=f.members.reduce((n,m)=>n+m.points.length,0);
+ details.textContent=f.issue_date+" · "+(f.type==="original"?"Original WATTCH forecast":"Synthetic daily reconstruction between "+f.bracketing_initializations.join(" and "))+" · "+count+" ensemble members · "+pts+" track positions";
+}
+fetch("./data/gamede-daily-forecasts.json").then(r=>{if(!r.ok)throw Error("Could not load Gamede data");return r.json();}).then(data=>{
+ data.forecasts.forEach((f,i)=>select.add(new Option(f.issue_date+" — "+(f.type==="original"?"Original WATTCH":"Synthetic"),i)));
+ select.value=String(data.forecasts.findIndex(f=>f.issue_date==="2007-02-20"));
+ const render=()=>draw(data.forecasts[+select.value||0],data);select.addEventListener("change",render);render();
+}).catch(e=>{details.textContent="Unable to load forecast data: "+e.message;});
+</script></html>
