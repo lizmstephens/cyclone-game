@@ -566,12 +566,17 @@ function selectFeedback(st){
 }
 
 function forecastMessage(rows){
- if(!rows.length)return "We're monitoring this system. The archived ensemble provides no further track guidance at this point; the location and intensity remain uncertain.";
+ const estimate=predictedLandfallCountdown(current());
+ if(!rows.length)return "We're monitoring this system. The archive provides no further forecast track guidance; the location and intensity remain uncertain.";
  const crossings=coastalLandfalls(rows.map(p=>[p.lat,p.lon,p.wind/3.6]));
- if(!crossings.length)return "We're monitoring the system. The central training track does not cross mainland Madagascar, but individual ensemble members may still indicate landfall. We will keep checking the forecast.";
- const h=crossings[0],left=rows[Math.floor(h.fraction)],right=rows[Math.min(rows.length-1,Math.ceil(h.fraction))],day=left.day+(h.fraction-Math.floor(h.fraction))*(right.day-left.day);
- const strength=h.wind>=118?"cyclone-strength":h.wind>=63?"tropical-storm-strength":"weaker";
- return "We're monitoring. The central training track indicates possible mainland landfall in around "+Math.round(day)+" day(s), with winds near "+Math.round(h.wind/5)*5+" km/h ("+strength+"). The location and intensity remain uncertain.";
+ if(!crossings.length){
+  return estimate?
+   "The central forecast track does not cross mainland Madagascar, but "+Math.round(estimate.fraction*100)+"% of ensemble members indicate a possible landfall in around "+estimate.days+" days. The location and intensity remain uncertain.":
+   "The current ensemble does not indicate mainland Madagascar landfall in the next seven days. We will continue monitoring.";
+ }
+ const h=crossings[0],strength=h.wind>=118?"cyclone-strength":h.wind>=63?"tropical-storm-strength":"weaker";
+ const day=estimate?estimate.days:rows[Math.floor(h.fraction)].day;
+ return "We're monitoring. Current ensemble guidance indicates possible mainland landfall in around "+day+" day(s), with central-track winds near "+Math.round(h.wind/5)*5+" km/h ("+strength+"). The location and intensity remain uncertain.";
 }
 function impact(st){
  const ref=st.data.reference_track,landfallSides=referenceLandingSides(st),hits=[];
