@@ -287,11 +287,39 @@ function coastalLandfalls(points){
    if(t<0||t>1||u<0||u>1)continue;
    const ahead=Math.min(1,t+1e-5);
    if(!inIsland(y+ahead*dy,x+ahead*dx))continue;
-   hits.push({fraction:i-1+t,wind:(a[2]+t*(b[2]-a[2]))*3.6});
+   hits.push({fraction:i-1+t,wind:(a[2]+t*(b[2]-a[2]))*3.6,lat:y+t*dy,lon:x+t*dx,side:coastSide(y+t*dy,x+t*dx)});
    break;
   }
  }
  return hits;
+}
+// Approximate which coast the track centre entered. This is used ONLY to
+// avoid assigning direct wind impacts at warehouses on the opposite coast;
+// rainfall and indirect flood impacts still require separate modelling.
+function coastSide(lat,lon){
+ const xs=[];
+ for(let j=1;j<coast.length;j++){
+  const a=coast[j-1],b=coast[j];
+  if((a[1]>lat)===(b[1]>lat))continue;
+  xs.push(a[0]+(b[0]-a[0])*(lat-a[1])/(b[1]-a[1]));
+ }
+ if(xs.length<2)return "either";
+ const west=Math.min(...xs),east=Math.max(...xs);
+ if(east-west<1.5)return "either"; // northern/southern tip
+ return Math.abs(lon-east)<Math.abs(lon-west)?"east":"west";
+}
+function referenceLandingSides(st){
+ const track=st.data.reference_track||[];
+ const hits=coastalLandfalls(track.map(p=>[+p[1],+p[2],+p[3]]));
+ const limit=addDays(st.event,2),begin=addDays(st.start,-2);
+ return new Set(hits.filter(h=>{
+  const i=Math.floor(h.fraction),f=h.fraction-i;
+  const when=new Date(+date(track[i][0])+f*(+date(track[i+1][0])-+date(track[i][0])));
+  return when>=begin&&when<=limit&&h.wind>=STORM_WIND;
+ }).map(h=>h.side));
+}
+function warehouseSide(id){
+ return ({N:"either",NE:"east",E:"east",SE:"east",NW:"west",SW:"west"})[id]||"either";
 }
 function forecastCrossings(track,now,days){
  const samples=[];
@@ -377,6 +405,12 @@ function selectFeedback(st){
   else id=warning?"F15":"F11";
  }
  const objective=feedbackLibrary.objective.find(x=>x.ID===id);
+ const landingSides=referenceLandingSides(st),opposite=[...new Set([...st.stock,...st.distributed].filter(area=>{
+  const side=warehouseSide(area);
+  return side!=="either"&&landingSides.size&&!landingSides.has("either")&&!landingSides.has(side);
+ }))];
+ const geographyNote=opposite.length?" The simulated centre approached the "+[...landingSides].join(" and ")+" coast; "+opposite.map(area=>hubs.find(h=>h.id===area)?.name||area).join(", ")+" was on the opposite coast and was not counted as directly affected by landfall winds. This does not exclude flooding or other indirect impacts.":"";
+
  const people=reached*1000,reach=people===0?"None":uncovered?"Some":"High";
  const budget=G.budget===0?"Exhausted":G.budget<45000?"Low":"Healthy";
  const decision=above?(credible&&reached?"Good":!warning&&!reached?"Good":"Poor"):(distributed.length&&!warning?"Poor":"Good");
@@ -387,7 +421,7 @@ function selectFeedback(st){
  (b["People helped"]===reach?5:0)+(b["Decision quality"]===decision?3:0)+(b["Forecast outcome"]===outlook?3:0)+(b["Budget remaining"]===budget?2:0)
  })).sort((a,b)=>b.score-a.score);
  const boss=variants[0]?.b;
- return {id,bossId:boss?.Boss_ID||"",objective:fillFeedback(objective?.Feedback_O||"Review forecast evidence and decision timing.",people),
+ return {id,bossId:boss?.Boss_ID||"",objective:fillFeedback(objective?.Feedback_O||"Review forecast evidence and decision timing.",people)+geographyNote,
  boss:fillFeedback(boss?.Feedback_B||objective?.Feedback_B||"We need to reflect on this storm.",people),
  threshold:above,forecast:outlook,decisionQuality:decision,people,stages};
 }
@@ -400,7 +434,24 @@ function forecastMessage(rows){
  const strength=h.wind>=118?"cyclone-strength":h.wind>=63?"tropical-storm-strength":"weaker";
  return "We're monitoring. The central training track indicates possible mainland landfall in around "+Math.round(day)+" day(s), with winds near "+Math.round(h.wind/5)*5+" km/h ("+strength+"). The location and intensity remain uncertain.";
 }
-function impact(st){const ref=st.data.reference_track;const hits=[];for(const h of hubs){let best=null;for(const p of ref){const t=date(p[0]);if(t<st.start||t>addDays(st.event,2))continue;const km=dist([h.lat,h.lon],[+p[1],+p[2]]);if(!best||km<best.km)best={km,wind:+p[3]*3.6};}if(best&&best.km<175&&best.wind>=63)hits.push(h.id);}return hits;}
+function impact(st){
+ const ref=st.data.reference_track,landfallSides=referenceLandingSides(st),hits=[];
+ for(const h of hubs){
+  const side=warehouseSide(h.id);
+  // Opposite-coast warehouses cannot receive direct landfall-wind impacts
+  // from a single-sided entry. Both sides become eligible if a later separate
+  // crossing approaches the opposite coast.
+  if(landfallSides.size&&!landfallSides.has("either")&&side!=="either"&&!landfallSides.has(side))continue;
+  let best=null;
+  for(const p of ref){
+   const t=date(p[0]);if(t<st.start||t>addDays(st.event,2))continue;
+   const km=dist([h.lat,h.lon],[+p[1],+p[2]]);
+   if(!best||km<best.km)best={km,wind:+p[3]*3.6};
+  }
+  if(best&&best.km<175&&best.wind>=63)hits.push(h.id);
+ }
+ return hits;
+}
 function finishStorm(){
  const st=current(),imp=impact(st),helped=imp.filter(id=>st.distributed.has(id)),lost=imp.filter(id=>!st.distributed.has(id));
  G.people+=helped.length*1000;
