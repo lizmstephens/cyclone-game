@@ -87,8 +87,8 @@ footer{margin-top:12px;color:#5f7780;font-size:12px;line-height:1.5}
 <div class="panel"><h2>Your decision</h2><div class="subtle" id="leadtime"></div>
 <div class="actions" id="actions">
 <button type="button" data-action="monitor" class="action">👀 <strong>Keep monitoring</strong><div class="subtle">CHF 0 · Wait for the next forecast</div></button>
-<button type="button" data-action="preposition" class="action">📦 <strong>Pre-activation</strong><div class="subtle">CHF 20,000 per area · Prepare within 7 days, before your difficulty deadline</div></button>
-<button type="button" data-action="distribute" class="action">🤝 <strong>Full activation</strong><div class="subtle">CHF 8,000 per area · Requires pre-activation · Last 3 days</div></button>
+<button type="button" data-action="preposition" class="action">📦 <strong>Mobilise</strong><div class="subtle">CHF 20,000 per area · Prepare within 7 days, before your difficulty deadline</div></button>
+<button type="button" data-action="distribute" class="action">🤝 <strong>Full activation</strong><div class="subtle">CHF 8,000 per area · Requires mobilisation · 3- and 2-day briefings only</div></button>
 </div>
 <div id="warehouses" class="wh"></div><div id="cost" class="subtle">Select an action above.</div>
 <div id="message" aria-live="polite"></div>
@@ -256,7 +256,7 @@ function issueTime(){const st=current();return new Date(+st.start+st.day*dayMs);
 function displayTime(){const st=current();return addDays(st.simStart,st.day);}
 function remainingDays(){return Math.ceil((current().event-issueTime())/dayMs);}
 function canPrep(){const d=remainingDays();return d>=G.prepDays&&d<=PRE_WINDOW;}
-function canDist(){const d=remainingDays();return d>=0&&d<=ACT_WINDOW&&[...current().stock].some(x=>!current().distributed.has(x));}
+function canDist(){const d=remainingDays();return d>=2&&d<=ACT_WINDOW&&[...current().stock].some(x=>!current().distributed.has(x));}
 function changeSeason(){
  const mode=document.querySelector('input[name="game-length"]:checked')?.value==="single"?"single":"season";
  const n=mode==="single"?1:stormCount(),chosen=[],seen=new Set();for(const s of shuffle(catalogue.scenarios)){const key=ibtracsMatches[s.event_id]||s.event_id;if(seen.has(key))continue;seen.add(key);chosen.push(s);if(chosen.length>=n)break;}
@@ -606,13 +606,27 @@ $("datepill").textContent=t.toLocaleDateString("en-GB",{day:"numeric",month:"lon
 $("map").innerHTML=mapSvg(rows);
 $("brief").textContent=last?"The storm has passed. Reviewing impacts and expenditure.":forecastMessage(rows);
 const windAtLandfall=forecastLandfall(rows),signals=trainingSignals(st);$("forecastsource").textContent="Training estimate · Tropical-storm-strength mainland landfall: "+Math.round(signals.probability*100)+"% of ensemble tracks · Cyclone-strength signal: "+(signals.activation?"yes":"not indicated")+" · Not an official forecast.";
-$("leadtime").textContent=last?"Storm completed":remaining>=0?"Approximate event window: "+remaining+" day(s) remaining · pre-activation: "+G.prepDays+"–7 days · full activation: 0–3 days":"Event window has passed";
+$("leadtime").textContent=last?"Storm completed":remaining>=0?"Approximate event window: "+remaining+" day(s) remaining · Mobilise: "+G.prepDays+"–7 days · Full activation: 3- and 2-day briefings":"Event window has passed";
 const names=ids=>[...ids].map(id=>hubs.find(h=>h.id===id)?.name||id).join(", ")||"None";
  $("stockstat").innerHTML='<div class="status-line"><strong>Mobilised:</strong> '+esc(names(st.stock))+'</div><div class="status-line"><strong>Fully activated:</strong> '+esc(names(st.distributed))+'</div>';
 $("progressbar").style.width=(100*(st.day+1)/(st.duration+1)).toFixed(0)+"%";
 
 const actions=$("actions").querySelectorAll("[data-action]");
-for(const btn of actions){const a=btn.dataset.action;btn.disabled=st.acted||last||(a==="preposition"&&!canPrep())||(a==="distribute"&&!canDist());btn.classList.toggle("selected",st.choice===a);}
+for(const btn of actions){
+ const a=btn.dataset.action;
+ btn.disabled=st.acted||last||(a==="preposition"&&!canPrep())||(a==="distribute"&&!canDist());
+ btn.classList.toggle("selected",st.choice===a);
+ const heading=btn.querySelector("strong"),description=btn.querySelector(".subtle");
+ if(a==="preposition"){
+  const late=remaining<G.prepDays;
+  heading.textContent=late?"Too late to mobilise":"Mobilise";
+  description.textContent=late?"Mobilisation deadline passed ("+G.prepDays+" days before landfall).":"CHF 20,000 per area · Prepare 7 to "+G.prepDays+" days ahead";
+ }else if(a==="distribute"){
+  const late=remaining<2;
+  heading.textContent=late?"Too late to activate":"Full activation";
+  description.textContent=late?"Activation deadline passed after the 2-day briefing.":"CHF 8,000 per area · Requires mobilisation · 3- and 2-day briefings";
+ }
+}
 $("warehouses").style.display=!st.acted&&!last&&["preposition","distribute"].includes(st.choice)?"grid":"none";
 $("warehouses").innerHTML=hubs.map(h=>{const blocked=st.choice==="preposition"?st.stock.has(h.id):!st.stock.has(h.id)||st.distributed.has(h.id);return '<label class="'+(blocked?"disabled":"")+'"><input type="checkbox" data-hub="'+h.id+'" '+(blocked?"disabled":"")+' '+(st.chosen.has(h.id)?"checked":"")+'>'+h.name+'</label>';}).join("");
 const n=st.chosen.size*(cost[st.choice]||0);
