@@ -524,8 +524,14 @@ function selectFeedback(st){
  const observed=observedThresholds(st),stages=forecastAssessment(st);
  const preForecast=["Correct warning","Correct non-warning"].includes(stages.pre)?"Good":"Poor";
  const actSites=activationForecastWarehouses(st);
- const activationForecast=actSites.length===affected.size&&actSites.every(x=>affected.has(x))?
- "Correct Locations":"Incorrect Locations";
+ // Location errors are only meaningful if the full-activation wind threshold
+ // was actually exceeded. Otherwise there are no qualifying activation-impact
+ // locations to verify; use the non-error category in the existing two-option
+ // lookup, and explicitly avoid claiming the forecast locations were correct.
+ const activationLocationsApplicable=observed.full;
+ const activationForecast=!activationLocationsApplicable?"Correct Locations":
+  actSites.length===affected.size&&actSites.every(x=>affected.has(x))?
+  "Correct Locations":"Incorrect Locations";
  const dimensions={
   "Mobilisation Threshold":observed.pre?"Above":"Below",
   "Activation Threshold":observed.full?"Above":"Below",
@@ -556,7 +562,15 @@ function selectFeedback(st){
  return {
   id:objective?.ID||"unmatched",bossId:boss?.Boss_ID||"unmatched",
   objective:objective?.Feedback_O||"This combination has no matching forecaster text.",
-  forecasterText:(objective?.Feedback_O||"This combination has no matching forecaster text.")+" "+coverage+extraNote,
+  forecasterText:(!activationLocationsApplicable?
+  ((stages.prePredicted&&!stock.length)?
+   "The forecast indicated that you should have mobilised, but you didn't. The full activation threshold was not exceeded.":
+   (objective?.Feedback_O||"This combination has no matching forecaster text.").replace(
+    /(?:The later activation forecast|the activation forecast)[^.]*\./gi,
+    "The activation threshold was not exceeded, so there are no activation locations to classify as correct or incorrect.")
+  ):
+  (objective?.Feedback_O||"This combination has no matching forecaster text."))+
+  " "+coverage+extraNote,
   outcomeText:coverage+extraNote,
   boss:fillFeedback(boss?.Feedback_B||"We need to review the result and the remaining funds.",people),
   threshold:observed.full,forecast:stages.full,
