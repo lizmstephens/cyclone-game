@@ -1,0 +1,22 @@
+name: Audit IBTrACS pre-landfall winds
+on:
+  push:
+    paths:
+      - '.github/workflows/audit-ibtracs.yml'
+      - 'scripts/audit_ibtracs_prelandfall.py'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate pre-landfall wind audit
+        run: python scripts/audit_ibtracs_prelandfall.py
+      - name: Commit audit dataset
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/ibtracs_prelandfall_audit.json
+          git diff --cached --quiet || (git commit -m "Update IBTrACS pre-landfall wind audit" && git push)
