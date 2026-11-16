@@ -1,0 +1,1571 @@
+{
+  "method": "IBTrACS v04r01 SI basin, last available RSMC La R\u00e9union wind before mainland Madagascar centre crossing; USA 1-minute fallback; no averaging-period conversions",
+  "source_url": "https://www.ncei.noaa.gov/data/international-best-track-archive-for-climate-stewardship-ibtracs/v04r01/access/csv/ibtracs.SI.list.v04r01.csv",
+  "events": {
+    "2003_tr0031": {
+      "event_id": "2003_tr0031",
+      "storm_name": "BENI",
+      "ibtracs_sid": "2003313S05079",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2003_tr0034": {
+      "event_id": "2003_tr0034",
+      "storm_name": "CELA",
+      "ibtracs_sid": "2003338S09065",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2003-12-09 15:00:00",
+          "end_utc": "2003-12-09 18:00:00",
+          "last_offshore_lat": -13.2,
+          "last_offshore_lon": 50.2,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 65,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2003-12-09 15:00:00",
+            "wind_lat": -13.2,
+            "wind_lon": 50.2,
+            "lag_hours": 0.0
+          }
+        },
+        {
+          "start_utc": "2003-12-10 00:00:00",
+          "end_utc": "2003-12-10 03:00:00",
+          "last_offshore_lat": -13.5,
+          "last_offshore_lon": 48.4,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 37,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2003-12-10 00:00:00",
+            "wind_lat": -13.5,
+            "wind_lon": 48.4,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2004_tr0009": {
+      "event_id": "2004_tr0009",
+      "storm_name": "ELITA",
+      "ibtracs_sid": "2004025S16044",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2004-01-28 12:00:00",
+          "end_utc": "2004-01-28 15:00:00",
+          "last_offshore_lat": -15.5,
+          "last_offshore_lon": 45.7,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 120,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2004-01-28 12:00:00",
+            "wind_lat": -15.5,
+            "wind_lon": 45.7,
+            "lag_hours": 0.0
+          }
+        },
+        {
+          "start_utc": "2004-01-30 21:00:00",
+          "end_utc": "2004-01-31 00:00:00",
+          "last_offshore_lat": -21.6,
+          "last_offshore_lon": 48.3,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 61,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2004-01-30 21:00:00",
+            "wind_lat": -21.6,
+            "wind_lon": 48.3,
+            "lag_hours": 0.0
+          }
+        },
+        {
+          "start_utc": "2004-02-03 00:00:00",
+          "end_utc": "2004-02-03 03:00:00",
+          "last_offshore_lat": -20.2,
+          "last_offshore_lon": 44.2,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 111,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2004-02-03 00:00:00",
+            "wind_lat": -20.2,
+            "wind_lon": 44.2,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2004_tr0014": {
+      "event_id": "2004_tr0014",
+      "storm_name": "GAFILO",
+      "ibtracs_sid": "2004061S12072",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2004-03-07 00:00:00",
+          "end_utc": "2004-03-07 03:00:00",
+          "last_offshore_lat": -15.0,
+          "last_offshore_lon": 50.5,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 222,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2004-03-07 00:00:00",
+            "wind_lat": -15.0,
+            "wind_lon": 50.5,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2004_tr0013": {
+      "event_id": "2004_tr0013",
+      "storm_name": "UNNAMED",
+      "ibtracs_sid": null,
+      "status": "NO_IBTRACS_MATCH",
+      "crossings": []
+    },
+    "2004_tr0025": {
+      "event_id": "2004_tr0025",
+      "storm_name": "BENTOJANA",
+      "ibtracs_sid": "2004325S06078",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2005_tr0009": {
+      "event_id": "2005_tr0009",
+      "storm_name": "ERNEST",
+      "ibtracs_sid": "2005017S09061",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2005-01-23 06:00:00",
+          "end_utc": "2005-01-23 09:00:00",
+          "last_offshore_lat": -24.8,
+          "last_offshore_lon": 43.9,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 130,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2005-01-23 06:00:00",
+            "wind_lat": -24.8,
+            "wind_lon": 43.9,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2005_tr0013": {
+      "event_id": "2005_tr0013",
+      "storm_name": "FELAPI",
+      "ibtracs_sid": "2005026S20040",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2005-01-28 09:00:00",
+          "end_utc": "2005-01-28 12:00:00",
+          "last_offshore_lat": -23.8,
+          "last_offshore_lon": 43.6,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 61,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2005-01-28 09:00:00",
+            "wind_lat": -23.8,
+            "wind_lon": 43.6,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2005_tr0031": {
+      "event_id": "2005_tr0031",
+      "storm_name": "UNNAMED",
+      "ibtracs_sid": null,
+      "status": "NO_IBTRACS_MATCH",
+      "crossings": []
+    },
+    "2006_tr0006": {
+      "event_id": "2006_tr0006",
+      "storm_name": "BOLOETSE",
+      "ibtracs_sid": "2006021S11053",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2006-01-28 21:00:00",
+          "end_utc": "2006-01-29 00:00:00",
+          "last_offshore_lat": -20.7,
+          "last_offshore_lon": 48.5,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 43,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2006-01-28 21:00:00",
+            "wind_lat": -20.7,
+            "wind_lon": 48.5,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2006_tr0011": {
+      "event_id": "2006_tr0011",
+      "storm_name": "UNNAMED",
+      "ibtracs_sid": null,
+      "status": "NO_IBTRACS_MATCH",
+      "crossings": []
+    },
+    "2006_tr0014": {
+      "event_id": "2006_tr0014",
+      "storm_name": "DIWA",
+      "ibtracs_sid": "2006060S13058",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2006_tr0020": {
+      "event_id": "2006_tr0020",
+      "storm_name": "ELIA",
+      "ibtracs_sid": "2006094S08087",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2006_tr0025": {
+      "event_id": "2006_tr0025",
+      "storm_name": "ANITA",
+      "ibtracs_sid": "2006330S06049",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2006_tr0027": {
+      "event_id": "2006_tr0027",
+      "storm_name": "BONDO",
+      "ibtracs_sid": "2006350S07071",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2006-12-25 12:00:00",
+          "end_utc": "2006-12-25 15:00:00",
+          "last_offshore_lat": -15.5,
+          "last_offshore_lon": 46.5,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 106,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2006-12-25 12:00:00",
+            "wind_lat": -15.5,
+            "wind_lon": 46.5,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2006_tr0029": {
+      "event_id": "2006_tr0029",
+      "storm_name": "CLOVIS",
+      "ibtracs_sid": "2006364S12058",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2007-01-03 09:00:00",
+          "end_utc": "2007-01-03 12:00:00",
+          "last_offshore_lat": -20.7,
+          "last_offshore_lon": 48.5,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 91,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2007-01-03 09:00:00",
+            "wind_lat": -20.7,
+            "wind_lon": 48.5,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2007_tr0011": {
+      "event_id": "2007_tr0011",
+      "storm_name": "ENOK",
+      "ibtracs_sid": "2007037S19050",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2007_tr0012": {
+      "event_id": "2007_tr0012",
+      "storm_name": "FAVIO",
+      "ibtracs_sid": "2007043S11071",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2007_tr0013": {
+      "event_id": "2007_tr0013",
+      "storm_name": "GAMEDE",
+      "ibtracs_sid": "2007050S16079",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2007_tr0017": {
+      "event_id": "2007_tr0017",
+      "storm_name": "INDLALA",
+      "ibtracs_sid": "2007066S12066",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2007-03-15 03:00:00",
+          "end_utc": "2007-03-15 06:00:00",
+          "last_offshore_lat": -14.9,
+          "last_offshore_lon": 50.3,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 167,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2007-03-15 03:00:00",
+            "wind_lat": -14.9,
+            "wind_lon": 50.3,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2007_tr0018": {
+      "event_id": "2007_tr0018",
+      "storm_name": "JAYA",
+      "ibtracs_sid": "2007085S11085",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2007-04-03 06:00:00",
+          "end_utc": "2007-04-03 09:00:00",
+          "last_offshore_lat": -14.5,
+          "last_offshore_lon": 50.5,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 139,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2007-04-03 06:00:00",
+            "wind_lat": -14.5,
+            "wind_lon": 50.5,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2007_tr0027": {
+      "event_id": "2007_tr0027",
+      "storm_name": "BONGWE",
+      "ibtracs_sid": "2007322S06075",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2007_tr0029": {
+      "event_id": "2007_tr0029",
+      "storm_name": "CELINA",
+      "ibtracs_sid": "2007346S12073",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2007_tr0033": {
+      "event_id": "2007_tr0033",
+      "storm_name": "ELNUS",
+      "ibtracs_sid": "2007363S20043",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2008_tr0013": {
+      "event_id": "2008_tr0013",
+      "storm_name": "FAME",
+      "ibtracs_sid": "2008023S10050",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2008-01-27 09:00:00",
+          "end_utc": "2008-01-27 12:00:00",
+          "last_offshore_lat": -16.0,
+          "last_offshore_lon": 44.4,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 119,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2008-01-27 09:00:00",
+            "wind_lat": -16.0,
+            "wind_lon": 44.4,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2008_tr0014": {
+      "event_id": "2008_tr0014",
+      "storm_name": "IVAN",
+      "ibtracs_sid": "2008037S10055",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2008-02-17 06:00:00",
+          "end_utc": "2008-02-17 09:00:00",
+          "last_offshore_lat": -17.2,
+          "last_offshore_lon": 49.7,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 176,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2008-02-17 06:00:00",
+            "wind_lat": -17.2,
+            "wind_lon": 49.7,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2008_tr0010": {
+      "event_id": "2008_tr0010",
+      "storm_name": "HONDO",
+      "ibtracs_sid": "2008033S11083",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2008_tr0019": {
+      "event_id": "2008_tr0019",
+      "storm_name": "JOKWE",
+      "ibtracs_sid": "2008062S10064",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2008-03-05 21:00:00",
+          "end_utc": "2008-03-06 00:00:00",
+          "last_offshore_lat": -12.2,
+          "last_offshore_lon": 49.5,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 87,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2008-03-05 21:00:00",
+            "wind_lat": -12.2,
+            "wind_lon": 49.5,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2008_tr0026": {
+      "event_id": "2008_tr0026",
+      "storm_name": "ASMA",
+      "ibtracs_sid": "2008290S05071",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2008_tr0029": {
+      "event_id": "2008_tr0029",
+      "storm_name": "CINDA",
+      "ibtracs_sid": "2008348S10077",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2009_tr0008": {
+      "event_id": "2009_tr0008",
+      "storm_name": "FANELE",
+      "ibtracs_sid": "2009017S20043",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2009-01-21 00:00:00",
+          "end_utc": "2009-01-21 03:00:00",
+          "last_offshore_lat": -20.6,
+          "last_offshore_lon": 43.7,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 167,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2009-01-21 00:00:00",
+            "wind_lat": -20.6,
+            "wind_lon": 43.7,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2009_tr0022": {
+      "event_id": "2009_tr0022",
+      "storm_name": "JADE",
+      "ibtracs_sid": "2009093S12062",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2009-04-06 00:00:00",
+          "end_utc": "2009-04-06 03:00:00",
+          "last_offshore_lat": -15.5,
+          "last_offshore_lon": 50.7,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 111,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2009-04-06 00:00:00",
+            "wind_lat": -15.5,
+            "wind_lon": 50.7,
+            "lag_hours": 0.0
+          }
+        },
+        {
+          "start_utc": "2009-04-06 06:00:00",
+          "end_utc": "2009-04-06 09:00:00",
+          "last_offshore_lat": -15.8,
+          "last_offshore_lon": 49.9,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 102,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2009-04-06 06:00:00",
+            "wind_lat": -15.8,
+            "wind_lon": 49.9,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2009_tr0027": {
+      "event_id": "2009_tr0027",
+      "storm_name": "BONGANI",
+      "ibtracs_sid": "2009325S12066",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2009_tr0031": {
+      "event_id": "2009_tr0031",
+      "storm_name": "DAVID",
+      "ibtracs_sid": "2009346S07086",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2010_tr0005": {
+      "event_id": "2010_tr0005",
+      "storm_name": "EDZANI",
+      "ibtracs_sid": "2010002S09096",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2010_tr0006": {
+      "event_id": "2010_tr0006",
+      "storm_name": "FAMI",
+      "ibtracs_sid": "2010032S20042",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2010-02-02 06:00:00",
+          "end_utc": "2010-02-02 09:00:00",
+          "last_offshore_lat": -20.8,
+          "last_offshore_lon": 43.6,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 83,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2010-02-02 06:00:00",
+            "wind_lat": -20.8,
+            "wind_lon": 43.6,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2010_tr0013": {
+      "event_id": "2010_tr0013",
+      "storm_name": "GELANE",
+      "ibtracs_sid": "2010046S10058",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2010_tr0017": {
+      "event_id": "2010_tr0017",
+      "storm_name": "HUBERT",
+      "ibtracs_sid": "2010066S19050",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2010-03-10 21:00:00",
+          "end_utc": "2010-03-11 00:00:00",
+          "last_offshore_lat": -21.0,
+          "last_offshore_lon": 48.4,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 93,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2010-03-10 21:00:00",
+            "wind_lat": -21.0,
+            "wind_lon": 48.4,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2010_tr0025": {
+      "event_id": "2010_tr0025",
+      "storm_name": "JOEL",
+      "ibtracs_sid": "2010143S20035",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2010_tr0026": {
+      "event_id": "2010_tr0026",
+      "storm_name": "UNNAMED",
+      "ibtracs_sid": null,
+      "status": "NO_IBTRACS_MATCH",
+      "crossings": []
+    },
+    "2011_tr0013": {
+      "event_id": "2011_tr0013",
+      "storm_name": "BINGIZA",
+      "ibtracs_sid": "2011038S11062",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2011-02-14 00:00:00",
+          "end_utc": "2011-02-14 03:00:00",
+          "last_offshore_lat": -16.0,
+          "last_offshore_lon": 50.5,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 139,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2011-02-14 00:00:00",
+            "wind_lat": -16.0,
+            "wind_lon": 50.5,
+            "lag_hours": 0.0
+          }
+        },
+        {
+          "start_utc": "2011-02-14 03:00:00",
+          "end_utc": "2011-02-14 06:00:00",
+          "last_offshore_lat": -16.0,
+          "last_offshore_lon": 50.1,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 135,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2011-02-14 03:00:00",
+            "wind_lat": -16.0,
+            "wind_lon": 50.1,
+            "lag_hours": 0.0
+          }
+        },
+        {
+          "start_utc": "2011-02-16 03:00:00",
+          "end_utc": "2011-02-16 06:00:00",
+          "last_offshore_lat": -17.0,
+          "last_offshore_lon": 44.1,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 130,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2011-02-14 06:00:00",
+            "wind_lat": -15.9,
+            "wind_lon": 49.7,
+            "lag_hours": 45.0
+          }
+        },
+        {
+          "start_utc": "2011-02-17 12:00:00",
+          "end_utc": "2011-02-17 15:00:00",
+          "last_offshore_lat": -20.6,
+          "last_offshore_lon": 44.0,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 65,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2011-02-17 12:00:00",
+            "wind_lat": -20.6,
+            "wind_lon": 44.0,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2011_tr0029": {
+      "event_id": "2011_tr0029",
+      "storm_name": "DANDO",
+      "ibtracs_sid": "2012010S24049",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2012_tr0006": {
+      "event_id": "2012_tr0006",
+      "storm_name": "DANDO",
+      "ibtracs_sid": "2012010S24049",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2012_tr0009": {
+      "event_id": "2012_tr0009",
+      "storm_name": "FUNSO",
+      "ibtracs_sid": "2012018S16041",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2012_tr0014": {
+      "event_id": "2012_tr0014",
+      "storm_name": "GIOVANNA",
+      "ibtracs_sid": "2012039S14075",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2012-02-13 21:00:00",
+          "end_utc": "2012-02-14 00:00:00",
+          "last_offshore_lat": -19.1,
+          "last_offshore_lon": 49.4,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 139,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2012-02-13 21:00:00",
+            "wind_lat": -19.1,
+            "wind_lon": 49.4,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2012_tr0015": {
+      "event_id": "2012_tr0015",
+      "storm_name": "UNNAMED",
+      "ibtracs_sid": null,
+      "status": "NO_IBTRACS_MATCH",
+      "crossings": []
+    },
+    "2012_tr0016": {
+      "event_id": "2012_tr0016",
+      "storm_name": "IRINA",
+      "ibtracs_sid": "2012056S13057",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2012-02-26 15:00:00",
+          "end_utc": "2012-02-26 18:00:00",
+          "last_offshore_lat": -13.6,
+          "last_offshore_lon": 50.4,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 54,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2012-02-26 15:00:00",
+            "wind_lat": -13.6,
+            "wind_lon": 50.4,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2012_tr0024": {
+      "event_id": "2012_tr0024",
+      "storm_name": "ANAIS",
+      "ibtracs_sid": "2012285S04077",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2012_tr0032": {
+      "event_id": "2012_tr0032",
+      "storm_name": "DUMILE",
+      "ibtracs_sid": "2012362S08071",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2013_tr0014": {
+      "event_id": "2013_tr0014",
+      "storm_name": "HARUNA",
+      "ibtracs_sid": "2013046S20042",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2013-02-22 00:00:00",
+          "end_utc": "2013-02-22 03:00:00",
+          "last_offshore_lat": -22.2,
+          "last_offshore_lon": 43.0,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 148,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2013-02-22 00:00:00",
+            "wind_lat": -22.2,
+            "wind_lon": 43.0,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2013_tr0020": {
+      "event_id": "2013_tr0020",
+      "storm_name": "IMELDA",
+      "ibtracs_sid": "2013093S08074",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2013_tr0023": {
+      "event_id": "2013_tr0023",
+      "storm_name": "UNNAMED",
+      "ibtracs_sid": null,
+      "status": "NO_IBTRACS_MATCH",
+      "crossings": []
+    },
+    "2013_tr0026": {
+      "event_id": "2013_tr0026",
+      "storm_name": "AMARA",
+      "ibtracs_sid": "2013348S10082",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2014_tr0006": {
+      "event_id": "2014_tr0006",
+      "storm_name": "DELIWE",
+      "ibtracs_sid": "2014015S16043",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2014-01-15 00:00:00",
+          "end_utc": "2014-01-15 03:00:00",
+          "last_offshore_lat": -16.3,
+          "last_offshore_lon": 44.2,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 43,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2014-01-15 00:00:00",
+            "wind_lat": -16.3,
+            "wind_lon": 44.2,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2014_tr0015": {
+      "event_id": "2014_tr0015",
+      "storm_name": "GUITO",
+      "ibtracs_sid": "2014048S16039",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2014_tr0025": {
+      "event_id": "2014_tr0025",
+      "storm_name": "ADJALI",
+      "ibtracs_sid": "2014319S06066",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2015_tr0003": {
+      "event_id": "2015_tr0003",
+      "storm_name": "CHEDZA",
+      "ibtracs_sid": "2015013S18038",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2015-01-16 12:00:00",
+          "end_utc": "2015-01-16 15:00:00",
+          "last_offshore_lat": -19.9,
+          "last_offshore_lon": 44.1,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 106,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2015-01-16 12:00:00",
+            "wind_lat": -19.9,
+            "wind_lon": 44.1,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2015_tr0015": {
+      "event_id": "2015_tr0015",
+      "storm_name": "HALIBA",
+      "ibtracs_sid": "2015064S14052",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2015_tr0013": {
+      "event_id": "2015_tr0013",
+      "storm_name": "UNNAMED",
+      "ibtracs_sid": null,
+      "status": "NO_IBTRACS_MATCH",
+      "crossings": []
+    },
+    "2015_tr0017": {
+      "event_id": "2015_tr0017",
+      "storm_name": "JOALANE",
+      "ibtracs_sid": "2015092S18074",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2016_tr0007": {
+      "event_id": "2016_tr0007",
+      "storm_name": "DAYA",
+      "ibtracs_sid": "2016039S14061",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2016_tr0018": {
+      "event_id": "2016_tr0018",
+      "storm_name": "ABELA",
+      "ibtracs_sid": "2016195S06076",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2017_tr0003": {
+      "event_id": "2017_tr0003",
+      "storm_name": "CARLOS",
+      "ibtracs_sid": "2017033S14056",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2017_tr0005": {
+      "event_id": "2017_tr0005",
+      "storm_name": "DINEO",
+      "ibtracs_sid": "2017043S19040",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2017_tr0009": {
+      "event_id": "2017_tr0009",
+      "storm_name": "ENAWO",
+      "ibtracs_sid": "2017061S11063",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2017-03-07 12:00:00",
+          "end_utc": "2017-03-07 15:00:00",
+          "last_offshore_lat": -14.5,
+          "last_offshore_lon": 50.2,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 157,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2017-03-07 12:00:00",
+            "wind_lat": -14.5,
+            "wind_lon": 50.2,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2017_tr0026": {
+      "event_id": "2017_tr0026",
+      "storm_name": "AVA",
+      "ibtracs_sid": "2017364S12065",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2018-01-05 09:00:00",
+          "end_utc": "2018-01-05 12:00:00",
+          "last_offshore_lat": -18.0,
+          "last_offshore_lon": 49.7,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 139,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2018-01-05 09:00:00",
+            "wind_lat": -18.0,
+            "wind_lon": 49.7,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2018_tr0013": {
+      "event_id": "2018_tr0013",
+      "storm_name": "ELIAKIM",
+      "ibtracs_sid": "2018073S12057",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2018-03-16 09:00:00",
+          "end_utc": "2018-03-16 12:00:00",
+          "last_offshore_lat": -15.8,
+          "last_offshore_lon": 50.4,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 107,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2018-03-16 09:00:00",
+            "wind_lat": -15.8,
+            "wind_lon": 50.4,
+            "lag_hours": 0.0
+          }
+        },
+        {
+          "start_utc": "2018-03-16 18:00:00",
+          "end_utc": "2018-03-16 21:00:00",
+          "last_offshore_lat": -15.7,
+          "last_offshore_lon": 49.7,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 93,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2018-03-16 18:00:00",
+            "wind_lat": -15.7,
+            "wind_lon": 49.7,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2018_tr0020": {
+      "event_id": "2018_tr0020",
+      "storm_name": "FAKIR",
+      "ibtracs_sid": "2018111S07055",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2019_tr0008": {
+      "event_id": "2019_tr0008",
+      "storm_name": "EKETSANG",
+      "ibtracs_sid": "2019023S21041",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2019_tr0013": {
+      "event_id": "2019_tr0013",
+      "storm_name": "IDAI",
+      "ibtracs_sid": "2019063S18038",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2019_tr0026": {
+      "event_id": "2019_tr0026",
+      "storm_name": "BELNA",
+      "ibtracs_sid": "2019336S06055",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2019-12-09 15:00:00",
+          "end_utc": "2019-12-09 18:00:00",
+          "last_offshore_lat": -16.1,
+          "last_offshore_lon": 45.0,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 143,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2019-12-09 15:00:00",
+            "wind_lat": -16.1,
+            "wind_lon": 45.0,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2020_tr0009": {
+      "event_id": "2020_tr0009",
+      "storm_name": "DIANE",
+      "ibtracs_sid": "2020022S17043",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2020-01-22 12:00:00",
+          "end_utc": "2020-01-22 15:00:00",
+          "last_offshore_lat": -16.8,
+          "last_offshore_lon": 43.8,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 56,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2020-01-22 12:00:00",
+            "wind_lat": -16.8,
+            "wind_lon": 43.8,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2020_tr0013": {
+      "event_id": "2020_tr0013",
+      "storm_name": "FRANCISCO",
+      "ibtracs_sid": "2020034S13063",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2020-02-15 06:00:00",
+          "end_utc": "2020-02-15 09:00:00",
+          "last_offshore_lat": -20.0,
+          "last_offshore_lon": 48.8,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 74,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2020-02-15 06:00:00",
+            "wind_lat": -20.0,
+            "wind_lon": 48.8,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2020_tr0028": {
+      "event_id": "2020_tr0028",
+      "storm_name": "BONGOYO",
+      "ibtracs_sid": "2020332S11091",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2020_tr0033": {
+      "event_id": "2020_tr0033",
+      "storm_name": "CHALANE",
+      "ibtracs_sid": "2020355S11065",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2020-12-26 18:00:00",
+          "end_utc": "2020-12-26 21:00:00",
+          "last_offshore_lat": -17.6,
+          "last_offshore_lon": 49.9,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 65,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2020-12-26 18:00:00",
+            "wind_lat": -17.6,
+            "wind_lon": 49.9,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2020_tr0034": {
+      "event_id": "2020_tr0034",
+      "storm_name": "DANILO",
+      "ibtracs_sid": "2020366S12073",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2021_tr0010": {
+      "event_id": "2021_tr0010",
+      "storm_name": "ELOISE",
+      "ibtracs_sid": "2021012S12086",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2021-01-19 15:00:00",
+          "end_utc": "2021-01-19 18:00:00",
+          "last_offshore_lat": -15.2,
+          "last_offshore_lon": 50.5,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 98,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2021-01-19 15:00:00",
+            "wind_lat": -15.2,
+            "wind_lon": 50.5,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2021_tr0019": {
+      "event_id": "2021_tr0019",
+      "storm_name": "FARAJI",
+      "ibtracs_sid": "2021035S11080",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2021_tr0025": {
+      "event_id": "2021_tr0025",
+      "storm_name": "IMAN",
+      "ibtracs_sid": "2021062S18040",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2021-03-05 09:00:00",
+          "end_utc": "2021-03-05 12:00:00",
+          "last_offshore_lat": -17.8,
+          "last_offshore_lon": 43.9,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 61,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2021-03-05 09:00:00",
+            "wind_lat": -17.8,
+            "wind_lon": 43.9,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2022_tr0006": {
+      "event_id": "2022_tr0006",
+      "storm_name": "ANA",
+      "ibtracs_sid": "2022020S13060",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2022-01-22 06:00:00",
+          "end_utc": "2022-01-22 09:00:00",
+          "last_offshore_lat": -17.7,
+          "last_offshore_lon": 50.3,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 74,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2022-01-22 06:00:00",
+            "wind_lat": -17.7,
+            "wind_lon": 50.3,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2022_tr0007": {
+      "event_id": "2022_tr0007",
+      "storm_name": "BATSIRAI",
+      "ibtracs_sid": "2022024S09090",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2022-02-05 15:00:00",
+          "end_utc": "2022-02-05 18:00:00",
+          "last_offshore_lat": -20.9,
+          "last_offshore_lon": 48.8,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 157,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2022-02-05 15:00:00",
+            "wind_lat": -20.9,
+            "wind_lon": 48.8,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2022_tr0009": {
+      "event_id": "2022_tr0009",
+      "storm_name": "CLIFF",
+      "ibtracs_sid": "2022034S16082",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2022_tr0014": {
+      "event_id": "2022_tr0014",
+      "storm_name": "DUMAKO",
+      "ibtracs_sid": "2022042S12063",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2022-02-15 12:00:00",
+          "end_utc": "2022-02-15 15:00:00",
+          "last_offshore_lat": -17.0,
+          "last_offshore_lon": 49.8,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 83,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2022-02-15 12:00:00",
+            "wind_lat": -17.0,
+            "wind_lon": 49.8,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2022_tr0019": {
+      "event_id": "2022_tr0019",
+      "storm_name": "GOMBE",
+      "ibtracs_sid": "2022065S16055",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2022-03-07 21:00:00",
+          "end_utc": "2022-03-08 00:00:00",
+          "last_offshore_lat": -15.6,
+          "last_offshore_lon": 50.7,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 70,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2022-03-07 21:00:00",
+            "wind_lat": -15.6,
+            "wind_lon": 50.7,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2022_tr0025": {
+      "event_id": "2022_tr0025",
+      "storm_name": "JASMINE",
+      "ibtracs_sid": "2022110S12051",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2022-04-20 15:00:00",
+          "end_utc": "2022-04-20 18:00:00",
+          "last_offshore_lat": -12.1,
+          "last_offshore_lon": 49.6,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 37,
+            "agency": "JTWC/USA",
+            "wind_averaging_period": "1-minute sustained",
+            "wind_time_utc": "2022-04-20 15:00:00",
+            "wind_lat": -12.1,
+            "wind_lon": 49.6,
+            "lag_hours": 0.0
+          }
+        },
+        {
+          "start_utc": "2022-04-26 12:00:00",
+          "end_utc": "2022-04-26 15:00:00",
+          "last_offshore_lat": -23.4,
+          "last_offshore_lon": 43.3,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 102,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2022-04-26 12:00:00",
+            "wind_lat": -23.4,
+            "wind_lon": 43.3,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2023_tr0004": {
+      "event_id": "2023_tr0004",
+      "storm_name": "CHENESO",
+      "ibtracs_sid": "2023013S08081",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2023-01-19 06:00:00",
+          "end_utc": "2023-01-19 09:00:00",
+          "last_offshore_lat": -14.6,
+          "last_offshore_lon": 50.4,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 93,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2023-01-19 06:00:00",
+            "wind_lat": -14.6,
+            "wind_lon": 50.4,
+            "lag_hours": 0.0
+          }
+        },
+        {
+          "start_utc": "2023-01-22 09:00:00",
+          "end_utc": "2023-01-22 12:00:00",
+          "last_offshore_lat": -19.4,
+          "last_offshore_lon": 44.4,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 56,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2023-01-22 09:00:00",
+            "wind_lat": -19.4,
+            "wind_lon": 44.4,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2023_tr0007": {
+      "event_id": "2023_tr0007",
+      "storm_name": "DINGANI",
+      "ibtracs_sid": "2023032S12091",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2023_tr0009": {
+      "event_id": "2023_tr0009",
+      "storm_name": "FREDDY",
+      "ibtracs_sid": "2023036S12117",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2023-02-21 15:00:00",
+          "end_utc": "2023-02-21 18:00:00",
+          "last_offshore_lat": -20.9,
+          "last_offshore_lon": 48.7,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 139,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2023-02-21 15:00:00",
+            "wind_lat": -20.9,
+            "wind_lon": 48.7,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2023_tr0020": {
+      "event_id": "2023_tr0020",
+      "storm_name": "ALVARO",
+      "ibtracs_sid": "2023364S19035",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2024-01-01 15:00:00",
+          "end_utc": "2024-01-01 18:00:00",
+          "last_offshore_lat": -21.4,
+          "last_offshore_lon": 43.3,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 111,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2024-01-01 15:00:00",
+            "wind_lat": -21.4,
+            "wind_lon": 43.3,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2024_tr0012": {
+      "event_id": "2024_tr0012",
+      "storm_name": "ELEANOR",
+      "ibtracs_sid": "2024049S17052",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2024-02-26 09:00:00",
+          "end_utc": "2024-02-26 12:00:00",
+          "last_offshore_lat": -20.1,
+          "last_offshore_lon": 49.0,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 43,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2024-02-26 09:00:00",
+            "wind_lat": -20.1,
+            "wind_lon": 49.0,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2024_tr0015": {
+      "event_id": "2024_tr0015",
+      "storm_name": "FILIPO",
+      "ibtracs_sid": "2024061S11062",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2024-03-03 18:00:00",
+          "end_utc": "2024-03-03 21:00:00",
+          "last_offshore_lat": -13.1,
+          "last_offshore_lon": 50.4,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 46,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2024-03-03 18:00:00",
+            "wind_lat": -13.1,
+            "wind_lon": 50.4,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2024_tr0018": {
+      "event_id": "2024_tr0018",
+      "storm_name": "GAMANE",
+      "ibtracs_sid": "2024082S08054",
+      "status": "MAINLAND_CROSSING",
+      "crossings": [
+        {
+          "start_utc": "2024-03-27 00:00:00",
+          "end_utc": "2024-03-27 03:00:00",
+          "last_offshore_lat": -12.9,
+          "last_offshore_lon": 50.0,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 139,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2024-03-27 00:00:00",
+            "wind_lat": -12.9,
+            "wind_lon": 50.0,
+            "lag_hours": 0.0
+          }
+        },
+        {
+          "start_utc": "2024-03-29 00:00:00",
+          "end_utc": "2024-03-29 03:00:00",
+          "last_offshore_lat": -14.2,
+          "last_offshore_lon": 47.7,
+          "landfall_flag": "0",
+          "wind": {
+            "wind_kmh": 37,
+            "agency": "RSMC La R\u00e9union",
+            "wind_averaging_period": "10-minute sustained",
+            "wind_time_utc": "2024-03-29 00:00:00",
+            "wind_lat": -14.2,
+            "wind_lon": 47.7,
+            "lag_hours": 0.0
+          }
+        }
+      ]
+    },
+    "2024_tr0025": {
+      "event_id": "2024_tr0025",
+      "storm_name": "BHEKI",
+      "ibtracs_sid": "2024313S06092",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    },
+    "2024_tr0027": {
+      "event_id": "2024_tr0027",
+      "storm_name": "CHIDO",
+      "ibtracs_sid": "2024341S12086",
+      "status": "NO_MAINLAND_CROSSING_FOUND",
+      "crossings": []
+    }
+  }
+}
