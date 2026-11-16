@@ -416,7 +416,8 @@ function fillFeedback(template,people){
 function selectFeedback(st){
  const affected=new Set(st.impact||[]),stock=[...st.stock],distributed=[...st.distributed],logs=st.decisionLog||[];
  const reached=distributed.filter(id=>affected.has(id)).length,uncovered=[...affected].filter(id=>!st.distributed.has(id)).length;
- const unnecessary=distributed.some(id=>!affected.has(id)),all=stock.length===hubs.length,above=thresholdExceeded(st);
+ const extraMobilised=stock.filter(id=>!affected.has(id)),extraActivated=distributed.filter(id=>!affected.has(id));
+ const unnecessary=extraActivated.length>0,all=stock.length===hubs.length,above=thresholdExceeded(st);
  const stages=forecastAssessment(st);
  const warning=stages.prePredicted;
  const activation=stages.fullPredicted;
@@ -424,7 +425,10 @@ function selectFeedback(st){
  let id;
  if(above){
   if(reached){
-   if(!credible)id="F08";
+   if((extraMobilised.length||extraActivated.length)&&uncovered)id="F23";
+   else if(extraActivated.length)id="F22";
+   else if(extraMobilised.length)id="F21";
+   else if(!credible)id="F08";
    else if(all)id="F05";
    else if(uncovered)id=G.budget<cost.preposition?"F20":"F04";
    else if(uncovered&&G.budget<cost.preposition)id="F20";
@@ -441,6 +445,18 @@ function selectFeedback(st){
   else id=warning?"F15":"F11";
  }
  const objective=feedbackLibrary.objective.find(x=>x.ID===id);
+ const nameFor=id=>hubs.find(h=>h.id===id)?.name||id;
+ const extraPreparedOnly=extraMobilised.filter(id=>!st.distributed.has(id));
+ const wastedCosts=extraMobilised.length*cost.preposition+extraActivated.length*cost.distribute;
+ const wasteNote=wastedCosts?(
+  " You mobilised in "+extraMobilised.length+" location(s) outside the modelled direct-impact footprint"+
+  (extraMobilised.length?" ("+extraMobilised.map(nameFor).join(", ")+")":"")+
+  " and fully activated in "+extraActivated.length+" unaffected location(s)"+
+  (extraActivated.length?" ("+extraActivated.map(nameFor).join(", ")+")":"")+
+  ". Extra expenditure in the game's simplified model: "+money(wastedCosts)+
+  ". This is hindsight about direct wind exposure, not proof that mobilisation was unreasonable given the forecast or that these areas suffered no flooding."
+ ):"";
+
  const landingSides=referenceLandingSides(st),opposite=[...new Set([...st.stock,...st.distributed].filter(area=>{
   const side=warehouseSide(area);
   return side!=="either"&&landingSides.size&&!landingSides.has("either")&&!landingSides.has(side);
@@ -457,8 +473,8 @@ function selectFeedback(st){
  (b["People helped"]===reach?5:0)+(b["Decision quality"]===decision?3:0)+(b["Forecast outcome"]===outlook?3:0)+(b["Budget remaining"]===budget?2:0)
  })).sort((a,b)=>b.score-a.score);
  const boss=variants[0]?.b;
- return {id,bossId:boss?.Boss_ID||"",objective:fillFeedback(objective?.Feedback_O||"Review forecast evidence and decision timing.",people)+geographyNote,
- boss:fillFeedback(boss?.Feedback_B||objective?.Feedback_B||"We need to reflect on this storm.",people),
+ return {id,bossId:boss?.Boss_ID||"",objective:fillFeedback(objective?.Feedback_O||"Review forecast evidence and decision timing.",people)+geographyNote+wasteNote,
+ boss:fillFeedback(boss?.Feedback_B||objective?.Feedback_B||"We need to reflect on this storm.",people)+(wastedCosts?" We also spent "+money(wastedCosts)+" mobilising or activating in locations outside the modelled direct-impact footprint.":""),
  threshold:above,forecast:outlook,decisionQuality:decision,people,stages};
 }
 
