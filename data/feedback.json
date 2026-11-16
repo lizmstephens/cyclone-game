@@ -64,7 +64,7 @@
       "Forecast": "Underforecast",
       "Action": "No action",
       "Context": "Threshold not forecast",
-      "Feedback_O": "The threshold was exceeded but the forecast did not justify action. Your restraint was defensible.",
+      "Feedback_O": "The storm made landfall above the threshold, but the forecast did not justify action. Your restraint was defensible on the basis of the forecast available to you.",
       "Feedback_B": "The donor will be unhappy, but we did not see this coming."
     },
     {
@@ -73,7 +73,7 @@
       "Forecast": "Underforecast",
       "Action": "Preposition + distribute",
       "Context": "Lucky success",
-      "Feedback_O": "People were helped, but the available forecast did not justify the action. A good outcome is not necessarily a good decision.",
+      "Feedback_O": "The storm made landfall above the threshold, but the available forecast did not justify the action. A good outcome is not necessarily a good decision.",
       "Feedback_B": "We helped {people_reached} people! Quite a gamble."
     },
     {
