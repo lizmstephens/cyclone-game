@@ -183,7 +183,7 @@ async function readPublishedSheet(spreadsheetId,gid,lastColumn,minRows,maxRow=30
 async function refreshLiveFeedback(){
  try{
   const [objective,boss]=await Promise.all([
-   readPublishedSheet("1kEIwFSZOG8nxThiheJkO-Tgtqn97HmlrawF9-gbB9FQ","401526903","F",36,45),
+   readPublishedSheet("1kEIwFSZOG8nxThiheJkO-Tgtqn97HmlrawF9-gbB9FQ","401526903","F",46,55),
    readPublishedSheet("1kEIwFSZOG8nxThiheJkO-Tgtqn97HmlrawF9-gbB9FQ","732145","F",20)
   ]);
   if(!objective.every(x=>x.ID&&x.Feedback_O)||!boss.every(x=>x.Boss_ID&&x.Feedback_B))throw Error("Required feedback columns missing");
@@ -442,7 +442,8 @@ function stageClassification(forecastIssued,forecastPositive,outcomeReached){
 }
 function forecastAssessment(st){
  const logs=st.decisionLog||[],observed=observedThresholds(st);
- const preSamples=logs.filter(x=>x.lead>=PRE_TRIGGER_MIN_DAYS&&x.lead<=PRE_WINDOW);
+ // Assess each forecast separately in the window relevant to its decision.
+ const preSamples=logs.filter(x=>x.lead>=G.prepDays&&x.lead<=PRE_WINDOW);
  const fullSamples=logs.filter(x=>x.lead>=2&&x.lead<=ACT_WINDOW);
  const prePredicted=preSamples.some(x=>x.preSignal);
  const fullPredicted=fullSamples.some(x=>x.activationSignal);
@@ -451,6 +452,14 @@ function forecastAssessment(st){
   pre:stageClassification(preSamples.length>0,prePredicted,observed.pre),
   full:stageClassification(fullSamples.length>0,fullPredicted,observed.full)
  };
+}
+function stageForecastOutcome(st,stage,assessment){
+ const mobilise=stage==="mobilise",classification=mobilise?assessment.pre:assessment.full;
+ const prefix=mobilise?"MO":"AO";
+ const map={"Correct warning":"01","Overforecast":"02","Underforecast":"03","Correct non-warning":"04","Not assessable":"05"};
+ const id=prefix+(map[classification]||"05");
+ const row=feedbackLibrary.objective.find(x=>x.ID===id);
+ return {id,classification,text:row?.Feedback_O||"The forecast outcome could not be described."};
 }
 function fillFeedback(template,people){
  return String(template||"").replace(/\{people_reached\}/g,people.toLocaleString("en-GB"));
@@ -509,6 +518,8 @@ function selectFeedback(st){
  const objective=feedbackLibrary.objective.find(x=>x.ID===id);
  const mobiliseReview=stageDecisionFeedback(st,"mobilise");
  const activationReview=stageDecisionFeedback(st,"activation");
+ const mobiliseForecast=stageForecastOutcome(st,"mobilise",stages);
+ const activationForecast=stageForecastOutcome(st,"activation",stages);
  const nameFor=id=>hubs.find(h=>h.id===id)?.name||id;
  const extraPreparedOnly=extraMobilised.filter(id=>!st.distributed.has(id));
  const wastedCosts=extraMobilised.length*cost.preposition+extraActivated.length*cost.distribute;
@@ -543,6 +554,8 @@ function selectFeedback(st){
   (uncovered?" "+uncovered+" directly affected area(s) remained without distribution.":"")+
   geographyNote+wasteNote,
  mobiliseText:mobiliseReview.text,activationText:activationReview.text,
+ mobiliseForecastText:mobiliseForecast.text,activationForecastText:activationForecast.text,
+ mobiliseForecastId:mobiliseForecast.id,activationForecastId:activationForecast.id,
  outcomeText:reached+" of "+affected.size+" directly affected warehouse area(s) received full activation."+
   (uncovered?" "+uncovered+" directly affected area(s) remained without distribution.":"")+geographyNote+wasteNote,
  boss:fillFeedback(boss?.Feedback_B||"We need to reflect on this storm.",people)+(wastedCosts?" We also spent "+money(wastedCosts)+" mobilising or activating in locations outside the modelled direct-impact footprint.":""),
@@ -715,12 +728,12 @@ function stormReview(st,index){
    '<div class="review-facts"><p><strong>Actual storm:</strong> '+esc(actualStormSentence(st,verified,impacts))+'</p>'+
    '<p><strong>Your decision:</strong> '+esc(playerDecisionSentence(st))+'</p></div>'+
    '<div class="review-voices">'+
-     '<section class="review-bubble scientist" aria-label="Scientist objective feedback"><h4>Scientist</h4><p><strong>Mobilise:</strong> '+esc(scored.mobiliseText||"Not assessed")+'</p><p style="margin-top:12px"><strong>Full activation:</strong> '+esc(scored.activationText||"Not assessed")+'</p><p style="margin-top:12px"><strong>Outcome and targeting:</strong> '+esc(scored.outcomeText||"Review unavailable")+'</p></section>'+
+     '<section class="review-bubble scientist" aria-label="Scientist objective feedback"><h4>Scientist</h4><p><strong>Mobilise — decision:</strong> '+esc(scored.mobiliseText||"Not assessed")+'</p><p style="margin-top:9px"><strong>Mobilise — forecast outcome:</strong> '+esc(scored.mobiliseForecastText||"Not assessed")+'</p><p style="margin-top:14px"><strong>Full activation — decision:</strong> '+esc(scored.activationText||"Not assessed")+'</p><p style="margin-top:9px"><strong>Full activation — forecast outcome:</strong> '+esc(scored.activationForecastText||"Not assessed")+'</p><p style="margin-top:14px"><strong>Outcome and targeting:</strong> '+esc(scored.outcomeText||"Review unavailable")+'</p></section>'+
      '<section class="review-bubble boss" aria-label="Boss feedback"><h4>Boss</h4><p>“'+esc(scored.boss||"Boss feedback unavailable.")+'”</p></section>'+
    '</div>'+
    '<details class="review-details"><summary>Sources and detailed review</summary>'+
    '<p><strong>Data sources:</strong> feedback '+esc(feedbackSourceLabel)+'; historical impacts '+esc(impactSourceLabel)+'.</p>'+
-   '<p>Feedback library: Mobilise '+esc(scored.mobiliseFeedbackId||"unavailable")+'; Full activation '+esc(scored.activationFeedbackId||"unavailable")+'; legacy overall outcome '+esc(scored.id||"unavailable")+'; Boss '+esc(scored.bossId||"unavailable")+'. Game outcome: '+(st.impact||[]).length+' modelled affected areas, '+reached.toLocaleString("en-GB")+' people reached (illustrative); '+money(spend)+' spent.</p>'+
+   '<p>Feedback library: Mobilise '+esc(scored.mobiliseFeedbackId||"unavailable")+'; Full activation '+esc(scored.activationFeedbackId||"unavailable")+'; Mobilise forecast '+esc(scored.mobiliseForecastId||"unavailable")+'; Full forecast '+esc(scored.activationForecastId||"unavailable")+'; legacy overall outcome '+esc(scored.id||"unavailable")+'; Boss '+esc(scored.bossId||"unavailable")+'. Game outcome: '+(st.impact||[]).length+' modelled affected areas, '+reached.toLocaleString("en-GB")+' people reached (illustrative); '+money(spend)+' spent.</p>'+
    (verified?.ibtracsFix?'<p><strong>Near-landfall best-track fix:</strong> '+esc(verified.ibtracsFix.kmh)+' km/h, 10-minute sustained, at '+esc(verified.ibtracsFix.utc)+'. This may not be the exact coastline-crossing wind.</p>':'')+
    (impacts?.landfall_date_text?'<p><strong>Historical landfall date in impact catalogue:</strong> '+esc(impacts.landfall_date_text)+'; <strong>reported location:</strong> '+esc(impacts.landfall_area||"Not specified")+'.</p>':'')+
    (impacts?.observed_landfall_wind_kmh?'<p><strong>Reported near-landfall intensity:</strong> '+esc(impacts.observed_landfall_wind_kmh)+' km/h'+(impacts.wind_averaging_period?" ("+esc(impacts.wind_averaging_period)+")":"")+'.</p>':'')+
