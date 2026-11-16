@@ -501,7 +501,7 @@ function activationForecastWarehouses(st){
  if(!logs.length)return [];
  // Use first briefing within the activation decision window, regardless of
  // whether the player activated. Never use the eventual reference track here.
- const briefing=logs[0],at=addDays(st.event,-briefing.lead),members=st.data.forecast_tracks||[];
+ const briefing=logs[0],at=briefing.issueTime?new Date(briefing.issueTime):addDays(st.event,-briefing.lead),members=st.data.forecast_tracks||[];
  if(!members.length)return [];
  const counts=new Map();
  for(const member of members){
@@ -784,7 +784,7 @@ function confirm(){
  if(a!=="monitor"&&!selected.length)return;
  if(amount>G.budget){$("message").textContent="Insufficient budget.";return;}
  const signals=trainingSignals(st),lead=remainingDays();
- st.decisionLog.push({action:a,lead,locations:selected.slice(),cost:amount,forecastSignal:signals.preSignal||signals.activation,preSignal:signals.preSignal,activationSignal:signals.activation,ensembleFraction:signals.probability});
+ st.decisionLog.push({action:a,lead,issueTime:issueTime().toISOString(),locations:selected.slice(),cost:amount,forecastSignal:signals.preSignal||signals.activation,preSignal:signals.preSignal,activationSignal:signals.activation,ensembleFraction:signals.probability});
  G.budget-=amount;
  if(a==="preposition")selected.forEach(id=>st.stock.add(id));
  if(a==="distribute")selected.forEach(id=>st.distributed.add(id));
