@@ -291,6 +291,86 @@
       "Action": "Did not activate",
       "Context": "Activation signal, no mobilisation",
       "Feedback_O": "The full-activation trigger was reached, but no warehouse had been mobilised in advance, so activation was not possible."
+    },
+    {
+      "ID": "MO01",
+      "Threshold": "Mobilise forecast outcome",
+      "Forecast": "Correct warning",
+      "Action": "Forecast vs reference track",
+      "Context": "Pre signal and reference ≥63",
+      "Feedback_O": "The mobilisation forecast indicated a tropical-storm-strength mainland landfall, and the WATTCH reference track crossed the coast at or above 63 km/h."
+    },
+    {
+      "ID": "MO02",
+      "Threshold": "Mobilise forecast outcome",
+      "Forecast": "False alarm / overforecast",
+      "Action": "Forecast vs reference track",
+      "Context": "Pre signal but reference below 63",
+      "Feedback_O": "The mobilisation forecast indicated a tropical-storm-strength mainland landfall, but the WATTCH reference track did not meet the 63 km/h coastline-crossing threshold."
+    },
+    {
+      "ID": "MO03",
+      "Threshold": "Mobilise forecast outcome",
+      "Forecast": "Missed event / underforecast",
+      "Action": "Forecast vs reference track",
+      "Context": "No pre signal; reference ≥63",
+      "Feedback_O": "The mobilisation forecast did not reach its warning threshold, but the WATTCH reference track crossed the coast at or above 63 km/h."
+    },
+    {
+      "ID": "MO04",
+      "Threshold": "Mobilise forecast outcome",
+      "Forecast": "Correct non-warning",
+      "Action": "Forecast vs reference track",
+      "Context": "No pre signal and reference below 63",
+      "Feedback_O": "The mobilisation forecast did not meet its warning threshold, and the WATTCH reference track did not meet the 63 km/h coastline-crossing threshold."
+    },
+    {
+      "ID": "MO05",
+      "Threshold": "Mobilise forecast outcome",
+      "Forecast": "Not assessable",
+      "Action": "Forecast vs reference track",
+      "Context": "No eligible recorded forecast",
+      "Feedback_O": "There is insufficient recorded forecast information in the mobilisation window to verify this forecast stage."
+    },
+    {
+      "ID": "AO01",
+      "Threshold": "Activation forecast outcome",
+      "Forecast": "Correct warning",
+      "Action": "Forecast vs reference track",
+      "Context": "Full signal and reference >118",
+      "Feedback_O": "The full-activation forecast indicated a cyclone-strength mainland landfall, and the WATTCH reference track crossed the coast above 118 km/h."
+    },
+    {
+      "ID": "AO02",
+      "Threshold": "Activation forecast outcome",
+      "Forecast": "False alarm / overforecast",
+      "Action": "Forecast vs reference track",
+      "Context": "Full signal but reference ≤118",
+      "Feedback_O": "The full-activation forecast indicated a cyclone-strength mainland landfall, but the WATTCH reference track did not exceed 118 km/h at coastline crossing."
+    },
+    {
+      "ID": "AO03",
+      "Threshold": "Activation forecast outcome",
+      "Forecast": "Missed event / underforecast",
+      "Action": "Forecast vs reference track",
+      "Context": "No full signal; reference >118",
+      "Feedback_O": "The full-activation forecast did not meet its warning threshold, but the WATTCH reference track crossed the coast above 118 km/h."
+    },
+    {
+      "ID": "AO04",
+      "Threshold": "Activation forecast outcome",
+      "Forecast": "Correct non-warning",
+      "Action": "Forecast vs reference track",
+      "Context": "No full signal and reference ≤118",
+      "Feedback_O": "The full-activation forecast did not reach its warning threshold, and the WATTCH reference track did not exceed 118 km/h at coastline crossing."
+    },
+    {
+      "ID": "AO05",
+      "Threshold": "Activation forecast outcome",
+      "Forecast": "Not assessable",
+      "Action": "Forecast vs reference track",
+      "Context": "No eligible recorded forecast",
+      "Feedback_O": "There is insufficient recorded forecast information in the full-activation window to verify this forecast stage."
     }
   ],
   "boss": [
