@@ -47,9 +47,27 @@ h1{font-size:clamp(27px,4vw,38px);line-height:1.15;margin:14px 0}h2{font-size:22
 <section class="card">
 <h2>Where do the cyclone scenarios come from?</h2>
 <p>The storm tracks and forecast ensembles originate from the open-access <strong>WATTCH Southern Hemisphere tropical-cyclone archive</strong>. The game maintains its playable scenarios in <code>data/scenarios.json</code>, separate from the game interface and historical annotations.</p>
-<p>At the time of this version the playable file includes <strong>94 WATTCH cases</strong>. These are simulated, independently selected historical cases rather than a reconstruction of one real cyclone season. You can play a single cyclone or a fictional sequence of 2–7 storms.</p>
-<p>For each case, the archive used here supplies a forecast initialisation, ensemble-member tracks and a reference track. The game interpolates these tracks and constructs <strong>illustrative successive daily briefings</strong>; it does not contain genuine independently issued operational forecasts for each simulated day. The original historical storm name and year are only revealed after the decision exercise.</p>
+<p>At the time of this version the playable file includes <strong>86 named WATTCH cases</strong>. These are simulated, independently selected historical cases rather than a reconstruction of one real cyclone season. You can play a single cyclone or a fictional sequence of 2–7 storms.</p>
+<p>For each stored scenario, the game currently retains one forecast initialisation, ensemble-member tracks and a reference track. This is a limitation of the extracted scenario file, not of the original WATTCH archive. The game interpolates these tracks and constructs <strong>illustrative successive daily briefings</strong>; it does not contain genuine independently issued operational forecasts for each simulated day. The original historical storm name and year are only revealed after the decision exercise.</p>
 <p><a href="https://zenodo.org/records/20446920" target="_blank" rel="noopener noreferrer">WATTCH data and documentation (Zenodo)</a> · <a href="https://github.com/lizmstephens/cyclone-game/tree/main/data" target="_blank" rel="noopener noreferrer">Game scenario files</a></p>
+</section>
+<section class="card">
+<h2>Planned improvement: daily forecast reconstruction</h2>
+<p><strong>Status: design specification, not yet implemented in the playable game.</strong> WATTCH hindcasts are initialised on Mondays and Thursdays. The current scenario library retains only one original forecast initialisation per storm case, so the first task is to recover all available initialisations for each cyclone from the source archive. We will test the method with <strong>Gamede (2007)</strong> before updating other storms.</p>
+<h3>Data preparation and interpolation requirements</h3>
+<ul>
+<li><strong>Preserve the originals:</strong> retain every authentic WATTCH forecast initialisation, ensemble member and reference track without modification. Record the issue time and distinguish genuine WATTCH forecasts from generated daily forecasts.</li>
+<li><strong>Fill only missing dates:</strong> generate daily initialisations between surrounding Monday/Thursday forecasts, rather than treating valid-time positions from one forecast as a new forecast issued each day.</li>
+<li><strong>Start from the cyclone's current position:</strong> initialise each synthetic forecast at the reference-track position on its issue date. Ensemble members should begin together and fan out smoothly with forecast lead time.</li>
+<li><strong>Interpolate forecast errors, not absolute locations:</strong> use a consistent forecast-lead-time coordinate system and interpolate along-track and cross-track deviations relative to a suitable reference trajectory. Match ensemble members across initialisations where possible; otherwise use reproducible matching to preserve coherent tracks.</li>
+<li><strong>Preserve plausible evolution:</strong> retain track curvature, ensemble structure, intensity development and possible landfall outcomes. Consecutive daily forecasts should evolve smoothly without artificial jumps.</li>
+<li><strong>Respect forecast spread:</strong> do not automatically narrow ensemble spread with every new issue date. It should remain plausible for the forecast lead time and surrounding forecasts; uncertainty about a fixed landfall may decrease as the event approaches, but not necessarily monotonically.</li>
+<li><strong>Preserve intensity units and reproducibility:</strong> interpolate wind intensity consistently, handle missing ensemble members and incomplete tracks explicitly, and precompute deterministic daily forecasts in a separate data file.</li>
+</ul>
+<h3>Validation before adoption</h3>
+<p>For Gamede, plot the original Monday/Thursday WATTCH forecasts alongside reconstructed daily forecasts. Check initial positions, track continuity, ensemble spread, wind evolution and changing landfall probabilities. Keep the game interface, warehouse locations, decisions and scoring unchanged until the results have been reviewed.</p>
+<p class="notice"><strong>Scientific caveat:</strong> using the reference track after a forecast's issue time introduces future information. Any reconstruction that does this must be labelled a <em>synthetic training forecast</em>, not an authentic historical forecast or independent hindcast of forecast skill. Prefer reconstruction constrained by the surrounding original forecasts, and preserve the originals for verification.</p>
+<p class="small">The separate <a href="./gamede-experiment.html">Gamede visual experiment</a> uses one stored forecast and future reference-track information. It is only an exploratory prototype, not the proposed Monday/Thursday interpolation or part of the playable scenario library.</p>
 </section>
 <section class="card">
 <h2>How are forecasts and outcomes assessed?</h2>
