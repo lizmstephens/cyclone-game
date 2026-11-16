@@ -3833,21 +3833,21 @@
       "Communities reached": "No areas affected",
       "Spending": "Targeted spending",
       "Budget remaining": "Healthy",
-      "Feedback_B": "At least no areas met the game's direct-impact threshold this time. We still need to be ready for the next storm. The resources we did commit were focused on the affected areas. We still have some room in the budget for the storms ahead."
+      "Feedback_B": "At least no warehouse area was counted as directly affected this time. We avoided spending on locations outside the modelled impact footprint. We still have some room in the budget for the storms ahead."
     },
     {
       "Boss_ID": "B20",
       "Communities reached": "No areas affected",
       "Spending": "Targeted spending",
       "Budget remaining": "Low",
-      "Feedback_B": "At least no areas met the game's direct-impact threshold this time. We still need to be ready for the next storm. The resources we did commit were focused on the affected areas. I'm concerned about how little money is left for the rest of the season."
+      "Feedback_B": "At least no warehouse area was counted as directly affected this time. We avoided spending on locations outside the modelled impact footprint. I'm concerned about how little money is left for the rest of the season."
     },
     {
       "Boss_ID": "B21",
       "Communities reached": "No areas affected",
       "Spending": "Targeted spending",
       "Budget remaining": "Exhausted",
-      "Feedback_B": "At least no areas met the game's direct-impact threshold this time. We still need to be ready for the next storm. The resources we did commit were focused on the affected areas. We've used the whole budget. What happens if another cyclone comes?"
+      "Feedback_B": "At least no warehouse area was counted as directly affected this time. We avoided spending on locations outside the modelled impact footprint. We've used the whole budget. What happens if another cyclone comes?"
     },
     {
       "Boss_ID": "B22",
