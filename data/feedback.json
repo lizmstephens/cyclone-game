@@ -183,6 +183,33 @@
       "Context": "Budget-limited",
       "Feedback_O": "Your response was well targeted but budget constraints limited coverage.",
       "Feedback_B": "We helped {people_reached} people. I wish we could have done more."
+    },
+    {
+      "ID": "F21",
+      "Threshold": "Above",
+      "Forecast": "Mixed",
+      "Action": "Mobilise + activate",
+      "Context": "Excess mobilisation",
+      "Feedback_O": "You reached affected communities, but also mobilised supplies in locations that were not directly affected. Those funds may have been better reserved for later storms.",
+      "Feedback_B": "We supported some communities, but why did we spend money preparing areas that were not affected?"
+    },
+    {
+      "ID": "F22",
+      "Threshold": "Above",
+      "Forecast": "Mixed",
+      "Action": "Mobilise + activate",
+      "Context": "Excess full activation",
+      "Feedback_O": "You reached affected communities, but also fully activated in locations that were not directly affected. Distribution in those locations increased expenditure without adding to the game's modelled reach.",
+      "Feedback_B": "We reached people who needed us, but I am concerned about the money spent distributing supplies elsewhere."
+    },
+    {
+      "ID": "F23",
+      "Threshold": "Above",
+      "Forecast": "Mixed",
+      "Action": "Mobilise + activate",
+      "Context": "Unnecessary spending and missed coverage",
+      "Feedback_O": "You reached some affected communities but left others unsupported, while committing funds to locations that were not directly affected. This reduced the efficiency of your response.",
+      "Feedback_B": "Some communities needed help and did not receive it, while we spent money elsewhere. We need to improve our targeting."
     }
   ],
   "boss": [
