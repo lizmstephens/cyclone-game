@@ -159,6 +159,7 @@ try {
 }
 // Optional live read of the two independently publishable feedback tabs.
 // The fallback JSON remains available for private/unpublished sheets or offline play.
+let feedbackSourceLabel="Saved GitHub JSON", impactSourceLabel="Saved GitHub JSON";
 async function readPublishedSheet(spreadsheetId,gid,lastColumn,minRows,maxRow=30){
  const base="https://docs.google.com/spreadsheets/d/"+spreadsheetId+"/gviz/tq";
  const qs="?gid="+gid+"&range=A1%3A"+lastColumn+maxRow+"&tqx=out%3Ajson&headers=1&_="+Date.now();
@@ -187,6 +188,7 @@ async function refreshLiveFeedback(){
   ]);
   if(!objective.every(x=>x.ID&&x.Feedback_O)||!boss.every(x=>x.Boss_ID&&x.Feedback_B))throw Error("Required feedback columns missing");
   feedbackLibrary={objective,boss};
+  feedbackSourceLabel="Live Google Sheet";
   console.info("Cyclone Game: using live Google Sheets feedback");
  }catch(error){
   console.info("Cyclone Game: using versioned feedback JSON (sheet tabs not published/reachable)",error);
@@ -199,6 +201,7 @@ async function refreshLiveHistoricalImpacts(){
  try{
   const rows=await readPublishedSheet("1gIZZ_wpC0yXadie5wqWFOBNfKdGN8dy6fH8qiOSIiWw","1464705366","N",85,100);
   let updated=0;
+  const pending=[];
   for(const r of rows){
    const id=r["WATTCH Event ID"],entry=verifiedImpacts.by_event_id?.[id];
    if(!id||!entry||!r["Storm name"]||r["Storm name"].trim().toUpperCase()!==entry.storm_name?.toUpperCase())continue;
@@ -216,12 +219,16 @@ async function refreshLiveHistoricalImpacts(){
     ["Cyclone season Wikipedia","season_page"],
     ["Season-page name check","name_check"]
    ];
+   const changed={...entry};
    for(const [column,property] of props){
-    if(Object.prototype.hasOwnProperty.call(r,column))entry[property]=r[column]||null;
+    if(Object.prototype.hasOwnProperty.call(r,column))changed[property]=r[column]||null;
    }
+   pending.push([id,changed]);
    updated++;
   }
   if(updated<85)throw Error("Too few matching storm rows in live impact sheet");
+  pending.forEach(([id,entry])=>{verifiedImpacts.by_event_id[id]=entry;});
+  impactSourceLabel="Live Google Sheet";
   console.info("Cyclone Game: loaded "+updated+" live historical-impact rows");
  }catch(error){
   console.info("Cyclone Game: using checked-in historical impact JSON",error);
@@ -683,6 +690,7 @@ function stormReview(st,index){
      '<section class="review-bubble boss" aria-label="Boss feedback"><h4>Boss</h4><p>“'+esc(scored.boss||"Boss feedback unavailable.")+'”</p></section>'+
    '</div>'+
    '<details class="review-details"><summary>Sources and detailed review</summary>'+
+   '<p><strong>Data sources:</strong> feedback '+esc(feedbackSourceLabel)+'; historical impacts '+esc(impactSourceLabel)+'.</p>'+
    '<p>Feedback library: Scientist '+esc(scored.id||"unavailable")+'; Boss '+esc(scored.bossId||"unavailable")+'. Game outcome: '+(st.impact||[]).length+' modelled affected areas, '+reached.toLocaleString("en-GB")+' people reached (illustrative); '+money(spend)+' spent.</p>'+
    (verified?.ibtracsFix?'<p><strong>Near-landfall best-track fix:</strong> '+esc(verified.ibtracsFix.kmh)+' km/h, 10-minute sustained, at '+esc(verified.ibtracsFix.utc)+'. This may not be the exact coastline-crossing wind.</p>':'')+
    (impacts?.landfall_date_text?'<p><strong>Historical landfall date in impact catalogue:</strong> '+esc(impacts.landfall_date_text)+'; <strong>reported location:</strong> '+esc(impacts.landfall_area||"Not specified")+'.</p>':'')+
