@@ -53,7 +53,7 @@ h1{font-size:clamp(27px,4vw,38px);line-height:1.15;margin:14px 0}h2{font-size:22
 </section>
 <section class="card">
 <h2>Planned improvement: daily forecast reconstruction</h2>
-<p><strong>Status: design specification, not yet implemented in the playable game.</strong> WATTCH hindcasts are initialised on Mondays and Thursdays. The current scenario library retains only one original forecast initialisation per storm case, so the first task is to recover all available initialisations for each cyclone from the source archive. We will test the method with <strong>Gamede (2007)</strong> before updating other storms.</p>
+<p><strong>Status: design specification, not yet implemented in the playable game.</strong> WATTCH hindcasts are initialised on Mondays and Thursdays. The current scenario library retains only one original forecast initialisation per storm case, so the first task is to recover all available initialisations for each cyclone from the source archive. A separate <strong>Gamede (2007)</strong> experiment now tests reconstruction using the original WATTCH initialisations; the playable game has not been updated.</p>
 <h3>Data preparation and interpolation requirements</h3>
 <ul>
 <li><strong>Preserve the originals:</strong> retain every authentic WATTCH forecast initialisation, ensemble member and reference track without modification. Record the issue time and distinguish genuine WATTCH forecasts from generated daily forecasts.</li>
@@ -67,7 +67,7 @@ h1{font-size:clamp(27px,4vw,38px);line-height:1.15;margin:14px 0}h2{font-size:22
 <h3>Validation before adoption</h3>
 <p>For Gamede, plot the original Monday/Thursday WATTCH forecasts alongside reconstructed daily forecasts. Check initial positions, track continuity, ensemble spread, wind evolution and changing landfall probabilities. Keep the game interface, warehouse locations, decisions and scoring unchanged until the results have been reviewed.</p>
 <p class="notice"><strong>Scientific caveat:</strong> using the reference track after a forecast's issue time introduces future information. Any reconstruction that does this must be labelled a <em>synthetic training forecast</em>, not an authentic historical forecast or independent hindcast of forecast skill. Prefer reconstruction constrained by the surrounding original forecasts, and preserve the originals for verification.</p>
-<p class="small">The separate <a href="./gamede-experiment.html">Gamede visual experiment</a> uses one stored forecast and future reference-track information. It is only an exploratory prototype, not the proposed Monday/Thursday interpolation or part of the playable scenario library.</p>
+<p class="small">The separate <a href="./gamede-experiment.html">Gamede visual experiment</a> now compares 12 recovered WATTCH initialisations with seven reconstructed missing daily forecasts. The experiment is not part of the playable scenario library.</p>
 </section>
 <section class="card">
 <h2>How are forecasts and outcomes assessed?</h2>
