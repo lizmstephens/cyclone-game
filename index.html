@@ -529,7 +529,8 @@ function selectFeedback(st){
 
  const people=reached*1000,reach=people===0?"None":uncovered?"Some":"High";
  const budget=G.budget===0?"Exhausted":G.budget<45000?"Low":"Healthy";
- const decision=above?(credible&&reached?"Good":!warning&&!reached?"Good":"Poor"):(distributed.length&&!warning?"Poor":"Good");
+ const decision=([ "M02","M03","M05","A02","A03","A05","A07" ].includes(mobiliseReview.id)||
+  [ "M02","M03","M05","A02","A03","A05","A07" ].includes(activationReview.id))?"Poor":"Good";
  // Boss feedback's legacy one-word forecast label uses the full-activation
  // comparison; the two separate forecast classifications are retained below.
  const outlook=stages.full==="Overforecast"?"Overforecast":stages.full==="Underforecast"?"Underforecast":distributed.length&&!reached&&above?"Track error":"Accurate";
@@ -541,6 +542,9 @@ function selectFeedback(st){
   " Outcome: "+reached+" of "+affected.size+" directly affected warehouse area(s) received full activation."+
   (uncovered?" "+uncovered+" directly affected area(s) remained without distribution.":"")+
   geographyNote+wasteNote,
+ mobiliseText:mobiliseReview.text,activationText:activationReview.text,
+ outcomeText:reached+" of "+affected.size+" directly affected warehouse area(s) received full activation."+
+  (uncovered?" "+uncovered+" directly affected area(s) remained without distribution.":"")+geographyNote+wasteNote,
  boss:fillFeedback(boss?.Feedback_B||"We need to reflect on this storm.",people)+(wastedCosts?" We also spent "+money(wastedCosts)+" mobilising or activating in locations outside the modelled direct-impact footprint.":""),
  threshold:above,forecast:outlook,decisionQuality:decision,people,stages,mobiliseFeedbackId:mobiliseReview.id,activationFeedbackId:activationReview.id};
 }
@@ -711,7 +715,7 @@ function stormReview(st,index){
    '<div class="review-facts"><p><strong>Actual storm:</strong> '+esc(actualStormSentence(st,verified,impacts))+'</p>'+
    '<p><strong>Your decision:</strong> '+esc(playerDecisionSentence(st))+'</p></div>'+
    '<div class="review-voices">'+
-     '<section class="review-bubble scientist" aria-label="Scientist objective feedback"><h4>Scientist</h4><p>'+esc(scored.objective||"Objective feedback unavailable.")+'</p></section>'+
+     '<section class="review-bubble scientist" aria-label="Scientist objective feedback"><h4>Scientist</h4><p><strong>Mobilise:</strong> '+esc(scored.mobiliseText||"Not assessed")+'</p><p style="margin-top:12px"><strong>Full activation:</strong> '+esc(scored.activationText||"Not assessed")+'</p><p style="margin-top:12px"><strong>Outcome and targeting:</strong> '+esc(scored.outcomeText||"Review unavailable")+'</p></section>'+
      '<section class="review-bubble boss" aria-label="Boss feedback"><h4>Boss</h4><p>“'+esc(scored.boss||"Boss feedback unavailable.")+'”</p></section>'+
    '</div>'+
    '<details class="review-details"><summary>Sources and detailed review</summary>'+
