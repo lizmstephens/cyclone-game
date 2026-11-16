@@ -10,8 +10,7 @@
       "Forecast": "Good",
       "Action": "Preposition + distribute",
       "Context": "Targeted, on time",
-      "Feedback_O": "The forecast was good and the cyclone exceeded the threshold. You acted in time and reached the affected communities.",
-      "Feedback_B": "We helped {people_reached} people before landfall. The donor is delighted!"
+      "Feedback_O": "The forecast was good and the cyclone exceeded the threshold. You acted in time and reached the affected communities."
     },
     {
       "ID": "F02",
@@ -19,8 +18,7 @@
       "Forecast": "Good",
       "Action": "Preposition only",
       "Context": "Not distributed",
-      "Feedback_O": "The threshold was exceeded, but supplies were not distributed before landfall.",
-      "Feedback_B": "We moved supplies but did not get them to families."
+      "Feedback_O": "The threshold was exceeded, but supplies were not distributed before landfall."
     },
     {
       "ID": "F03",
@@ -28,8 +26,7 @@
       "Forecast": "Good",
       "Action": "No action",
       "Context": "Action possible",
-      "Feedback_O": "The warning justified action. You missed an opportunity to help.",
-      "Feedback_B": "We had warning and did nothing!"
+      "Feedback_O": "The warning justified action. You missed an opportunity to help."
     },
     {
       "ID": "F04",
@@ -37,8 +34,7 @@
       "Forecast": "Good",
       "Action": "Preposition + distribute",
       "Context": "Partial coverage",
-      "Feedback_O": "You acted in time but left some affected areas uncovered.",
-      "Feedback_B": "We helped {people_reached} people, but why not the others?"
+      "Feedback_O": "You acted in time but left some affected areas uncovered."
     },
     {
       "ID": "F05",
@@ -46,8 +42,7 @@
       "Forecast": "Good",
       "Action": "Preposition + distribute",
       "Context": "Every warehouse",
-      "Feedback_O": "The intervention reached people, but distributing everywhere was unnecessarily expensive.",
-      "Feedback_B": "The donor is happy, but our budget is nearly gone."
+      "Feedback_O": "The intervention reached people, but distributing everywhere was unnecessarily expensive."
     },
     {
       "ID": "F06",
@@ -55,8 +50,7 @@
       "Forecast": "Poor/late",
       "Action": "No action",
       "Context": "Impossible lead time",
-      "Feedback_O": "The warning came too late for the required action. This was not a preventable failure by the player.",
-      "Feedback_B": "The storm caught us out. We need better forecasts."
+      "Feedback_O": "The warning came too late for the required action. This was not a preventable failure by the player."
     },
     {
       "ID": "F07",
@@ -64,8 +58,7 @@
       "Forecast": "Underforecast",
       "Action": "No action",
       "Context": "Threshold not forecast",
-      "Feedback_O": "The storm made landfall above the threshold, but the forecast did not justify action. Your restraint was defensible on the basis of the forecast available to you.",
-      "Feedback_B": "The donor will be unhappy, but we did not see this coming."
+      "Feedback_O": "The storm made landfall above the threshold, but the forecast did not justify action. Your restraint was defensible on the basis of the forecast available to you."
     },
     {
       "ID": "F08",
@@ -73,8 +66,7 @@
       "Forecast": "Underforecast",
       "Action": "Preposition + distribute",
       "Context": "Lucky success",
-      "Feedback_O": "The storm made landfall above the threshold, but the available forecast did not justify the action. A good outcome is not necessarily a good decision.",
-      "Feedback_B": "We helped {people_reached} people! Quite a gamble."
+      "Feedback_O": "The storm made landfall above the threshold, but the available forecast did not justify the action. A good outcome is not necessarily a good decision."
     },
     {
       "ID": "F09",
@@ -82,8 +74,7 @@
       "Forecast": "Good",
       "Action": "Preposition + distribute",
       "Context": "Too late",
-      "Feedback_O": "Action was initiated too late to complete distribution before impact.",
-      "Feedback_B": "We spent money and still missed the window."
+      "Feedback_O": "Action was initiated too late to complete distribution before impact."
     },
     {
       "ID": "F10",
@@ -91,8 +82,7 @@
       "Forecast": "Good",
       "Action": "Preposition + distribute",
       "Context": "Wrong area",
-      "Feedback_O": "Assistance was delivered away from the areas actually affected.",
-      "Feedback_B": "We distributed kits in the wrong places."
+      "Feedback_O": "Assistance was delivered away from the areas actually affected."
     },
     {
       "ID": "F11",
@@ -100,8 +90,7 @@
       "Forecast": "Good",
       "Action": "No action",
       "Context": "Correct restraint",
-      "Feedback_O": "The threshold was not exceeded and the forecast did not justify activation. Conserving funds was appropriate.",
-      "Feedback_B": "Good. We saved our budget."
+      "Feedback_O": "The threshold was not exceeded and the forecast did not justify activation. Conserving funds was appropriate."
     },
     {
       "ID": "F12",
@@ -109,8 +98,7 @@
       "Forecast": "Good",
       "Action": "Preposition + distribute",
       "Context": "Unnecessary action",
-      "Feedback_O": "The forecast did not justify action and the threshold was not exceeded.",
-      "Feedback_B": "Why did we distribute kits when the trigger was not met?"
+      "Feedback_O": "The forecast did not justify action and the threshold was not exceeded."
     },
     {
       "ID": "F13",
@@ -118,8 +106,7 @@
       "Forecast": "Overforecast",
       "Action": "Preposition only",
       "Context": "Reasonable precaution",
-      "Feedback_O": "The threshold was not exceeded, but prepositioning was justified by the available warning.",
-      "Feedback_B": "An expensive false alarm, but I understand why you acted."
+      "Feedback_O": "The threshold was not exceeded, but prepositioning was justified by the available warning."
     },
     {
       "ID": "F14",
@@ -127,8 +114,7 @@
       "Forecast": "Overforecast",
       "Action": "Preposition + distribute",
       "Context": "Reasonable false alarm",
-      "Feedback_O": "The forecast justified activation, even though the storm ultimately stayed below threshold.",
-      "Feedback_B": "The donor is asking about costs. I will explain the warning."
+      "Feedback_O": "The forecast justified activation, even though the storm ultimately stayed below threshold."
     },
     {
       "ID": "F15",
@@ -136,8 +122,7 @@
       "Forecast": "Overforecast",
       "Action": "No action",
       "Context": "Lucky restraint",
-      "Feedback_O": "The outcome was benign, but the warning suggested action. You may have been lucky.",
-      "Feedback_B": "We got away with that one."
+      "Feedback_O": "The outcome was benign, but the warning suggested action. You may have been lucky."
     },
     {
       "ID": "F16",
@@ -145,8 +130,7 @@
       "Forecast": "Good",
       "Action": "No action",
       "Context": "Budget exhausted",
-      "Feedback_O": "The threshold was exceeded, but earlier spending left no money for this response.",
-      "Feedback_B": "A serious storm and nothing left to spend!"
+      "Feedback_O": "The threshold was exceeded, but earlier spending left no money for this response."
     },
     {
       "ID": "F17",
@@ -154,8 +138,7 @@
       "Forecast": "Rapid intensification",
       "Action": "No action",
       "Context": "Impossible lead time",
-      "Feedback_O": "Rapid intensification left too little time to complete the required intervention.",
-      "Feedback_B": "We need to talk to our forecasting partners about this."
+      "Feedback_O": "Rapid intensification left too little time to complete the required intervention."
     },
     {
       "ID": "F18",
@@ -163,8 +146,7 @@
       "Forecast": "Track error",
       "Action": "Preposition + distribute",
       "Context": "Wrong forecast area",
-      "Feedback_O": "The forecast displaced the impact area, so even reasonable targeting missed affected communities.",
-      "Feedback_B": "We followed the forecast and still missed people."
+      "Feedback_O": "The forecast displaced the impact area, so even reasonable targeting missed affected communities."
     },
     {
       "ID": "F19",
@@ -172,8 +154,7 @@
       "Forecast": "Mixed",
       "Action": "Preposition + distribute",
       "Context": "Targeted, timely",
-      "Feedback_O": "You acted decisively under uncertainty and reached affected areas.",
-      "Feedback_B": "We reached {people_reached} people. This is what the programme is for."
+      "Feedback_O": "You acted decisively under uncertainty and reached affected areas."
     },
     {
       "ID": "F20",
@@ -181,8 +162,7 @@
       "Forecast": "Good",
       "Action": "Preposition + distribute",
       "Context": "Budget-limited",
-      "Feedback_O": "Your response was well targeted but budget constraints limited coverage.",
-      "Feedback_B": "We helped {people_reached} people. I wish we could have done more."
+      "Feedback_O": "Your response was well targeted but budget constraints limited coverage."
     },
     {
       "ID": "F21",
@@ -190,8 +170,7 @@
       "Forecast": "Mixed",
       "Action": "Mobilise + activate",
       "Context": "Excess mobilisation",
-      "Feedback_O": "You reached affected communities, but also mobilised supplies in locations that were not directly affected. Those funds may have been better reserved for later storms.",
-      "Feedback_B": "We supported some communities, but why did we spend money preparing areas that were not affected?"
+      "Feedback_O": "You reached affected communities, but also mobilised supplies in locations that were not directly affected. Those funds may have been better reserved for later storms."
     },
     {
       "ID": "F22",
@@ -199,8 +178,7 @@
       "Forecast": "Mixed",
       "Action": "Mobilise + activate",
       "Context": "Excess full activation",
-      "Feedback_O": "You reached affected communities, but also fully activated in locations that were not directly affected. Distribution in those locations increased expenditure without adding to the game's modelled reach.",
-      "Feedback_B": "We reached people who needed us, but I am concerned about the money spent distributing supplies elsewhere."
+      "Feedback_O": "You reached affected communities, but also fully activated in locations that were not directly affected. Distribution in those locations increased expenditure without adding to the game's modelled reach."
     },
     {
       "ID": "F23",
@@ -208,8 +186,111 @@
       "Forecast": "Mixed",
       "Action": "Mobilise + activate",
       "Context": "Unnecessary spending and missed coverage",
-      "Feedback_O": "You reached some affected communities but left others unsupported, while committing funds to locations that were not directly affected. This reduced the efficiency of your response.",
-      "Feedback_B": "Some communities needed help and did not receive it, while we spent money elsewhere. We need to improve our targeting."
+      "Feedback_O": "You reached some affected communities but left others unsupported, while committing funds to locations that were not directly affected. This reduced the efficiency of your response."
+    },
+    {
+      "ID": "M01",
+      "Threshold": "Mobilise",
+      "Forecast": "Supported action",
+      "Action": "Mobilised",
+      "Context": "Decision matched warning",
+      "Feedback_O": "You mobilised when the available forecast supported doing so."
+    },
+    {
+      "ID": "M02",
+      "Threshold": "Mobilise",
+      "Forecast": "Unsupported action",
+      "Action": "Mobilised",
+      "Context": "No warning at decision time",
+      "Feedback_O": "You mobilised even though the forecast available on the decision day did not meet the mobilisation trigger."
+    },
+    {
+      "ID": "M03",
+      "Threshold": "Mobilise",
+      "Forecast": "Missed opportunity",
+      "Action": "Did not mobilise",
+      "Context": "Warning during eligible window",
+      "Feedback_O": "The mobilisation trigger was reached while action was still possible, but you did not mobilise."
+    },
+    {
+      "ID": "M04",
+      "Threshold": "Mobilise",
+      "Forecast": "Appropriate restraint",
+      "Action": "Did not mobilise",
+      "Context": "No warning during eligible window",
+      "Feedback_O": "The mobilisation trigger was not reached while action was possible, and you appropriately conserved the budget."
+    },
+    {
+      "ID": "M05",
+      "Threshold": "Mobilise",
+      "Forecast": "Mixed actions",
+      "Action": "Mobilised",
+      "Context": "Some decisions supported, some unsupported",
+      "Feedback_O": "Some mobilisation decisions were supported by the forecast at the time, but others were not."
+    },
+    {
+      "ID": "M06",
+      "Threshold": "Mobilise",
+      "Forecast": "Not assessable",
+      "Action": "Any",
+      "Context": "No eligible briefing",
+      "Feedback_O": "There was no eligible mobilisation decision window in the recorded briefings, so this stage cannot be assessed."
+    },
+    {
+      "ID": "A01",
+      "Threshold": "Full activation",
+      "Forecast": "Supported action",
+      "Action": "Activated",
+      "Context": "Decision matched warning",
+      "Feedback_O": "You fully activated when the available forecast supported doing so."
+    },
+    {
+      "ID": "A02",
+      "Threshold": "Full activation",
+      "Forecast": "Unsupported action",
+      "Action": "Activated",
+      "Context": "No warning at decision time",
+      "Feedback_O": "You fully activated even though the forecast available on the decision day did not meet the full-activation trigger."
+    },
+    {
+      "ID": "A03",
+      "Threshold": "Full activation",
+      "Forecast": "Missed opportunity",
+      "Action": "Did not activate",
+      "Context": "Warning during eligible window",
+      "Feedback_O": "The full-activation trigger was reached while action was possible, but no full activation was completed."
+    },
+    {
+      "ID": "A04",
+      "Threshold": "Full activation",
+      "Forecast": "Appropriate restraint",
+      "Action": "Did not activate",
+      "Context": "No warning during eligible window",
+      "Feedback_O": "The full-activation trigger was not reached during the eligible window, so restraint was consistent with the forecast."
+    },
+    {
+      "ID": "A05",
+      "Threshold": "Full activation",
+      "Forecast": "Mixed actions",
+      "Action": "Activated",
+      "Context": "Some decisions supported, some unsupported",
+      "Feedback_O": "Some full-activation decisions were supported by the forecast at the time, but others were not."
+    },
+    {
+      "ID": "A06",
+      "Threshold": "Full activation",
+      "Forecast": "Not assessable",
+      "Action": "Any",
+      "Context": "No eligible briefing",
+      "Feedback_O": "There was no eligible full-activation decision window in the recorded briefings, so this stage cannot be assessed."
+    },
+    {
+      "ID": "A07",
+      "Threshold": "Full activation",
+      "Forecast": "Warning, unprepared",
+      "Action": "Did not activate",
+      "Context": "Activation signal, no mobilisation",
+      "Feedback_O": "The full-activation trigger was reached, but no warehouse had been mobilised in advance, so activation was not possible."
     }
   ],
   "boss": [
