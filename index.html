@@ -183,7 +183,7 @@ async function readPublishedSheet(spreadsheetId,gid,lastColumn,minRows,maxRow=30
 async function refreshLiveFeedback(){
  try{
   const [objective,boss]=await Promise.all([
-   readPublishedSheet("1kEIwFSZOG8nxThiheJkO-Tgtqn97HmlrawF9-gbB9FQ","401526903","G",23),
+   readPublishedSheet("1kEIwFSZOG8nxThiheJkO-Tgtqn97HmlrawF9-gbB9FQ","401526903","F",36,45),
    readPublishedSheet("1kEIwFSZOG8nxThiheJkO-Tgtqn97HmlrawF9-gbB9FQ","732145","F",20)
   ]);
   if(!objective.every(x=>x.ID&&x.Feedback_O)||!boss.every(x=>x.Boss_ID&&x.Feedback_B))throw Error("Required feedback columns missing");
@@ -455,6 +455,26 @@ function forecastAssessment(st){
 function fillFeedback(template,people){
  return String(template||"").replace(/\{people_reached\}/g,people.toLocaleString("en-GB"));
 }
+// Stage-specific forecast-informed decision assessment; independent of outcomes.
+function stageDecisionFeedback(st,stage){
+ const logs=st.decisionLog||[],mobilise=stage==="mobilise";
+ const actions=logs.filter(x=>x.action===(mobilise?"preposition":"distribute"));
+ const eligible=logs.filter(x=>mobilise?
+  x.lead>=G.prepDays&&x.lead<=PRE_WINDOW:
+  x.lead>=0&&x.lead<=ACT_WINDOW);
+ const signal=x=>mobilise?x.preSignal:x.activationSignal;
+ let id;
+ if(!eligible.length)id=mobilise?"M06":"A06";
+ else if(actions.length){
+  const supported=actions.filter(signal).length;
+  id=mobilise?(supported===actions.length?"M01":supported===0?"M02":"M05"):
+     (supported===actions.length?"A01":supported===0?"A02":"A05");
+ }else if(eligible.some(signal)){
+  id=mobilise?"M03":(st.stock.size?"A03":"A07");
+ }else id=mobilise?"M04":"A04";
+ const row=feedbackLibrary.objective.find(x=>x.ID===id);
+ return {id,text:row?.Feedback_O||"Stage-specific feedback unavailable."};
+}
 function selectFeedback(st){
  const affected=new Set(st.impact||[]),stock=[...st.stock],distributed=[...st.distributed],logs=st.decisionLog||[];
  const reached=distributed.filter(id=>affected.has(id)).length,uncovered=[...affected].filter(id=>!st.distributed.has(id)).length;
@@ -487,6 +507,8 @@ function selectFeedback(st){
   else id=warning?"F15":"F11";
  }
  const objective=feedbackLibrary.objective.find(x=>x.ID===id);
+ const mobiliseReview=stageDecisionFeedback(st,"mobilise");
+ const activationReview=stageDecisionFeedback(st,"activation");
  const nameFor=id=>hubs.find(h=>h.id===id)?.name||id;
  const extraPreparedOnly=extraMobilised.filter(id=>!st.distributed.has(id));
  const wastedCosts=extraMobilised.length*cost.preposition+extraActivated.length*cost.distribute;
@@ -515,9 +537,12 @@ function selectFeedback(st){
  (b["People helped"]===reach?5:0)+(b["Decision quality"]===decision?3:0)+(b["Forecast outcome"]===outlook?3:0)+(b["Budget remaining"]===budget?2:0)
  })).sort((a,b)=>b.score-a.score);
  const boss=variants[0]?.b;
- return {id,bossId:boss?.Boss_ID||"",objective:fillFeedback(objective?.Feedback_O||"Review forecast evidence and decision timing.",people)+geographyNote+wasteNote,
- boss:fillFeedback(boss?.Feedback_B||objective?.Feedback_B||"We need to reflect on this storm.",people)+(wastedCosts?" We also spent "+money(wastedCosts)+" mobilising or activating in locations outside the modelled direct-impact footprint.":""),
- threshold:above,forecast:outlook,decisionQuality:decision,people,stages};
+ return {id,bossId:boss?.Boss_ID||"",objective:"Mobilise ("+mobiliseReview.id+"): "+mobiliseReview.text+" Full activation ("+activationReview.id+"): "+activationReview.text+
+  " Outcome: "+reached+" of "+affected.size+" directly affected warehouse area(s) received full activation."+
+  (uncovered?" "+uncovered+" directly affected area(s) remained without distribution.":"")+
+  geographyNote+wasteNote,
+ boss:fillFeedback(boss?.Feedback_B||"We need to reflect on this storm.",people)+(wastedCosts?" We also spent "+money(wastedCosts)+" mobilising or activating in locations outside the modelled direct-impact footprint.":""),
+ threshold:above,forecast:outlook,decisionQuality:decision,people,stages,mobiliseFeedbackId:mobiliseReview.id,activationFeedbackId:activationReview.id};
 }
 
 function forecastMessage(rows){
@@ -691,7 +716,7 @@ function stormReview(st,index){
    '</div>'+
    '<details class="review-details"><summary>Sources and detailed review</summary>'+
    '<p><strong>Data sources:</strong> feedback '+esc(feedbackSourceLabel)+'; historical impacts '+esc(impactSourceLabel)+'.</p>'+
-   '<p>Feedback library: Scientist '+esc(scored.id||"unavailable")+'; Boss '+esc(scored.bossId||"unavailable")+'. Game outcome: '+(st.impact||[]).length+' modelled affected areas, '+reached.toLocaleString("en-GB")+' people reached (illustrative); '+money(spend)+' spent.</p>'+
+   '<p>Feedback library: Mobilise '+esc(scored.mobiliseFeedbackId||"unavailable")+'; Full activation '+esc(scored.activationFeedbackId||"unavailable")+'; legacy overall outcome '+esc(scored.id||"unavailable")+'; Boss '+esc(scored.bossId||"unavailable")+'. Game outcome: '+(st.impact||[]).length+' modelled affected areas, '+reached.toLocaleString("en-GB")+' people reached (illustrative); '+money(spend)+' spent.</p>'+
    (verified?.ibtracsFix?'<p><strong>Near-landfall best-track fix:</strong> '+esc(verified.ibtracsFix.kmh)+' km/h, 10-minute sustained, at '+esc(verified.ibtracsFix.utc)+'. This may not be the exact coastline-crossing wind.</p>':'')+
    (impacts?.landfall_date_text?'<p><strong>Historical landfall date in impact catalogue:</strong> '+esc(impacts.landfall_date_text)+'; <strong>reported location:</strong> '+esc(impacts.landfall_area||"Not specified")+'.</p>':'')+
    (impacts?.observed_landfall_wind_kmh?'<p><strong>Reported near-landfall intensity:</strong> '+esc(impacts.observed_landfall_wind_kmh)+' km/h'+(impacts.wind_averaging_period?" ("+esc(impacts.wind_averaging_period)+")":"")+'.</p>':'')+
