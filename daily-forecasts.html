@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Daily cyclone forecasts · Scenario library browser</title>
+<style>
+:root{font:16px system-ui,-apple-system,"Segoe UI",sans-serif;color:#19394a;background:#eef3f5}
+*{box-sizing:border-box}body{margin:0}header{background:#173e51;color:white;padding:17px 24px}header a{color:#d6edf5}
+main{max-width:1160px;margin:auto;padding:20px 16px 45px}h1{font-size:clamp(23px,3vw,32px);margin:0 0 7px}h2{font-size:19px;margin:0 0 7px}p{line-height:1.45}
+.panel{background:white;border:1px solid #d9e4e9;border-radius:12px;padding:18px;margin:13px 0}
+.controls{display:flex;gap:14px;align-items:end;flex-wrap:wrap}.controls label{display:grid;gap:7px;font-weight:650;flex:1;min-width:230px}
+select,button{font:inherit;border:1px solid #aec6cf;border-radius:8px;padding:11px;background:white;color:#19394a}
+select{width:100%}button{cursor:pointer;font-weight:650}button:disabled{opacity:.35;cursor:default}
+.nav{display:flex;align-items:center;gap:10px;justify-content:space-between;flex-wrap:wrap;margin:12px 0}
+.nav button{background:#17667b;color:white;border:0;min-width:130px}
+#date{font-size:19px;font-weight:700;text-align:center}#counter{font-size:13px;text-align:center;color:#637b87}
+#map{width:100%;border-radius:10px;display:block;background:#e5f3f9;aspect-ratio:1000/550}
+.legend{display:flex;gap:15px;flex-wrap:wrap;color:#4d6974;font-size:13px;margin-top:13px}
+.dot{display:inline-block;width:13px;height:13px;border-radius:50%;vertical-align:middle;margin-right:3px}
+.muted{color:#57717e;font-size:14px}#status{min-height:18px;color:#8e4434}#details{margin-top:10px}
+@media(max-width:640px){main{padding:13px 9px}.panel{padding:12px}.nav button{min-width:108px}#map{aspect-ratio:1.15}}
+</style>
+</head>
+<body>
+<header><a href="./daily-library.html">← Scenario catalogue</a></header>
+<main>
+<h1>Daily cyclone forecast browser</h1>
+<p class="muted">Inspect each forecast from the experimental WATTCH daily scenario library. No gameplay. Original and retrospectively reconstructed forecasts are shown as stored; some reconstructed dates and threat windows still need validation.</p>
+<div class="panel">
+<div class="controls"><label>Storm <select id="storm"><option value="">Loading storms…</option></select></label><label>Forecast date <select id="issue"></select></label></div>
+<p class="muted" id="coverage"></p><p id="status" role="status"></p>
+<div class="nav"><button id="previous" type="button">← Previous day</button><div><div id="date">—</div><div id="counter">—</div></div><button id="next" type="button">Next day →</button></div>
+<svg id="map" viewBox="0 0 1000 550" role="img" aria-label="Daily cyclone ensemble forecast tracks around Madagascar" preserveAspectRatio="xMidYMid meet"></svg>
+<div class="legend"><span><span class="dot" style="background:#61b7db"></span>&lt;63 km/h</span><span><span class="dot" style="background:#36b99b"></span>63–88</span><span><span class="dot" style="background:#ebca55"></span>89–117</span><span><span class="dot" style="background:#f39a4b"></span>118–165</span><span><span class="dot" style="background:#cf4b4b"></span>≥166</span><span>Colours represent forecast wind speed, not observed intensity</span></div>
+<p class="muted" id="details"></p>
+</div>
+</main>
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+let manifest=[],data=null,index=0,loadNumber=0,land=[];
+const bbox={west:34,east:83,north:-3,south:-35};
+const project=([lon,lat])=>[35+(lon-bbox.west)/(bbox.east-bbox.west)*930,30+(bbox.north-lat)/(bbox.north-bbox.south)*485];
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const pathFor=pts=>pts.map((p,i)=>{const [x,y]=project(p);return (i?"L":"M")+x.toFixed(1)+" "+y.toFixed(1)}).join(" ");
+const windColor=v=>v<63?"#61b7db":v<89?"#36b99b":v<118?"#ebca55":v<166?"#f39a4b":"#cf4b4b";
+function drawing(){
+ if(!data)return;
+ const f=data.forecasts[index],start=Date.parse(f.issue_date+"T00:00:00Z"),end=start+7*86400000;
+ const outline=land.map(r=>'<path d="'+pathFor(r)+'" fill="#d5e5cd" stroke="#809d85" stroke-width="1.1"/>').join("");
+ const grid=[];
+ for(let lon=40;lon<=80;lon+=10){const [x]=project([lon,-20]);grid.push('<line x1="'+x+'" x2="'+x+'" y1="15" y2="525" stroke="#fff" stroke-opacity=".5"/>');}
+ for(let lat=-30;lat<=-5;lat+=5){const [,y]=project([45,lat]);grid.push('<line x1="25" x2="985" y1="'+y+'" y2="'+y+'" stroke="#fff" stroke-opacity=".5"/>');}
+ let tracks="",shown=0;
+ for(const member of f.members||[]){
+  const points=(member.points||[]).filter(p=>{const t=Date.parse(String(p[0]).replace(" ","T")+"Z");return t>=start&&t<=end&&Number.isFinite(+p[1])&&Number.isFinite(+p[2])&&Number.isFinite(+p[3]);});
+  if(points.length<2)continue;shown++;
+  for(let i=1;i<points.length;i++){
+   const a=points[i-1],b=points[i],aa=project([+a[2],+a[1]]),bb=project([+b[2],+b[1]]);
+   const kmh=((+a[3])+(+b[3]))*1.8;
+   tracks+='<line x1="'+aa[0].toFixed(1)+'" y1="'+aa[1].toFixed(1)+'" x2="'+bb[0].toFixed(1)+'" y2="'+bb[1].toFixed(1)+'" stroke="'+windColor(kmh)+'" stroke-width="2" opacity=".68" stroke-linecap="round"/>';
+  }
+  const a=points[0],at=project([+a[2],+a[1]]);
+  tracks+='<circle cx="'+at[0].toFixed(1)+'" cy="'+at[1].toFixed(1)+'" r="3.5" fill="#183f54" opacity=".6"/>';
+ }
+ $("map").innerHTML='<rect width="1000" height="550" fill="#dfeff7"/>'+grid.join("")+outline+tracks+'<text x="360" y="315" font-size="17" fill="#5a7c70" opacity=".8">Madagascar</text><text x="42" y="500" font-size="14" fill="#608098">Mozambique Channel</text>';
+ $("date").textContent=new Date(f.issue_date+"T00:00:00Z").toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"});
+ $("counter").textContent="Forecast "+(index+1)+" of "+data.forecasts.length;
+ $("details").textContent=shown+" ensemble member tracks · "+(f.type==="original"?"Original WATTCH run":f.type==="synthetic"?"Reconstructed daily forecast":f.type.replaceAll("_"," "))+" · Showing tracks for the next 7 days. This is a retrospective forecast reconstruction, not a live forecast.";
+ $("previous").disabled=index===0;$("next").disabled=index===data.forecasts.length-1;
+ $("issue").value=String(index);
+ const url=new URL(location.href);url.searchParams.set("event",data.event_id);url.searchParams.set("day",String(index));history.replaceState(null,"",url);
+}
+async function chooseStorm(id){
+ const request=++loadNumber; $("status").textContent="Loading daily forecasts…";data=null;
+ $("previous").disabled=$("next").disabled=true;
+ try{
+  const response=await fetch("./data/daily/"+encodeURIComponent(id)+".json");
+  if(!response.ok)throw Error("HTTP "+response.status);
+  const loaded=await response.json();if(request!==loadNumber)return;
+  if(!Array.isArray(loaded.forecasts)||!loaded.forecasts.length)throw Error("No forecast dates available");
+  data=loaded;data.forecasts.sort((a,b)=>a.issue_date.localeCompare(b.issue_date));
+  $("issue").replaceChildren();
+  data.forecasts.forEach((forecast,i)=>{const opt=document.createElement("option");opt.value=String(i);opt.textContent=forecast.issue_date+" · "+(forecast.type==="original"?"original":"reconstructed");$("issue").appendChild(opt);});
+  const requested=Number(new URLSearchParams(location.search).get("day"));index=Number.isInteger(requested)&&requested>=0&&requested<data.forecasts.length?requested:0;
+  const entry=manifest.find(x=>x.event_id===id);
+  $("coverage").textContent=entry?entry.original_initialisations+" original runs · "+entry.synthetic_initialisations+" reconstructed dates · "+entry.playable_briefings+" proposed playable briefings":"";
+  $("status").textContent="";drawing();
+ }catch(e){if(request!==loadNumber)return;$("status").textContent="Could not load forecasts: "+e.message;}
+}
+$("storm").addEventListener("change",()=>{const u=new URL(location.href);u.searchParams.delete("day");history.replaceState(null,"",u);chooseStorm($("storm").value);});
+$("issue").addEventListener("change",()=>{index=Number($("issue").value);drawing();});
+$("previous").addEventListener("click",()=>{if(index>0){index--;drawing();}});
+$("next").addEventListener("click",()=>{if(data&&index<data.forecasts.length-1){index++;drawing();}});
+async function init(){
+ try{
+  const r=await fetch("./data/daily/manifest.json",{cache:"no-store"});if(!r.ok)throw Error("Manifest unavailable");
+  manifest=(await r.json()).storms.sort((a,b)=>a.name.localeCompare(b.name)||a.event_id.localeCompare(b.event_id));
+  $("storm").replaceChildren();
+  for(const m of manifest){const option=document.createElement("option");option.value=m.event_id;option.textContent=m.name+" ("+m.event_id.slice(0,4)+") · "+m.event_id;$("storm").appendChild(option);}
+  const requested=new URLSearchParams(location.search).get("event");
+  const id=manifest.some(m=>m.event_id===requested)?requested:manifest[0].event_id;
+  $("storm").value=id;await chooseStorm(id);
+ }catch(e){$("status").textContent="Unable to load the library: "+e.message;}
+}
+fetch("https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson").then(r=>r.json()).then(g=>{
+ for(const f of g.features||[]){
+  const v=f.geometry,p=v?.type==="Polygon"?[v.coordinates]:v?.type==="MultiPolygon"?v.coordinates:[];
+  for(const poly of p)for(const ring of poly){const near=ring.some(c=>c[0]>bbox.west&&c[0]<bbox.east&&c[1]>bbox.south&&c[1]<bbox.north);if(near)land.push(ring);}
+ }
+ if(data)drawing();
+}).catch(()=>{});
+init();
+</script>
+</body></html>
