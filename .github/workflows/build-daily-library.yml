@@ -1,0 +1,35 @@
+name: Rebuild experimental WATTCH daily library
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/build-daily-library.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Download original WATTCH Southern Hemisphere archive from Zenodo
+        shell: bash
+        run: |
+          curl --fail --location --retry 5 --retry-delay 8 --connect-timeout 30             --output "$RUNNER_TEMP/WATTCH_SH.csv"             "https://zenodo.org/records/20446920/files/WATTCH_SH.csv?download=1"
+          echo "66f842d5dab4287065db6c3a9e477960  $RUNNER_TEMP/WATTCH_SH.csv" | md5sum --check --status
+      - name: Generate all original and reconstructed daily forecast files
+        run: python3 scripts/build_daily_library.py "$RUNNER_TEMP/WATTCH_SH.csv"
+      - name: Commit only the experimental daily library
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/daily/
+          if ! git diff --cached --quiet; then
+            git commit -m "Build experimental daily WATTCH forecast library for 86 selected storms"
+            git push
+          fi
