@@ -31,5 +31,9 @@ jobs:
           git add data/daily/
           if ! git diff --cached --quiet; then
             git commit -m "Build experimental daily WATTCH forecast library for 86 selected storms"
-            git push
+            # Repository may change while the large source archive is processed.
+            # Integrate those newer commits without discarding the generated data.
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
           fi
