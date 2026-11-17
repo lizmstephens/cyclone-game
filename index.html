@@ -78,7 +78,7 @@ footer{margin-top:12px;color:#5f7780;font-size:12px;line-height:1.5}
 <div class="panel">
 <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap"><h2 id="stormtitle">Loading…</h2><span class="pill" id="datepill">Forecast briefing</span></div>
 <div id="map" role="img" aria-label="Map of Madagascar with forecast tracks and warehouse locations"></div>
-<div class="wind-legend" aria-label="Forecast map key"><span class="legend-entry"><span class="wind-dot" style="background:#61b7db"></span>&lt;63 km/h</span><span class="legend-entry"><span class="wind-dot" style="background:#36b99b"></span>63–88 km/h</span><span class="legend-entry"><span class="wind-dot" style="background:#ebca55"></span>89–117 km/h</span><span class="legend-entry"><span class="wind-dot" style="background:#f39a4b"></span>118–165 km/h</span><span class="legend-entry"><span class="wind-dot" style="background:#cf4b4b"></span>≥166 km/h</span></div><div class="wind-legend"><span class="legend-entry"><span class="line-sample"></span>Ensemble members</span><span class="legend-entry"><span class="line-sample median"></span>Median track</span><span>Coloured dots show median-track wind strength, not observed intensity</span></div><div class="subtle" style="margin-top:7px">Warehouses: red = not mobilised; green = mobilised; dark green = fully activated. Winds are approximate 10 m model winds; averaging period unverified.</div>
+<div class="wind-legend" aria-label="Forecast map key"><span class="legend-entry"><span class="wind-dot" style="background:#61b7db"></span>&lt;63 km/h</span><span class="legend-entry"><span class="wind-dot" style="background:#36b99b"></span>63–88 km/h</span><span class="legend-entry"><span class="wind-dot" style="background:#ebca55"></span>89–117 km/h</span><span class="legend-entry"><span class="wind-dot" style="background:#f39a4b"></span>118–165 km/h</span><span class="legend-entry"><span class="wind-dot" style="background:#cf4b4b"></span>≥166 km/h</span></div><div class="wind-legend"><span class="legend-entry"><span class="line-sample" style="border-top:3px solid #36b99b"></span>Ensemble members: forecast intensity colours</span><span class="legend-entry"><span class="line-sample median"></span>Median track</span><span>Track colours and dots show forecast wind strength, not observed intensity</span></div><div class="subtle" style="margin-top:7px">Warehouses: red = not mobilised; green = mobilised; dark green = fully activated. Winds are approximate 10 m model winds; averaging period unverified.</div>
 
 </div>
 <div class="panel"><h3>Met Service · WhatsApp update</h3><div id="brief"></div><div class="subtle" id="forecastsource"></div></div>
@@ -380,6 +380,35 @@ fetch('https://raw.githubusercontent.com/datasets/geo-countries/master/data/coun
   landShapes=rings;
   if(typeof G!=='undefined'&&G&&G.storms?.length)document.getElementById('map').innerHTML=mapSvg(forecast(current()));
  }).catch(()=>{});
+function windTrackColour(kmh){
+ if(kmh<63)return "#61b7db";
+ if(kmh<89)return "#36b99b";
+ if(kmh<118)return "#ebca55";
+ if(kmh<166)return "#f39a4b";
+ return "#cf4b4b";
+}
+// Split each ensemble segment at intensity-band boundaries, preserving
+// smooth location changes while showing wind speed along the whole member.
+function colouredMemberSvg(track,x,y){
+ const thresholds=[63,89,118,166];
+ let svg="";
+ for(let i=1;i<track.length;i++){
+  const a=track[i-1],b=track[i];
+  if(![a.lat,a.lon,a.wind,b.lat,b.lon,b.wind].every(Number.isFinite))continue;
+  const fractions=[0,1];
+  if(a.wind!==b.wind)for(const threshold of thresholds){
+    const f=(threshold-a.wind)/(b.wind-a.wind);
+    if(f>0&&f<1)fractions.push(f);
+  }
+  fractions.sort((u,v)=>u-v);
+  const at=f=>({lat:a.lat+(b.lat-a.lat)*f,lon:a.lon+(b.lon-a.lon)*f,wind:a.wind+(b.wind-a.wind)*f});
+  for(let k=1;k<fractions.length;k++){
+    const p=at(fractions[k-1]),q=at(fractions[k]);
+    svg+='<line x1="'+x(p.lon).toFixed(1)+'" y1="'+y(p.lat).toFixed(1)+'" x2="'+x(q.lon).toFixed(1)+'" y2="'+y(q.lat).toFixed(1)+'" stroke="'+windTrackColour((p.wind+q.wind)/2)+'" stroke-width="1.8" stroke-opacity=".75" stroke-linecap="round"/>';
+  }
+ }
+ return svg;
+}
 function mapSvg(rows){
 const lo=16,hi=71,left=58,top=25,width=820,height=525,x=lon=>left+(lon-lo)/(hi-lo)*(width-left-15),y=lat=>top+(-5-lat)/31*(height-top-28);
 const coords=arr=>arr.map(p=>x(p[0]).toFixed(1)+","+y(p[1]).toFixed(1)).join(" ");
@@ -392,9 +421,9 @@ for(let l=20;l<=hi;l+=5)svg+='<line x1="'+x(l)+'" y1="20" x2="'+x(l)+'" y2="510"
 for(let lat=-10;lat>=-35;lat-=5)svg+='<line x1="43" y1="'+y(lat)+'" x2="808" y2="'+y(lat)+'" stroke="#bfd6de" stroke-dasharray="3 5"/><text x="8" y="'+(y(lat)+4)+'" fill="#527080" font-size="12">'+Math.abs(lat)+'°S</text>';
 svg+=landShapes.length?landShapes.map(ring=>'<polygon points="'+coords(ring)+'" fill="#efece0" stroke="#738b7e" stroke-width="1.3"/>').join(""):'<polygon points="'+coords(mapPts)+'" fill="#efece0" stroke="#738b7e" stroke-width="2"/>';
 if(rows.length){
- svg+=ensemble.map(track=>'<polyline points="'+coords(track.map(p=>[p.lon,p.lat]))+'" fill="none" stroke="#416b89" stroke-opacity=".48" stroke-width="1.7" stroke-linejoin="round"/>').join("");
+ svg+=ensemble.map(track=>colouredMemberSvg(track,x,y)).join("");
  svg+='<polyline points="'+coords(rows.map(p=>[p.lon,p.lat]))+'" fill="none" stroke="#c74c44" stroke-width="3" stroke-dasharray="8 5"/>';
- for(const p of rows){const c=p.wind<63?"#61b7db":p.wind<89?"#36b99b":p.wind<118?"#ebca55":p.wind<166?"#f39a4b":"#cf4b4b";svg+='<circle cx="'+x(p.lon)+'" cy="'+y(p.lat)+'" r="6.2" fill="'+c+'" stroke="#224650" stroke-width="1.1"/><text x="'+(x(p.lon)+9)+'" y="'+(y(p.lat)-10)+'" font-size="11" fill="#234553" stroke="#dfeef7" stroke-width="3" paint-order="stroke">+'+p.day+'d</text>';}
+ for(const p of rows){const c=windTrackColour(p.wind);svg+='<circle cx="'+x(p.lon)+'" cy="'+y(p.lat)+'" r="6.2" fill="'+c+'" stroke="#224650" stroke-width="1.1"/><text x="'+(x(p.lon)+9)+'" y="'+(y(p.lat)-10)+'" font-size="11" fill="#234553" stroke="#dfeef7" stroke-width="3" paint-order="stroke">+'+p.day+'d</text>';}
 }
 for(const h of hubs){const stocked=current().stock.has(h.id),delivered=current().distributed.has(h.id);const fill=delivered?"#216c43":stocked?"#32a852":"#c43b35";svg+='<circle cx="'+x(h.lon)+'" cy="'+y(h.lat)+'" r="8.7" fill="'+fill+'" stroke="#fff" stroke-width="2"/><text x="'+(x(h.lon)+13)+'" y="'+(y(h.lat)-8)+'" font-size="15" font-weight="750" fill="#193742" stroke="#fff" stroke-width="4" paint-order="stroke">'+esc(h.name)+'</text>';}
 svg+='</svg>';return svg;
