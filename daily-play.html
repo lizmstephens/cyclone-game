@@ -279,20 +279,23 @@ async function changeSeason(){
  const requestedEvent=new URLSearchParams(window.location.search).get("event");
  const mode=requestedEvent?"single":(document.querySelector('input[name="game-length"]:checked')?.value==="single"?"single":"season");
  const n=mode==="single"?1:stormCount(),selected=[],seen=new Set();
- const available=new Set(dailyManifest.storms.filter(x=>x.original_initialisations>0).map(x=>x.event_id));
+ // The daily manifest is the authoritative catalogue for this experimental
+ // playtest. The older scenario catalogue may use a different selection of IDs.
+ const legacyById=new Map((catalogue.scenarios||[]).map(s=>[s.event_id,s]));
+ const dailyOptions=dailyManifest.storms.filter(x=>x.original_initialisations>0&&x.playable_briefings>0)
+   .map(x=>({...legacyById.get(x.event_id),event_id:x.event_id,storm_name:x.name}));
  if(requestedEvent){
-  const requested=catalogue.scenarios.find(s=>s.event_id===requestedEvent&&available.has(s.event_id));
+  const requested=dailyOptions.find(s=>s.event_id===requestedEvent);
   if(!requested)throw Error("Selected event is missing from the daily library: "+requestedEvent);
   selected.push(requested);
   seen.add(ibtracsMatches[requested.event_id]||requested.event_id);
  }
- for(const s of shuffle(catalogue.scenarios)){
-  if(!available.has(s.event_id))continue;
+ for(const s of shuffle(dailyOptions)){
   const key=ibtracsMatches[s.event_id]||s.event_id;
   if(seen.has(key))continue;
   seen.add(key);selected.push(s);if(selected.length>=n)break;
  }
- if(selected.length!==n)throw Error("Not enough daily scenarios");
+ if(selected.length!==n)throw Error("Not enough daily scenarios ("+selected.length+" of "+n+" available)");
  const daily=await Promise.all(selected.map(async s=>{
   const r=await fetch("./data/daily/"+s.event_id+".json",{cache:"no-store"});
   if(!r.ok)throw Error("Daily forecast file missing: "+s.event_id);
