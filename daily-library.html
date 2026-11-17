@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Daily WATTCH scenario library review · Madagascar Cyclone Game</title>
+<style>
+:root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#183c50;background:#edf3f4}
+*{box-sizing:border-box}body{margin:0}header{background:#173e51;color:white;padding:18px max(16px,calc((100vw - 1180px)/2))}header a{color:white}main{max-width:1180px;margin:auto;padding:24px 16px 65px}
+h1{font-size:clamp(24px,3.5vw,35px);margin:0 0 8px}p{line-height:1.5}.panel{background:white;padding:18px;border:1px solid #d6e2e7;border-radius:14px;margin:16px 0}.subtle{color:#59717c}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:16px 0}.metric{background:#fff;border:1px solid #d6e2e7;padding:15px;border-radius:10px}.metric strong{display:block;font-size:29px}
+.controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:16px 0}.controls>*{font:inherit;padding:8px;max-width:100%;border:1px solid #becfd6;border-radius:7px;background:white}
+.table-wrap{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:13px;background:white}th,td{padding:10px;border-bottom:1px solid #d6e1e6;text-align:left;white-space:nowrap}th{position:sticky;top:0;background:#e8f1f4;font-size:12px}td:nth-child(2){font-weight:650}tr:hover td{background:#f1f7f9}
+a{color:#146a82}a:hover{text-decoration:underline}.flag{font-weight:700;color:#98601b}.ok{color:#2c7158}.small{font-size:12px}
+@media(max-width:700px){.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style></head><body><header><a href="./about.html">← About the game</a></header><main>
+<h1>Daily WATTCH scenario library — review</h1>
+<p class="subtle">Review the original and reconstructed forecast coverage and the proposed dates for each playable cyclone. This is an experimental library: automatic threat-window cutoffs are <strong>not independently verified</strong>.</p>
+<div class="metrics"><div class="metric"><strong id="total">—</strong>Selected storms</div><div class="metric"><strong id="original">—</strong>Original WATTCH initialisations</div><div class="metric"><strong id="synthetic">—</strong>Synthetic daily initialisations</div><div class="metric"><strong id="review">—</strong>Short or flagged cases</div></div>
+<div class="panel">
+<p>For each storm, the build preserves original WATTCH initialisations, interpolates missing daily forecasts between adjacent original runs and proposes a shorter playing window based on the Madagascar threat. The original tracks remain available after the playing window ends.</p>
+<p><strong>Review priorities:</strong> scenarios shorter than five briefings, scenarios with no detected Madagascar threat, missing daily reconstruction, and storms with a possible later return.</p>
+<div class="controls"><input id="q" type="search" placeholder="Find storm or event ID" aria-label="Search storms"/><select id="filter" aria-label="Filter storms"><option value="all">All storms</option><option value="short">Short (&lt;5 briefings)</option><option value="threat">No detected threat</option><option value="synthetic">No synthetic daily forecasts</option></select><select id="sort" aria-label="Sort storms"><option value="name">Storm name</option><option value="year">Year</option><option value="briefings">Shortest game first</option><option value="coverage">Fewest original forecasts</option></select></div>
+<p id="status" aria-live="polite">Loading the reconstructed scenario catalogue…</p>
+<div class="table-wrap"><table><thead><tr><th>Storm</th><th>Event ID</th><th>Original runs</th><th>Reconstructed days</th><th>Playable start</th><th>Playable end</th><th>Briefings</th><th>Threat assessment</th><th>Test</th></tr></thead><tbody id="table"></tbody></table></div>
+</div>
+<p class="small">Data: <a href="./data/daily/manifest.json">Experimental manifest</a> · <a href="https://zenodo.org/records/20446920">WATTCH source archive</a> · <a href="https://github.com/lizmstephens/cyclone-game/blob/main/scripts/build_daily_library.py">Preprocessing script</a>.</p>
+</main>
+<script>
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+let all=[];
+const $=id=>document.getElementById(id);
+const statusLabel=s=>({reference_approached_madagascar:"Reference track approached Madagascar",ensemble_only_potential_threat:"Forecast approach only",no_detected_madagascar_threat_review_for_removal:"No detected threat — review"})[s]||s.replaceAll("_"," ");
+function draw(){
+ const q=$("q").value.toLowerCase().trim(),filter=$("filter").value,sort=$("sort").value;
+ let rows=all.filter(r=>(r.name+" "+r.event_id).toLowerCase().includes(q));
+ if(filter==="short")rows=rows.filter(r=>r.playable_briefings<5);
+ if(filter==="threat")rows=rows.filter(r=>r.threat_status?.startsWith("no_detected"));
+ if(filter==="synthetic")rows=rows.filter(r=>!r.synthetic_initialisations);
+ rows.sort((a,b)=>sort==="briefings"?a.playable_briefings-b.playable_briefings:
+  sort==="coverage"?a.original_initialisations-b.original_initialisations:
+  sort==="year"?a.event_id.localeCompare(b.event_id):
+  a.name.localeCompare(b.name));
+ $("status").textContent=rows.length+" of "+all.length+" storms shown";
+ $("table").innerHTML=rows.map(r=>{
+  const flag=(r.playable_briefings<5||r.threat_status?.startsWith("no_detected"));
+  return '<tr><td>'+esc(r.name)+'</td><td>'+esc(r.event_id)+'</td><td>'+esc(r.original_initialisations)+'</td><td>'+esc(r.synthetic_initialisations)+'</td><td>'+esc(r.first_playable_date)+'</td><td>'+esc(r.last_playable_date)+'</td><td class="'+(flag?'flag':'ok')+'">'+esc(r.playable_briefings)+(r.playable_briefings<5?' ⚠':'')+'</td><td>'+esc(statusLabel(r.threat_status||"unknown"))+'</td><td><a href="./daily-play.html?event='+encodeURIComponent(r.event_id)+'">Play</a></td></tr>'
+ }).join("");
+}
+Promise.all([fetch("./data/daily/manifest.json",{cache:"no-store"}),fetch("./data/scenarios.json")]).then(async rr=>{
+ if(!rr.every(x=>x.ok))throw Error("Rebuilt data have not been published successfully.");
+ const [manifest,scenarios]=await Promise.all(rr.map(x=>x.json()));
+ const selected=new Set(scenarios.scenarios.map(s=>s.event_id));
+ all=manifest.storms.filter(r=>selected.has(r.event_id));
+ $("total").textContent=all.length;
+ $("original").textContent=all.reduce((n,r)=>n+(r.original_initialisations||0),0);
+ $("synthetic").textContent=all.reduce((n,r)=>n+(r.synthetic_initialisations||0),0);
+ $("review").textContent=all.filter(r=>r.playable_briefings<5||r.threat_status?.startsWith("no_detected")).length;
+ draw();
+}).catch(err=>{$("status").textContent="Unable to load daily scenario library: "+err.message;});
+for(const id of ["q","filter","sort"])$(id).addEventListener(id==="q"?"input":"change",draw);
+</script></body></html>
