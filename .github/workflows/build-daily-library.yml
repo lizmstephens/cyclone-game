@@ -33,7 +33,20 @@ jobs:
             git commit -m "Build experimental daily WATTCH forecast library for 86 selected storms"
             # Repository may change while the large source archive is processed.
             # Integrate those newer commits without discarding the generated data.
-            git fetch origin main
-            git rebase origin/main
-            git push origin HEAD:main
+            # Rebase and retry when another API edit advances main.
+            # Never force-push or overwrite unrelated commits.
+            published=false
+            for attempt in 1 2 3 4 5 6 7 8 9 10; do
+              git fetch origin main
+              git rebase origin/main
+              if git push origin HEAD:main; then
+                published=true
+                break
+              fi
+              sleep 3
+            done
+            if [ "$published" != "true" ]; then
+              echo "Could not publish experimental daily files after ten retries"
+              exit 1
+            fi
           fi
