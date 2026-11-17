@@ -193,12 +193,13 @@
       "original_initialisations": 12,
       "synthetic_initialisations": 7,
       "total_forecast_dates": 19,
-      "first_playable_date": "2007-02-19",
-      "last_playable_date": "2007-02-27",
-      "playable_briefings": 9,
+      "first_playable_date": "2007-02-18",
+      "last_playable_date": "2007-02-28",
+      "playable_briefings": 11,
       "threat_status": "ensemble_only_potential_threat",
       "source_rows": 5770,
-      "missing_reference_positions": 2
+      "missing_reference_positions": 2,
+      "manual_window_override": 1
     },
     {
       "event_id": "2007_tr0017",
