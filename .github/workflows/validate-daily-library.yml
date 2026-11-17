@@ -1,0 +1,20 @@
+name: Validate experimental WATTCH daily library
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/validate-daily-library.yml'
+      - 'data/daily/**'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate 86 original and synthetic forecast histories
+        run: python3 scripts/validate_daily_library.py
