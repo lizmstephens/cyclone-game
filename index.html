@@ -65,7 +65,7 @@ footer{margin-top:12px;color:#5f7780;font-size:12px;line-height:1.5}
 </head>
 <body>
 <header><div><h1 data-front-key="header_title">Madagascar Cyclone Decision Game</h1><small data-front-key="header_tagline">Can you protect communities without exhausting your seasonal budget?</small></div><button class="btn alt" id="restart" data-front-key="new_game_button">New game</button></header>
-<section id="start-screen"><div class="intro"><h2 data-front-key="front_title">Madagascar Cyclone Anticipatory Action Game</h2><p data-front-key="front_intro">Manage a shared budget for cyclone anticipatory action. Decide when to keep monitoring, pre-activate preparedness, and fully activate early actions in threatened areas.</p><p data-front-key="front_explainer">Play one storm or an unknown number of storms in a fictional season. Real identities are revealed only at the end. Daily briefings are training simulations based on WATTCH hindcasts.</p><h3 data-front-key="game_length_heading">How long would you like to play?</h3><div class="choice-grid" role="group" aria-label="Game length"><label><input type="radio" name="game-length" value="single"><span><strong data-front-key="single_title">Play one storm</strong><span data-front-key="single_description">Follow one cyclone through to its historical reveal</span></span></label><label><input type="radio" name="game-length" value="season" checked><span><strong data-front-key="season_title">Play a whole season</strong><span data-front-key="season_description">Manage several cyclones with one shared budget, without knowing how many are coming</span></span></label></div><h3 data-front-key="difficulty_heading">Difficulty</h3><div class="choice-grid difficulty-grid" role="group" aria-label="Difficulty"><label><input type="radio" name="difficulty" value="3"><span><strong data-front-key="easy_title">Easy</strong><span data-front-key="easy_description">Pre-activate at least 3 days before</span></span></label><label><input type="radio" name="difficulty" value="4" checked><span><strong data-front-key="medium_title">Medium</strong><span data-front-key="medium_description">Pre-activate 4+ days before</span></span></label><label><input type="radio" name="difficulty" value="5"><span><strong data-front-key="hard_title">Hard</strong><span data-front-key="hard_description">Pre-activate 5+ days before</span></span></label></div><p class="subtle" data-front-key="front_rules">Pre-activate to prepare an area; full activation is possible closer to landfall in an area you have prepared.</p><div class="start-actions"><button type="button" class="btn" id="start-game" data-front-key="start_button">Start game</button><a class="about-link" href="./about.html" data-front-key="about_button">About the game</a></div><p class="image-credit"><span data-front-key="image_credit">Background: NASA Terra/MODIS image of Cyclone Bingiza approaching Madagascar (13 February 2011), Jeff Schmaltz / NASA GSFC, CC BY 2.0.</span> <a href="https://earthobservatory.nasa.gov/images/49250/tropical-cyclone-bingiza" target="_blank" rel="noopener noreferrer" data-front-key="image_source_link_text">Image source</a> · <a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener noreferrer" data-front-key="image_licence_link_text">Licence</a>.</p></div></section><main>
+<section id="start-screen"><div class="intro"><h2 data-front-key="front_title">Madagascar Cyclone Anticipatory Action Game</h2><p data-front-key="front_intro">Manage a shared budget for cyclone anticipatory action. Decide when to keep monitoring, pre-activate preparedness, and fully activate early actions in threatened areas.</p><p data-front-key="front_explainer">Play one storm or an unknown number of storms in a fictional season. Real identities are revealed only at the end. Daily briefings use original and reconstructed WATTCH forecasts.</p><h3 data-front-key="game_length_heading">How long would you like to play?</h3><div class="choice-grid" role="group" aria-label="Game length"><label><input type="radio" name="game-length" value="single"><span><strong data-front-key="single_title">Play one storm</strong><span data-front-key="single_description">Follow one cyclone through to its historical reveal</span></span></label><label><input type="radio" name="game-length" value="season" checked><span><strong data-front-key="season_title">Play a whole season</strong><span data-front-key="season_description">Manage several cyclones with one shared budget, without knowing how many are coming</span></span></label></div><h3 data-front-key="difficulty_heading">Difficulty</h3><div class="choice-grid difficulty-grid" role="group" aria-label="Difficulty"><label><input type="radio" name="difficulty" value="3"><span><strong data-front-key="easy_title">Easy</strong><span data-front-key="easy_description">Pre-activate at least 3 days before</span></span></label><label><input type="radio" name="difficulty" value="4" checked><span><strong data-front-key="medium_title">Medium</strong><span data-front-key="medium_description">Pre-activate 4+ days before</span></span></label><label><input type="radio" name="difficulty" value="5"><span><strong data-front-key="hard_title">Hard</strong><span data-front-key="hard_description">Pre-activate 5+ days before</span></span></label></div><p class="subtle" data-front-key="front_rules">Pre-activate to prepare an area; full activation is possible closer to landfall in an area you have prepared.</p><div class="start-actions"><button type="button" class="btn" id="start-game" data-front-key="start_button">Start game</button><a class="about-link" href="./about.html" data-front-key="about_button">About the game</a></div><p class="image-credit"><span data-front-key="image_credit">Background: NASA Terra/MODIS image of Cyclone Bingiza approaching Madagascar (13 February 2011), Jeff Schmaltz / NASA GSFC, CC BY 2.0.</span> <a href="https://earthobservatory.nasa.gov/images/49250/tropical-cyclone-bingiza" target="_blank" rel="noopener noreferrer" data-front-key="image_source_link_text">Image source</a> · <a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener noreferrer" data-front-key="image_licence_link_text">Licence</a>.</p></div></section><main>
 <div class="stats">
 <div class="stat"><div class="k">Season progress</div><div class="v" id="seasonstat">—</div></div>
 <div class="stat"><div class="k">Remaining budget</div><div class="v" id="budgetstat">—</div></div>
@@ -140,15 +140,16 @@ loadEditableFrontPageCopy();
 "use strict";
 // Game logic and scenario library are maintained independently.
 // Both files are loaded before any game state is initialized.
-let catalogue, historical, verifiedImpacts, feedbackLibrary;
+let catalogue, historical, verifiedImpacts, feedbackLibrary, dailyManifest;
 try {
-  const [scenariosResponse, historicalResponse, impactsResponse, feedbackResponse] = await Promise.all([
+  const [scenariosResponse, historicalResponse, impactsResponse, feedbackResponse, manifestResponse] = await Promise.all([
     fetch("./data/scenarios.json"), fetch("./data/historical.json"),
-    fetch("./data/verified_impacts.json",{cache:"no-store"}), fetch("./data/feedback.json",{cache:"no-store"})
+    fetch("./data/verified_impacts.json",{cache:"no-store"}), fetch("./data/feedback.json",{cache:"no-store"}),
+    fetch("./data/daily/manifest.json",{cache:"no-store"})
   ]);
-  if (!scenariosResponse.ok || !historicalResponse.ok || !impactsResponse.ok || !feedbackResponse.ok) throw new Error("Could not load the scenario library.");
-  [catalogue, historical, verifiedImpacts, feedbackLibrary] = await Promise.all([
-    scenariosResponse.json(), historicalResponse.json(), impactsResponse.json(), feedbackResponse.json()
+  if (!scenariosResponse.ok || !historicalResponse.ok || !impactsResponse.ok || !feedbackResponse.ok || !manifestResponse.ok) throw new Error("Could not load the scenario library.");
+  [catalogue, historical, verifiedImpacts, feedbackLibrary, dailyManifest] = await Promise.all([
+    scenariosResponse.json(), historicalResponse.json(), impactsResponse.json(), feedbackResponse.json(), manifestResponse.json()
   ]);
 } catch (error) {
   const panel = document.querySelector("#start-screen .intro");
@@ -252,7 +253,7 @@ function quantile(vals,q){if(!vals.length)return 0;const a=vals.slice().sort((x,
 function eventDate(s){const ev=s.forecast_landfalls?.map(p=>date(p.time)).filter(d=>!isNaN(+d));if(ev?.length)return new Date(midpoint(ev.map(x=>+x)));const init=date(s.initialization),ref=s.reference_track;let closest=null;for(const p of ref){const t=date(p[0]);if(t<init)continue;const lat=+p[1],lon=+p[2];if(lat>=-26&&lat<=-11&&lon>=43&&lon<=52){closest=t;break;}}return closest||new Date(+init+8*dayMs);}
 function startScenario(s,simStart){const t=date(s.initialization),event=eventDate(s);const duration=clamp(Math.ceil((event-t)/dayMs)+2,5,12);return {data:s,start:t,simStart,event,day:0,duration,stock:new Set(),distributed:new Set(),choice:"",chosen:new Set(),acted:false,history:[],decisionLog:[],impact:null};}
 function current(){return G.storms[G.slot];}
-function issueTime(){const st=current();return new Date(+st.start+st.day*dayMs);}
+function issueTime(){const st=current();return st.issueDates?date(st.issueDates[st.day]):new Date(+st.start+st.day*dayMs);}
 function displayTime(){const st=current();return addDays(st.simStart,st.day);}
 // In-game planning windows use the scenario clock; the visible landfall
 // countdown below is recalculated from the CURRENT ensemble, not this clock.
@@ -275,14 +276,50 @@ function predictedLandfallCountdown(st){
 }
 function canPrep(){const d=remainingDays();return d>=G.prepDays&&d<=PRE_WINDOW;}
 function canDist(){const d=remainingDays();return d>=2&&d<=ACT_WINDOW&&[...current().stock].some(x=>!current().distributed.has(x));}
-function changeSeason(){
+async function changeSeason(){
  const mode=document.querySelector('input[name="game-length"]:checked')?.value==="single"?"single":"season";
- const n=mode==="single"?1:stormCount(),chosen=[],seen=new Set();for(const s of shuffle(catalogue.scenarios)){const key=ibtracsMatches[s.event_id]||s.event_id;if(seen.has(key))continue;seen.add(key);chosen.push(s);if(chosen.length>=n)break;}
+ const n=mode==="single"?1:stormCount(),chosen=[],seen=new Set();
+ // Daily manifest, not the older scenario selection, defines what is playable.
+ // Historical impact data are still looked up separately at the storm review.
+ const legacy=new Map((catalogue.scenarios||[]).map(s=>[s.event_id,s]));
+ const available=dailyManifest.storms.filter(s=>s.original_initialisations>0&&s.playable_briefings>0);
+ for(const entry of shuffle(available)){
+   const id=entry.event_id,key=ibtracsMatches[id]||id;
+   if(seen.has(key))continue;
+   seen.add(key);
+   chosen.push({...legacy.get(id),event_id:id,storm_name:entry.name});
+   if(chosen.length>=n)break;
+ }
+ if(chosen.length<n)throw Error("Not enough daily scenarios: "+chosen.length+" of "+n);
+ // Download only selected files (each complete daily ensemble can be large).
+ const daily=await Promise.all(chosen.map(async s=>{
+   const response=await fetch("./data/daily/"+encodeURIComponent(s.event_id)+".json");
+   if(!response.ok)throw Error("Forecast library file missing: "+s.event_id);
+   return response.json();
+ }));
  const seasonStart=new Date("2026-12-01T00:00:00Z");
- const storms=chosen.map((s,i)=>{
-   // Fictional dates are ordered, nonoverlapping, and fall within Dec–Apr.
+ const storms=chosen.map((original,i)=>{
+   const entry=daily[i],first=entry.playable?.first_issue_date,last=entry.playable?.last_issue_date;
+   if(!first||!last||!Array.isArray(entry.forecasts))throw Error("Missing playable dates: "+original.event_id);
+   const dates=entry.forecasts.filter(f=>f.issue_date>=first&&f.issue_date<=last&&f.members?.length)
+     .sort((a,b)=>a.issue_date.localeCompare(b.issue_date));
+   if(!dates.length)throw Error("No daily forecasts in the playing window: "+original.event_id);
+   const byDate=new Map(dates.map(f=>[f.issue_date,f]));
+   const scenario={...original,initialization:dates[0].issue_date,reference_track:entry.reference_track,dailyForecasts:entry};
+   // Every new briefing uses the forecast that was available on that day.
+   Object.defineProperty(scenario,"forecast_tracks",{enumerable:false,get(){
+     const st=scenario._st;
+     const day=st?st.issueDates[st.day]:dates[0].issue_date;
+     return (byDate.get(day)?.members||[]).map(m=>({member:m.member,points:m.points}));
+   }});
    const offset=Math.round((i+0.5)*130/n+Math.random()*3);
-   return startScenario(s,addDays(seasonStart,offset));
+   const st=startScenario(scenario,addDays(seasonStart,offset));
+   st.issueDates=dates.map(f=>f.issue_date);
+   st.start=date(st.issueDates[0]);
+   st.event=date(st.issueDates[st.issueDates.length-1]);
+   st.duration=st.issueDates.length;
+   scenario._st=st;
+   return st;
  });
  G={storms,slot:0,budget:150000,people:0,boss:60,finished:false,mode,prepDays:Number(document.querySelector('input[name="difficulty"]:checked')?.value||4)};
  render();
@@ -298,7 +335,7 @@ const nowMedian=now.length>=3?[midpoint(now.map(p=>p[0])),midpoint(now.map(p=>p[
 for(let d=0;d<=7;d++){
 const valid=addDays(issue,d),positions=members.map(m=>pt(m.points,valid)).filter(Boolean);
 if(positions.length<3)continue;
-const adjust=actual&&nowMedian?Math.exp(-d/2.5):0;
+const adjust=st.data.dailyForecasts?0:(actual&&nowMedian?Math.exp(-d/2.5):0);
 const shifted=actual&&nowMedian?positions.map(p=>[p[0]+(actual[0]-nowMedian[0])*adjust,p[1]+(actual[1]-nowMedian[1])*adjust,p[2]]):positions;
 const lat=midpoint(shifted.map(p=>p[0])),lon=midpoint(shifted.map(p=>p[1])),wind=midpoint(shifted.map(p=>p[2]))*3.6;
 const distances=shifted.map(p=>dist([lat,lon],[p[0],p[1]]));
@@ -320,7 +357,7 @@ function forecastMembers(st){
   const points=[];
   for(let d=0;d<=7;d+=0.25){
    const p=pt(m.points,addDays(issue,d));if(!p)continue;
-   const shift=actual&&median?Math.exp(-d/2.5):0;
+   const shift=st.data.dailyForecasts?0:(actual&&median?Math.exp(-d/2.5):0);
    points.push({lat:p[0]+(actual&&median?actual[0]-median[0]:0)*shift,lon:p[1]+(actual&&median?actual[1]-median[1]:0)*shift,wind:p[2]*3.6});
   }
   return points;
@@ -817,7 +854,22 @@ $("advance").addEventListener("click",()=>{const st=current();if(!st.acted||st.i
 $("nextstorm").addEventListener("click",()=>{if(current().impact===null||G.finished)return;G.slot++;$("message").textContent="A new cyclone is developing. Your remaining budget carries forward.";render();});
 $("restart").addEventListener("click",()=>{if(G&&!G.finished&&!confirmNewSeason())return;$("start-screen").hidden=false;});
 function confirmNewSeason(){return window.confirm("Start a new game? Current decisions and progress will be reset.");}
-$("season-summary").addEventListener("click",e=>{if(e.target.closest("#review-next")){if(!G.finished&&current().impact!==null){G.slot++;$("message").textContent="A new cyclone is developing. Your remaining budget carries forward.";render();}return;}if(e.target.closest("#summary-restart")){$("start-screen").hidden=false;}});$("start-game").addEventListener("click",()=>{$("start-screen").hidden=true;changeSeason();});
-changeSeason();
+$("season-summary").addEventListener("click",e=>{if(e.target.closest("#review-next")){if(!G.finished&&current().impact!==null){G.slot++;$("message").textContent="A new cyclone is developing. Your remaining budget carries forward.";render();}return;}if(e.target.closest("#summary-restart")){$("start-screen").hidden=false;}});$("start-game").addEventListener("click",async()=>{
+ const button=$("start-game");button.disabled=true;
+ try{
+   await changeSeason();
+   $("start-screen").hidden=true;
+   document.querySelector("#start-screen .daily-error")?.remove();
+ }catch(error){
+   console.error("Daily forecast scenario failed:",error);
+   const intro=document.querySelector("#start-screen .intro");
+   intro.querySelector(".daily-error")?.remove();
+   const alert=document.createElement("p");
+   alert.className="daily-error";alert.setAttribute("role","alert");
+   alert.style.color="#9b2525";
+   alert.textContent="Could not start: "+error.message;
+   intro.appendChild(alert);
+ }finally{button.disabled=false;}
+});
 })();
 </script></body></html>
