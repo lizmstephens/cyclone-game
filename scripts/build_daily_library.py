@@ -252,6 +252,11 @@ def reconstruct(event, scenario, initialisations, row_count):
         proposed_start = daily_start
         proposed_end = min(daily_end, daily_start + timedelta(days=3))
         status = "no_detected_madagascar_threat_review_for_removal"
+    # User-reviewed Gamede playtest: retain the initial approach and final
+    # threat briefing (18–28 Feb), rather than the shorter automatic estimate.
+    if event == "2007_tr0013":
+        proposed_start, proposed_end = dt("2007-02-18"), dt("2007-02-28")
+        quality["manual_window_override"] = 1
     playable = [x for x in daily if proposed_start <= dt(x["issue_date"]) <= proposed_end]
     if not playable and daily:
         playable = daily[:min(len(daily), 3)]
