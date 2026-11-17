@@ -276,9 +276,16 @@ function predictedLandfallCountdown(st){
 function canPrep(){const d=remainingDays();return d>=G.prepDays&&d<=PRE_WINDOW;}
 function canDist(){const d=remainingDays();return d>=2&&d<=ACT_WINDOW&&[...current().stock].some(x=>!current().distributed.has(x));}
 async function changeSeason(){
- const mode=document.querySelector('input[name="game-length"]:checked')?.value==="single"?"single":"season";
+ const requestedEvent=new URLSearchParams(window.location.search).get("event");
+ const mode=requestedEvent?"single":(document.querySelector('input[name="game-length"]:checked')?.value==="single"?"single":"season");
  const n=mode==="single"?1:stormCount(),selected=[],seen=new Set();
  const available=new Set(dailyManifest.storms.filter(x=>x.original_initialisations>0).map(x=>x.event_id));
+ if(requestedEvent){
+  const requested=catalogue.scenarios.find(s=>s.event_id===requestedEvent&&available.has(s.event_id));
+  if(!requested)throw Error("Selected event is missing from the daily library: "+requestedEvent);
+  selected.push(requested);
+  seen.add(ibtracsMatches[requested.event_id]||requested.event_id);
+ }
  for(const s of shuffle(catalogue.scenarios)){
   if(!available.has(s.event_id))continue;
   const key=ibtracsMatches[s.event_id]||s.event_id;
