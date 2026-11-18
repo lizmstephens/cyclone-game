@@ -648,12 +648,20 @@ function selectFeedback(st){
  const boss=feedbackLibrary.boss.find(x=>
   x["Communities reached"]===category&&x["Spending"]===spending&&x["Budget remaining"]===budget);
  const people=reached*1000;
+ const evidence=verifiedImpacts?.by_event_id?.[st.data.event_id]?.madagascar_impact_evidence;
+ // Simulated direct-wind exposure does not establish historical human impacts.
+ const evidenceLimitedBoss=
+  evidence==="documented_madagascar_effects"&&!affected.size?
+   "The historical record reports effects in Madagascar, but our wind-only model missed them. We need to review the assessment.":
+  evidence==="not_established"&&affected.size?
+   "The simulation suggests exposure, but Madagascar impacts have not been verified. We shouldn't claim people were affected without that evidence.":
+   null;
  return {
   id:objective?.ID||"unmatched",bossId:boss?.Boss_ID||"unmatched",
   objective:objective?.Feedback_O||"This combination has no matching forecaster text.",
   forecasterText:objective?.Feedback_O||"This combination has no matching forecaster text.",
   outcomeText:coverage+extraNote,
-  boss:fillFeedback(boss?.Feedback_B||"We need to review the result and the remaining funds.",people),
+  boss:evidenceLimitedBoss||fillFeedback(boss?.Feedback_B||"We need to review the result and the remaining funds.",people),
   threshold:observed.full,forecast:stages.full,
   people,stages,decisionQuality:dimensions["Mobilisation Action"]+" / "+dimensions["Activation Action"],
   dimensions,mobiliseForecastId:stages.pre,activationForecastId:stages.full
@@ -677,7 +685,7 @@ function impact(st){
  // Historical override: Fakir (2018) affected Réunion, not Madagascar.
  // Do not count a proximity-based WATTCH training footprint as documented
  // humanitarian impacts in Madagascar for this event.
- if(st.data.event_id==="2018_tr0020")return [];
+ if(verifiedImpacts?.by_event_id?.[st.data.event_id]?.madagascar_impact_evidence==="no_impacts_identified")return [];
  const ref=st.data.reference_track,landfallSides=referenceLandingSides(st),hits=[];
  for(const h of hubs){
   const side=warehouseSide(h.id);
@@ -858,6 +866,7 @@ function stormReview(st,index){
    '</div>'+
    '<details class="review-details"><summary>Sources and detailed review</summary>'+
    '<p><strong>Data sources:</strong> feedback '+esc(feedbackSourceLabel)+'; historical impacts '+esc(impactSourceLabel)+'.</p>'+
+   '<p><strong>Madagascar impact evidence:</strong> '+esc(impacts?.madagascar_impact_evidence==="documented_madagascar_effects"?"Documented Madagascar effects":impacts?.madagascar_impact_evidence==="no_impacts_identified"?"No Madagascar impacts identified in reviewed sources (not proof of zero effects)":"Madagascar impacts not established")+'. The simulated wind footprint is not a verified impact assessment.</p>'+
    '<p>Feedback library: Forecaster '+esc(scored.id||"unavailable")+'; Boss '+esc(scored.bossId||"unavailable")+'. Game outcome: '+(st.impact||[]).length+' modelled affected areas, '+reached.toLocaleString("en-GB")+' people reached (illustrative); '+money(spend)+' spent.</p>'+
    (verified?.ibtracsFix?'<p><strong>Near-landfall best-track fix:</strong> '+esc(verified.ibtracsFix.kmh)+' km/h, 10-minute sustained, at '+esc(verified.ibtracsFix.utc)+'. This may not be the exact coastline-crossing wind.</p>':'')+
    (impacts?.landfall_date_text?'<p><strong>Historical landfall date in impact catalogue:</strong> '+esc(impacts.landfall_date_text)+'; <strong>reported location:</strong> '+esc(impacts.landfall_area||"Not specified")+'.</p>':'')+
