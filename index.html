@@ -630,7 +630,7 @@ function selectFeedback(st){
  const evidenceLimitedBoss=
   evidence==="documented_madagascar_effects"&&!affected.size?
    "The historical record reports effects in Madagascar, but our wind-only model missed them. We need to review the assessment.":
-  evidence==="not_established"&&affected.size?
+  (evidence==="not_established"||evidence==="no_impacts_identified")&&affected.size?
    "The simulation suggests exposure, but Madagascar impacts have not been verified. We shouldn't claim people were affected without that evidence.":
    null;
  return {
@@ -662,7 +662,7 @@ function impact(st){
  // Historical override: Fakir (2018) affected Réunion, not Madagascar.
  // Do not count a proximity-based WATTCH training footprint as documented
  // humanitarian impacts in Madagascar for this event.
- if(verifiedImpacts?.by_event_id?.[st.data.event_id]?.madagascar_impact_evidence==="no_impacts_identified")return [];
+ if(st.data.event_id==="2018_tr0020")return [];
  const ref=st.data.reference_track,landfallSides=referenceLandingSides(st),hits=[];
  for(const h of hubs){
   const side=warehouseSide(h.id);
