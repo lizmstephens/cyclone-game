@@ -44,6 +44,21 @@ footer{margin-top:12px;color:#5f7780;font-size:12px;line-height:1.5}
 #start-screen .about-link:hover{background:#e6f5f9}
 @media(max-width:520px){#start-screen{padding:10px;place-items:start center}#start-screen .intro{padding:17px}#start-screen label{font-size:12px;padding:10px 7px;gap:5px}#start-screen .choice-grid{gap:6px}#start-screen h2{font-size:19px}}
 
+/* Front page hierarchy: read the briefing first, then choose compact options. */
+#start-screen .intro{background:rgba(248,251,252,.90)}
+#start-screen h2{font-size:clamp(25px,3.2vw,34px);line-height:1.12;margin:0 0 14px;color:#123747}
+#start-screen p[data-front-key="front_intro"]{font-size:clamp(18px,2vw,21px);font-weight:700;line-height:1.38;color:#123747;margin:0 0 10px}
+#start-screen p[data-front-key="front_explainer"]{font-size:16px;line-height:1.6;color:#203d4b;margin:0 0 22px}
+#start-screen h3{font-size:14px;margin:12px 0 6px;color:#264b5b}
+#start-screen .choice-grid{gap:8px;margin:6px 0 13px}
+#start-screen label{padding:8px 10px;gap:7px;font-size:13px;line-height:1.3;border-width:1.5px}
+#start-screen label strong{font-size:14px;margin-bottom:2px}
+#start-screen .choice-grid.difficulty-grid label{padding:7px 8px}
+#start-screen .choice-grid.difficulty-grid label strong{font-size:13px}
+#start-screen p[data-front-key="front_rules"]{font-size:13px;margin:9px 0 14px}
+#start-screen .start-actions .btn,#start-screen .about-link{padding:9px 14px;font-size:14px}
+@media(max-width:520px){#start-screen h2{font-size:25px}#start-screen p[data-front-key="front_intro"]{font-size:18px}#start-screen p[data-front-key="front_explainer"]{font-size:15px}#start-screen label{font-size:12px;padding:7px 6px}#start-screen label strong{font-size:12px}#start-screen .choice-grid.difficulty-grid label{padding:7px 5px}}
+
 /* Compact storm debrief: facts and decisions first, then two distinct voices. */
 .storm-review{background:#f8fbfc;border:1px solid #d7e2e6;border-radius:14px;padding:clamp(16px,3vw,25px);margin:16px 0 20px}
 .storm-review h3{font-size:21px;color:#173e51;margin:0 0 15px}
