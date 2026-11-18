@@ -651,6 +651,10 @@ function forecastMessage(rows){
  return "We're monitoring. Current ensemble guidance indicates possible mainland landfall in around "+day+" day(s), with central-track winds near "+Math.round(h.wind/5)*5+" km/h ("+strength+"). The location and intensity remain uncertain.";
 }
 function impact(st){
+ // Historical override: Fakir (2018) affected Réunion, not Madagascar.
+ // Do not count a proximity-based WATTCH training footprint as documented
+ // humanitarian impacts in Madagascar for this event.
+ if(st.data.event_id==="2018_tr0020")return [];
  const ref=st.data.reference_track,landfallSides=referenceLandingSides(st),hits=[];
  for(const h of hubs){
   const side=warehouseSide(h.id);
