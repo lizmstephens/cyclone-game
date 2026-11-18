@@ -3,7 +3,8 @@
     "source_sheet": "https://docs.google.com/spreadsheets/d/1gIZZ_wpC0yXadie5wqWFOBNfKdGN8dy6fH8qiOSIiWw/edit#gid=1464705366",
     "tab": "Madagascar impacts",
     "description": "Read-only snapshot of the user's Verified Storm Impacts catalogue. Refresh after editing the sheet; text is not live.",
-    "rows": 94
+    "rows": 94,
+    "impact_evidence_audit": "2026-11-18: 86 selected scenarios categorised by the existing season-summary evidence. No landfall alone does not imply no Madagascar impacts. Modelled footprint and reported impacts are distinct."
   },
   "by_event_id": {
     "2003_tr0031": {
@@ -19,7 +20,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2003%E2%80%9304_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "No Madagascar landfall wind available unless independently sourced. Wikipedia season-page summary. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2003%E2%80%9304_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "not_established",
+      "madagascar_impact_evidence_note": "The current record does not establish Madagascar impacts; absence of a reported centre landfall is not sufficient to infer zero effects."
     },
     "2003_tr0034": {
       "storm_name": "CELA",
@@ -34,7 +37,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2003%E2%80%9304_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "IBTrACS audit: latest offshore wind before mainland coastline entry 2003-12-09 15:00:00–2003-12-09 18:00:00: 65 km/h (10-minute sustained, RSMC La Réunion), observation 2003-12-09 15:00:00. 2 detected coastal entries; sentence refers to FIRST crossing. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2003%E2%80%9304_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2004_tr0009": {
       "storm_name": "ELITA",
@@ -49,7 +54,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2003%E2%80%9304_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "IBTrACS audit: latest offshore wind before mainland coastline entry 2004-01-28 12:00:00–2004-01-28 15:00:00: 120 km/h (10-minute sustained, RSMC La Réunion), observation 2004-01-28 12:00:00. 3 detected coastal entries; sentence refers to FIRST crossing. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2003%E2%80%9304_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2004_tr0014": {
       "storm_name": "GAFILO",
@@ -64,7 +71,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/Cyclone_Gafilo",
       "verification_notes": "220 km/h landfall wind reported in Wikipedia. IBTrACS audit: latest offshore wind before mainland coastline entry 2004-03-07 00:00:00–2004-03-07 03:00:00: 222 km/h (10-minute sustained, RSMC La Réunion), observation 2004-03-07 00:00:00. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2003%E2%80%9304_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2004_tr0013": {
       "storm_name": "UNNAMED",
@@ -109,7 +118,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2004%E2%80%9305_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "IBTrACS audit: latest offshore wind before mainland coastline entry 2005-01-23 06:00:00–2005-01-23 09:00:00: 130 km/h (10-minute sustained, RSMC La Réunion), observation 2005-01-23 06:00:00. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2004%E2%80%9305_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2005_tr0013": {
       "storm_name": "FELAPI",
@@ -124,7 +135,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2004%E2%80%9305_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "IBTrACS audit: latest offshore wind before mainland coastline entry 2005-01-28 09:00:00–2005-01-28 12:00:00: 61 km/h (10-minute sustained, RSMC La Réunion), observation 2005-01-28 09:00:00. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2004%E2%80%9305_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2005_tr0031": {
       "storm_name": "UNNAMED",
@@ -154,7 +167,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2005%E2%80%9306_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "No Madagascar landfall wind available unless independently sourced. Wikipedia season-page summary. IBTrACS audit: latest offshore wind before mainland coastline entry 2006-01-28 21:00:00–2006-01-29 00:00:00: 43 km/h (10-minute sustained, RSMC La Réunion), observation 2006-01-28 21:00:00. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2005%E2%80%9306_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2006_tr0011": {
       "storm_name": "UNNAMED",
@@ -184,7 +199,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2005%E2%80%9306_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "No Madagascar landfall wind available unless independently sourced. Wikipedia season-page summary. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2005%E2%80%9306_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "not_established",
+      "madagascar_impact_evidence_note": "The current record does not establish Madagascar impacts; absence of a reported centre landfall is not sufficient to infer zero effects."
     },
     "2006_tr0020": {
       "storm_name": "ELIA",
@@ -199,7 +216,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2005%E2%80%9306_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "No Madagascar landfall wind available unless independently sourced. Wikipedia season-page summary. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2005%E2%80%9306_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "not_established",
+      "madagascar_impact_evidence_note": "The current record does not establish Madagascar impacts; absence of a reported centre landfall is not sufficient to infer zero effects."
     },
     "2006_tr0025": {
       "storm_name": "ANITA",
@@ -214,7 +233,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2006%E2%80%9307_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "No Madagascar landfall wind available unless independently sourced. Wikipedia season-page summary. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2006%E2%80%9307_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "not_established",
+      "madagascar_impact_evidence_note": "The current record does not establish Madagascar impacts; absence of a reported centre landfall is not sufficient to infer zero effects."
     },
     "2006_tr0027": {
       "storm_name": "BONDO",
@@ -229,7 +250,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2006%E2%80%9307_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "IBTrACS audit: latest offshore wind before mainland coastline entry 2006-12-25 12:00:00–2006-12-25 15:00:00: 106 km/h (10-minute sustained, RSMC La Réunion), observation 2006-12-25 12:00:00. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2006%E2%80%9307_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2006_tr0029": {
       "storm_name": "CLOVIS",
@@ -244,7 +267,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2006%E2%80%9307_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "IBTrACS audit: latest offshore wind before mainland coastline entry 2007-01-03 09:00:00–2007-01-03 12:00:00: 91 km/h (10-minute sustained, RSMC La Réunion), observation 2007-01-03 09:00:00. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2006%E2%80%9307_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2007_tr0011": {
       "storm_name": "ENOK",
@@ -259,7 +284,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2006%E2%80%9307_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "No Madagascar-specific fatalities established. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2006%E2%80%9307_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "not_established",
+      "madagascar_impact_evidence_note": "The current record does not establish Madagascar impacts; absence of a reported centre landfall is not sufficient to infer zero effects."
     },
     "2007_tr0012": {
       "storm_name": "FAVIO",
@@ -274,7 +301,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2006%E2%80%9307_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "Do not use Favio's Mozambique landfall intensity for Madagascar. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2006%E2%80%9307_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2007_tr0013": {
       "storm_name": "GAMEDE",
@@ -289,7 +318,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2006%E2%80%9307_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "No Madagascar landfall wind available unless independently sourced. Wikipedia season-page summary. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2006%E2%80%9307_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2007_tr0017": {
       "storm_name": "INDLALA",
@@ -304,7 +335,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2006%E2%80%9307_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "IBTrACS audit: latest offshore wind before mainland coastline entry 2007-03-15 03:00:00–2007-03-15 06:00:00: 167 km/h (10-minute sustained, RSMC La Réunion), observation 2007-03-15 03:00:00. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2006%E2%80%9307_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2007_tr0018": {
       "storm_name": "JAYA",
@@ -319,7 +352,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2006%E2%80%9307_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "IBTrACS audit: latest offshore wind before mainland coastline entry 2007-04-03 06:00:00–2007-04-03 09:00:00: 139 km/h (10-minute sustained, RSMC La Réunion), observation 2007-04-03 06:00:00. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2006%E2%80%9307_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2007_tr0027": {
       "storm_name": "BONGWE",
@@ -334,7 +369,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2007%E2%80%9308_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "No Madagascar landfall wind available unless independently sourced. Wikipedia season-page summary. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2007%E2%80%9308_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "not_established",
+      "madagascar_impact_evidence_note": "The current record does not establish Madagascar impacts; absence of a reported centre landfall is not sufficient to infer zero effects."
     },
     "2007_tr0029": {
       "storm_name": "CELINA",
@@ -349,7 +386,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2007%E2%80%9308_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "No Madagascar landfall wind available unless independently sourced. Wikipedia season-page summary. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2007%E2%80%9308_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "not_established",
+      "madagascar_impact_evidence_note": "The current record does not establish Madagascar impacts; absence of a reported centre landfall is not sufficient to infer zero effects."
     },
     "2007_tr0033": {
       "storm_name": "ELNUS",
@@ -364,7 +403,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2007%E2%80%9308_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "No Madagascar landfall wind available unless independently sourced. Wikipedia season-page summary. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2007%E2%80%9308_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "not_established",
+      "madagascar_impact_evidence_note": "The current record does not establish Madagascar impacts; absence of a reported centre landfall is not sufficient to infer zero effects."
     },
     "2008_tr0013": {
       "storm_name": "FAME",
@@ -379,7 +420,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2007%E2%80%9308_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "IBTrACS audit: latest offshore wind before mainland coastline entry 2008-01-27 09:00:00–2008-01-27 12:00:00: 119 km/h (10-minute sustained, RSMC La Réunion), observation 2008-01-27 09:00:00. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2007%E2%80%9308_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2008_tr0014": {
       "storm_name": "IVAN",
@@ -394,7 +437,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2007%E2%80%9308_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "IBTrACS audit: latest offshore wind before mainland coastline entry 2008-02-17 06:00:00–2008-02-17 09:00:00: 176 km/h (10-minute sustained, RSMC La Réunion), observation 2008-02-17 06:00:00. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2007%E2%80%9308_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2008_tr0010": {
       "storm_name": "HONDO",
@@ -409,7 +454,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2007%E2%80%9308_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "No Madagascar landfall wind available unless independently sourced. Wikipedia season-page summary. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2007%E2%80%9308_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "not_established",
+      "madagascar_impact_evidence_note": "The current record does not establish Madagascar impacts; absence of a reported centre landfall is not sufficient to infer zero effects."
     },
     "2008_tr0019": {
       "storm_name": "JOKWE",
@@ -424,7 +471,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2007%E2%80%9308_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "No Madagascar landfall wind available unless independently sourced. Wikipedia season-page summary. IBTrACS audit: latest offshore wind before mainland coastline entry 2008-03-05 21:00:00–2008-03-06 00:00:00: 87 km/h (10-minute sustained, RSMC La Réunion), observation 2008-03-05 21:00:00. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2007%E2%80%9308_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2008_tr0026": {
       "storm_name": "ASMA",
@@ -439,7 +488,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2008%E2%80%9309_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "Landfall intensity blank: not a verified named-storm landfall wind observation. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2008%E2%80%9309_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2008_tr0029": {
       "storm_name": "CINDA",
@@ -454,7 +505,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2008%E2%80%9309_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "Landfall intensity blank: not a verified named-storm landfall wind observation. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2008%E2%80%9309_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "not_established",
+      "madagascar_impact_evidence_note": "The current record does not establish Madagascar impacts; absence of a reported centre landfall is not sufficient to infer zero effects."
     },
     "2009_tr0008": {
       "storm_name": "FANELE",
@@ -469,7 +522,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2008%E2%80%9309_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "Landfall wind value not distinguished from lifetime maximum; left blank. IBTrACS audit: latest offshore wind before mainland coastline entry 2009-01-21 00:00:00–2009-01-21 03:00:00: 167 km/h (10-minute sustained, RSMC La Réunion), observation 2009-01-21 00:00:00. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2008%E2%80%9309_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2009_tr0022": {
       "storm_name": "JADE",
@@ -484,7 +539,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2008%E2%80%9309_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "Fatalities from season effects; landfall sustained wind not separately stated. IBTrACS audit: latest offshore wind before mainland coastline entry 2009-04-06 00:00:00–2009-04-06 03:00:00: 111 km/h (10-minute sustained, RSMC La Réunion), observation 2009-04-06 00:00:00. 2 detected coastal entries; sentence refers to FIRST crossing. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2008%E2%80%9309_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2009_tr0027": {
       "storm_name": "BONGANI",
@@ -499,7 +556,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2009%E2%80%9310_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "No Madagascar landfall wind available unless independently sourced. Wikipedia season-page summary. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2009%E2%80%9310_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2009_tr0031": {
       "storm_name": "DAVID",
@@ -514,7 +573,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2009%E2%80%9310_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "No Madagascar landfall wind available unless independently sourced. Wikipedia season-page summary. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2009%E2%80%9310_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2010_tr0005": {
       "storm_name": "EDZANI",
@@ -529,7 +590,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2009%E2%80%9310_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "No Madagascar landfall wind available unless independently sourced. Wikipedia season-page summary. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2009%E2%80%9310_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "no_impacts_identified",
+      "madagascar_impact_evidence_note": "No Madagascar-specific impacts identified in the current season-account summary; absence of reporting does not prove zero effects."
     },
     "2010_tr0006": {
       "storm_name": "FAMI",
@@ -544,7 +607,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2009%E2%80%9310_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "No Madagascar landfall wind available unless independently sourced. Wikipedia season-page summary. IBTrACS audit: latest offshore wind before mainland coastline entry 2010-02-02 06:00:00–2010-02-02 09:00:00: 83 km/h (10-minute sustained, RSMC La Réunion), observation 2010-02-02 06:00:00. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2009%E2%80%9310_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2010_tr0013": {
       "storm_name": "GELANE",
@@ -559,7 +624,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2009%E2%80%9310_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "No Madagascar landfall wind available unless independently sourced. Wikipedia season-page summary. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2009%E2%80%9310_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2010_tr0017": {
       "storm_name": "HUBERT",
@@ -574,7 +641,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/Timeline_of_the_2009%E2%80%9310_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "Landfall time 21:00 UTC in cyclone-season timeline. IBTrACS audit: latest offshore wind before mainland coastline entry 2010-03-10 21:00:00–2010-03-11 00:00:00: 93 km/h (10-minute sustained, RSMC La Réunion), observation 2010-03-10 21:00:00. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2009%E2%80%9310_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2010_tr0025": {
       "storm_name": "JOEL",
@@ -589,7 +658,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2009%E2%80%9310_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "No Madagascar landfall wind available unless independently sourced. Wikipedia season-page summary. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2009%E2%80%9310_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2010_tr0026": {
       "storm_name": "UNNAMED",
@@ -619,7 +690,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2010%E2%80%9311_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "IBTrACS audit: latest offshore wind before mainland coastline entry 2011-02-14 00:00:00–2011-02-14 03:00:00: 139 km/h (10-minute sustained, RSMC La Réunion), observation 2011-02-14 00:00:00. 4 detected coastal entries; sentence refers to FIRST crossing. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2010%E2%80%9311_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2011_tr0029": {
       "storm_name": "DANDO",
@@ -634,7 +707,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2011%E2%80%9312_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "No Madagascar landfall wind available unless independently sourced. Wikipedia season-page summary. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2011%E2%80%9312_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season; Named storm verified; appears in two WATTCH event IDs (2011_tr0029 and 2012_tr0006), possibly duplicate real-world cyclone across year boundary."
+      "name_check": "name listed in wikipedia season; Named storm verified; appears in two WATTCH event IDs (2011_tr0029 and 2012_tr0006), possibly duplicate real-world cyclone across year boundary.",
+      "madagascar_impact_evidence": "not_established",
+      "madagascar_impact_evidence_note": "The current record does not establish Madagascar impacts; absence of a reported centre landfall is not sufficient to infer zero effects."
     },
     "2012_tr0006": {
       "storm_name": "DANDO",
@@ -649,7 +724,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2011%E2%80%9312_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "No Madagascar landfall wind available unless independently sourced. Wikipedia season-page summary. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2011%E2%80%9312_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season; Named storm verified; appears in two WATTCH event IDs (2011_tr0029 and 2012_tr0006), possibly duplicate real-world cyclone across year boundary."
+      "name_check": "name listed in wikipedia season; Named storm verified; appears in two WATTCH event IDs (2011_tr0029 and 2012_tr0006), possibly duplicate real-world cyclone across year boundary.",
+      "madagascar_impact_evidence": "not_established",
+      "madagascar_impact_evidence_note": "The current record does not establish Madagascar impacts; absence of a reported centre landfall is not sufficient to infer zero effects."
     },
     "2012_tr0009": {
       "storm_name": "FUNSO",
@@ -664,7 +741,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2011%E2%80%9312_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "No Madagascar landfall wind available unless independently sourced. Wikipedia season-page summary. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2011%E2%80%9312_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "not_established",
+      "madagascar_impact_evidence_note": "The current record does not establish Madagascar impacts; absence of a reported centre landfall is not sufficient to infer zero effects."
     },
     "2012_tr0014": {
       "storm_name": "GIOVANNA",
@@ -679,7 +758,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2011%E2%80%9312_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "Season article lists at least 35 deaths across the region, so Madagascar-only toll left blank. IBTrACS audit: latest offshore wind before mainland coastline entry 2012-02-13 21:00:00–2012-02-14 00:00:00: 139 km/h (10-minute sustained, RSMC La Réunion), observation 2012-02-13 21:00:00. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2011%E2%80%9312_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2012_tr0015": {
       "storm_name": "UNNAMED",
@@ -709,7 +790,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2011%E2%80%9312_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "At least 65 Madagascar fatalities reported as of 6 March. IBTrACS audit: latest offshore wind before mainland coastline entry 2012-02-26 15:00:00–2012-02-26 18:00:00: 54 km/h (10-minute sustained, RSMC La Réunion), observation 2012-02-26 15:00:00. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2011%E2%80%9312_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2012_tr0024": {
       "storm_name": "ANAIS",
@@ -724,7 +807,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2012%E2%80%9313_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "Landfall intensity blank: not a verified named-storm landfall wind observation. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2012%E2%80%9313_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2012_tr0032": {
       "storm_name": "DUMILE",
@@ -739,7 +824,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2012%E2%80%9313_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "Landfall intensity blank: not a verified named-storm landfall wind observation. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2012%E2%80%9313_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "not_established",
+      "madagascar_impact_evidence_note": "The current record does not establish Madagascar impacts; absence of a reported centre landfall is not sufficient to infer zero effects."
     },
     "2013_tr0014": {
       "storm_name": "HARUNA",
@@ -754,7 +841,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2012%E2%80%9313_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "IBTrACS audit: latest offshore wind before mainland coastline entry 2013-02-22 00:00:00–2013-02-22 03:00:00: 148 km/h (10-minute sustained, RSMC La Réunion), observation 2013-02-22 00:00:00. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2012%E2%80%9313_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2013_tr0020": {
       "storm_name": "IMELDA",
@@ -769,7 +858,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2012%E2%80%9313_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "Landfall intensity blank: not a verified named-storm landfall wind observation. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2012%E2%80%9313_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "not_established",
+      "madagascar_impact_evidence_note": "The current record does not establish Madagascar impacts; absence of a reported centre landfall is not sufficient to infer zero effects."
     },
     "2013_tr0023": {
       "storm_name": "UNNAMED",
@@ -799,7 +890,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2013%E2%80%9314_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "Landfall intensity blank: not a verified named-storm landfall wind observation. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2013%E2%80%9314_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "not_established",
+      "madagascar_impact_evidence_note": "The current record does not establish Madagascar impacts; absence of a reported centre landfall is not sufficient to infer zero effects."
     },
     "2014_tr0006": {
       "storm_name": "DELIWE",
@@ -814,7 +907,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2013%E2%80%9314_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "Named Deliwe after the system left Madagascar; not a named-storm landfall. IBTrACS audit: latest offshore wind before mainland coastline entry 2014-01-15 00:00:00–2014-01-15 03:00:00: 43 km/h (10-minute sustained, RSMC La Réunion), observation 2014-01-15 00:00:00. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2013%E2%80%9314_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2014_tr0015": {
       "storm_name": "GUITO",
@@ -829,7 +924,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2013%E2%80%9314_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "Landfall intensity blank: not a verified named-storm landfall wind observation. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2013%E2%80%9314_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "not_established",
+      "madagascar_impact_evidence_note": "The current record does not establish Madagascar impacts; absence of a reported centre landfall is not sufficient to infer zero effects."
     },
     "2014_tr0025": {
       "storm_name": "ADJALI",
@@ -844,7 +941,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2014%E2%80%9315_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "Landfall intensity blank: not a verified named-storm landfall wind observation. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2014%E2%80%9315_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "not_established",
+      "madagascar_impact_evidence_note": "The current record does not establish Madagascar impacts; absence of a reported centre landfall is not sufficient to infer zero effects."
     },
     "2015_tr0003": {
       "storm_name": "CHEDZA",
@@ -859,7 +958,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2014%E2%80%9315_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "IBTrACS audit: latest offshore wind before mainland coastline entry 2015-01-16 12:00:00–2015-01-16 15:00:00: 106 km/h (10-minute sustained, RSMC La Réunion), observation 2015-01-16 12:00:00. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2014%E2%80%9315_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2015_tr0015": {
       "storm_name": "HALIBA",
@@ -874,7 +975,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2014%E2%80%9315_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "Heavy rain occurred during early development; not a confirmed named-storm landfall. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2014%E2%80%9315_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2015_tr0013": {
       "storm_name": "UNNAMED",
@@ -904,7 +1007,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2014%E2%80%9315_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "No Madagascar impacts identified in season account. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2014%E2%80%9315_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "no_impacts_identified",
+      "madagascar_impact_evidence_note": "No Madagascar-specific impacts identified in the current season-account summary; absence of reporting does not prove zero effects."
     },
     "2016_tr0007": {
       "storm_name": "DAYA",
@@ -919,7 +1024,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2015%E2%80%9316_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "Landfall intensity blank: not a verified named-storm landfall wind observation. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2015%E2%80%9316_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2016_tr0018": {
       "storm_name": "ABELA",
@@ -934,7 +1041,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2016%E2%80%9317_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "Landfall intensity blank: not a verified named-storm landfall wind observation. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2016%E2%80%9317_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "not_established",
+      "madagascar_impact_evidence_note": "The current record does not establish Madagascar impacts; absence of a reported centre landfall is not sufficient to infer zero effects."
     },
     "2017_tr0003": {
       "storm_name": "CARLOS",
@@ -949,7 +1058,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2016%E2%80%9317_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "Landfall intensity blank: not a verified named-storm landfall wind observation. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2016%E2%80%9317_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "not_established",
+      "madagascar_impact_evidence_note": "The current record does not establish Madagascar impacts; absence of a reported centre landfall is not sufficient to infer zero effects."
     },
     "2017_tr0005": {
       "storm_name": "DINEO",
@@ -964,7 +1075,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2016%E2%80%9317_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "Landfall intensity blank: not a verified named-storm landfall wind observation. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2016%E2%80%9317_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "not_established",
+      "madagascar_impact_evidence_note": "The current record does not establish Madagascar impacts; absence of a reported centre landfall is not sufficient to infer zero effects."
     },
     "2017_tr0009": {
       "storm_name": "ENAWO",
@@ -979,7 +1092,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/Cyclone_Enawo",
       "verification_notes": "205 km/h estimated just before landfall; verify exact landfall fix. IBTrACS audit: latest offshore wind before mainland coastline entry 2017-03-07 12:00:00–2017-03-07 15:00:00: 157 km/h (10-minute sustained, RSMC La Réunion), observation 2017-03-07 12:00:00. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2016%E2%80%9317_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2017_tr0026": {
       "storm_name": "AVA",
@@ -994,7 +1109,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2017%E2%80%9318_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "Peak 150 km/h (10-minute) occurs near landfall, but separate landfall wind not established. IBTrACS audit: latest offshore wind before mainland coastline entry 2018-01-05 09:00:00–2018-01-05 12:00:00: 139 km/h (10-minute sustained, RSMC La Réunion), observation 2018-01-05 09:00:00. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2017%E2%80%9318_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2018_tr0013": {
       "storm_name": "ELIAKIM",
@@ -1009,7 +1126,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2017%E2%80%9318_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "GDACS reports 111 km/h as the maximum storm wind, NOT a verified coastal landfall intensity; do not fill observed landfall wind column E from this value. Fatalities/homeless figures retained from existing season summary. Wind averaging conventions require confirmation. IBTrACS audit: latest offshore wind before mainland coastline entry 2018-03-16 09:00:00–2018-03-16 12:00:00: 107 km/h (10-minute sustained, RSMC La Réunion), observation 2018-03-16 09:00:00. 2 detected coastal entries; sentence refers to FIRST crossing. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2017%E2%80%9318_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2018_tr0020": {
       "storm_name": "FAKIR",
@@ -1024,7 +1143,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2017%E2%80%9318_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "Landfall intensity blank: not a verified named-storm landfall wind observation. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2017%E2%80%9318_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "no_impacts_identified",
+      "madagascar_impact_evidence_note": "No Madagascar-specific impacts identified in the current season-account summary; absence of reporting does not prove zero effects."
     },
     "2019_tr0008": {
       "storm_name": "EKETSANG",
@@ -1039,7 +1160,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2018%E2%80%9319_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "Named phase developed after crossing Madagascar; not a named-storm landfall. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2018%E2%80%9319_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2019_tr0013": {
       "storm_name": "IDAI",
@@ -1054,7 +1177,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2018%E2%80%9319_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "Landfall intensity blank: not a verified named-storm landfall wind observation. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2018%E2%80%9319_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "not_established",
+      "madagascar_impact_evidence_note": "The current record does not establish Madagascar impacts; absence of a reported centre landfall is not sufficient to infer zero effects."
     },
     "2019_tr0026": {
       "storm_name": "BELNA",
@@ -1069,7 +1194,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2019%E2%80%9320_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "IBTrACS audit: latest offshore wind before mainland coastline entry 2019-12-09 15:00:00–2019-12-09 18:00:00: 143 km/h (10-minute sustained, RSMC La Réunion), observation 2019-12-09 15:00:00. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2019%E2%80%9320_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2020_tr0009": {
       "storm_name": "DIANE",
@@ -1084,7 +1211,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2019%E2%80%9320_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "Diane was named only after leaving Madagascar; no named-storm landfall intensity. IBTrACS audit: latest offshore wind before mainland coastline entry 2020-01-22 12:00:00–2020-01-22 15:00:00: 56 km/h (10-minute sustained, RSMC La Réunion), observation 2020-01-22 12:00:00. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2019%E2%80%9320_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2020_tr0013": {
       "storm_name": "FRANCISCO",
@@ -1099,7 +1228,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2019%E2%80%9320_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "Peak 85 km/h was before landfall; do not enter as landfall wind. IBTrACS audit: latest offshore wind before mainland coastline entry 2020-02-15 06:00:00–2020-02-15 09:00:00: 74 km/h (10-minute sustained, RSMC La Réunion), observation 2020-02-15 06:00:00. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2019%E2%80%9320_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2020_tr0028": {
       "storm_name": "BONGOYO",
@@ -1114,7 +1245,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2020%E2%80%9321_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "No Madagascar landfall wind available unless independently sourced. Wikipedia season-page summary. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2020%E2%80%9321_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "not_established",
+      "madagascar_impact_evidence_note": "The current record does not establish Madagascar impacts; absence of a reported centre landfall is not sufficient to infer zero effects."
     },
     "2020_tr0033": {
       "storm_name": "CHALANE",
@@ -1129,7 +1262,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2020%E2%80%9321_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "Storm intensified later over Mozambique Channel; later peak not Madagascar landfall wind. IBTrACS audit: latest offshore wind before mainland coastline entry 2020-12-26 18:00:00–2020-12-26 21:00:00: 65 km/h (10-minute sustained, RSMC La Réunion), observation 2020-12-26 18:00:00. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2020%E2%80%9321_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2020_tr0034": {
       "storm_name": "DANILO",
@@ -1144,7 +1279,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2020%E2%80%9321_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "No Madagascar landfall wind available unless independently sourced. Wikipedia season-page summary. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2020%E2%80%9321_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "not_established",
+      "madagascar_impact_evidence_note": "The current record does not establish Madagascar impacts; absence of a reported centre landfall is not sufficient to infer zero effects."
     },
     "2021_tr0010": {
       "storm_name": "ELOISE",
@@ -1159,7 +1296,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/Cyclone_Eloise",
       "verification_notes": "Do not confuse Madagascar landfall with much stronger later Mozambique landfall. IBTrACS audit: latest offshore wind before mainland coastline entry 2021-01-19 15:00:00–2021-01-19 18:00:00: 98 km/h (10-minute sustained, RSMC La Réunion), observation 2021-01-19 15:00:00. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2020%E2%80%9321_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2021_tr0019": {
       "storm_name": "FARAJI",
@@ -1174,7 +1313,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2020%E2%80%9321_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "No Madagascar landfall wind available unless independently sourced. Wikipedia season-page summary. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2020%E2%80%9321_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "not_established",
+      "madagascar_impact_evidence_note": "The current record does not establish Madagascar impacts; absence of a reported centre landfall is not sufficient to infer zero effects."
     },
     "2021_tr0025": {
       "storm_name": "IMAN",
@@ -1189,7 +1330,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2020%E2%80%9321_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "Landfall intensity blank: not a verified named-storm landfall wind observation. IBTrACS audit: possible coastline crossing in mapped track conflicts with existing historical no-landfall summary. Needs manual verification before publication.",
       "season_page": "https://en.wikipedia.org/wiki/2020%E2%80%9321_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "not_established",
+      "madagascar_impact_evidence_note": "The current record does not establish Madagascar impacts; absence of a reported centre landfall is not sufficient to infer zero effects."
     },
     "2022_tr0006": {
       "storm_name": "ANA",
@@ -1204,7 +1347,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2021%E2%80%9322_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "Crossed as tropical depression before receiving name Ana over Mozambique Channel. IBTrACS audit: latest offshore wind before mainland coastline entry 2022-01-22 06:00:00–2022-01-22 09:00:00: 74 km/h (10-minute sustained, RSMC La Réunion), observation 2022-01-22 06:00:00. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2021%E2%80%9322_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2022_tr0007": {
       "storm_name": "BATSIRAI",
@@ -1219,7 +1364,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/Cyclone_Batsirai",
       "verification_notes": "165 km/h at landfall in WMO article; confirm averaging period. IBTrACS audit: latest offshore wind before mainland coastline entry 2022-02-05 15:00:00–2022-02-05 18:00:00: 157 km/h (10-minute sustained, RSMC La Réunion), observation 2022-02-05 15:00:00. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2021%E2%80%9322_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2022_tr0009": {
       "storm_name": "CLIFF",
@@ -1234,7 +1381,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2021%E2%80%9322_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "No Madagascar impacts identified in season account. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2021%E2%80%9322_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "no_impacts_identified",
+      "madagascar_impact_evidence_note": "No Madagascar-specific impacts identified in the current season-account summary; absence of reporting does not prove zero effects."
     },
     "2022_tr0014": {
       "storm_name": "DUMAKO",
@@ -1249,7 +1398,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2021%E2%80%9322_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "Madagascar-specific wind and losses not established from season overview. IBTrACS audit: latest offshore wind before mainland coastline entry 2022-02-15 12:00:00–2022-02-15 15:00:00: 83 km/h (10-minute sustained, RSMC La Réunion), observation 2022-02-15 12:00:00. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2021%E2%80%9322_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2022_tr0019": {
       "storm_name": "GOMBE",
@@ -1264,7 +1415,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2021%E2%80%9322_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "Do not use stronger later Mozambique landfall intensity. IBTrACS audit: latest offshore wind before mainland coastline entry 2022-03-07 21:00:00–2022-03-08 00:00:00: 70 km/h (10-minute sustained, RSMC La Réunion), observation 2022-03-07 21:00:00. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2021%E2%80%9322_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2022_tr0025": {
       "storm_name": "JASMINE",
@@ -1279,7 +1432,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2021%E2%80%9322_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "Madagascar impacts not quantified in season overview. IBTrACS audit: latest offshore wind before mainland coastline entry 2022-04-20 15:00:00–2022-04-20 18:00:00: 37 km/h (1-minute sustained, JTWC/USA), observation 2022-04-20 15:00:00. 2 detected coastal entries; sentence refers to FIRST crossing. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2021%E2%80%9322_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2023_tr0004": {
       "storm_name": "CHENESO",
@@ -1294,7 +1449,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/Cyclone_Cheneso",
       "verification_notes": "Peak 140 km/h was attained later over ocean, NOT at Madagascar landfall. IBTrACS audit: latest offshore wind before mainland coastline entry 2023-01-19 06:00:00–2023-01-19 09:00:00: 93 km/h (10-minute sustained, RSMC La Réunion), observation 2023-01-19 06:00:00. 2 detected coastal entries; sentence refers to FIRST crossing. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2022%E2%80%9323_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2023_tr0007": {
       "storm_name": "DINGANI",
@@ -1309,7 +1466,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2022%E2%80%9323_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "No Madagascar landfall wind available unless independently sourced. Wikipedia season-page summary. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2022%E2%80%9323_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "not_established",
+      "madagascar_impact_evidence_note": "The current record does not establish Madagascar impacts; absence of a reported centre landfall is not sufficient to infer zero effects."
     },
     "2023_tr0009": {
       "storm_name": "FREDDY",
@@ -1324,7 +1483,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/Cyclone_Freddy",
       "verification_notes": "175 km/h is a 1-minute wind; not directly comparable with RSMC 10-minute speeds. IBTrACS audit: latest offshore wind before mainland coastline entry 2023-02-21 15:00:00–2023-02-21 18:00:00: 139 km/h (10-minute sustained, RSMC La Réunion), observation 2023-02-21 15:00:00. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2022%E2%80%9323_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2023_tr0020": {
       "storm_name": "ALVARO",
@@ -1339,7 +1500,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2023%E2%80%9324_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "Season article quotes 140 km/h winds but averaging convention and landfall estimate inconsistent with peak-intensity summary; left wind blank. IBTrACS audit: latest offshore wind before mainland coastline entry 2024-01-01 15:00:00–2024-01-01 18:00:00: 111 km/h (10-minute sustained, RSMC La Réunion), observation 2024-01-01 15:00:00. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2023%E2%80%9324_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2024_tr0012": {
       "storm_name": "ELEANOR",
@@ -1354,7 +1517,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2023%E2%80%9324_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "No Madagascar impacts identified in season account. IBTrACS audit: possible coastline crossing in mapped track conflicts with existing historical no-landfall summary. Needs manual verification before publication.",
       "season_page": "https://en.wikipedia.org/wiki/2023%E2%80%9324_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "not_established",
+      "madagascar_impact_evidence_note": "The current record does not establish Madagascar impacts; absence of a reported centre landfall is not sufficient to infer zero effects."
     },
     "2024_tr0015": {
       "storm_name": "FILIPO",
@@ -1369,7 +1534,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2023%E2%80%9324_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "No Madagascar landfall wind available unless independently sourced. Wikipedia season-page summary. IBTrACS audit: possible coastline crossing in mapped track conflicts with existing historical no-landfall summary. Needs manual verification before publication.",
       "season_page": "https://en.wikipedia.org/wiki/2023%E2%80%9324_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "not_established",
+      "madagascar_impact_evidence_note": "The current record does not establish Madagascar impacts; absence of a reported centre landfall is not sufficient to infer zero effects."
     },
     "2024_tr0018": {
       "storm_name": "GAMANE",
@@ -1384,7 +1551,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2023%E2%80%9324_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "150 km/h landfall estimate in UNICEF report; averaging period to confirm. IBTrACS audit: latest offshore wind before mainland coastline entry 2024-03-27 00:00:00–2024-03-27 03:00:00: 139 km/h (10-minute sustained, RSMC La Réunion), observation 2024-03-27 00:00:00. 2 detected coastal entries; sentence refers to FIRST crossing. Not necessarily an exact landfall observation; review intensity source/geometry.",
       "season_page": "https://en.wikipedia.org/wiki/2023%E2%80%9324_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "documented_madagascar_effects",
+      "madagascar_impact_evidence_note": "Season summary documents landfall, precursor rainfall or other Madagascar effects; modelled wind footprint is not a historical impact assessment."
     },
     "2024_tr0025": {
       "storm_name": "BHEKI",
@@ -1399,7 +1568,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2024%E2%80%9325_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "No Madagascar landfall wind available unless independently sourced. Wikipedia season-page summary. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2024%E2%80%9325_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "not_established",
+      "madagascar_impact_evidence_note": "The current record does not establish Madagascar impacts; absence of a reported centre landfall is not sufficient to infer zero effects."
     },
     "2024_tr0027": {
       "storm_name": "CHIDO",
@@ -1414,7 +1585,9 @@
       "impact_source": "https://en.wikipedia.org/wiki/2024%E2%80%9325_South-West_Indian_Ocean_cyclone_season",
       "verification_notes": "No Madagascar landfall wind available unless independently sourced. Wikipedia season-page summary. IBTrACS audit: no Madagascar mainland storm-centre crossing detected for mapped IBTrACS track. Offshore winds and flooding can still occur.",
       "season_page": "https://en.wikipedia.org/wiki/2024%E2%80%9325_South-West_Indian_Ocean_cyclone_season",
-      "name_check": "name listed in wikipedia season"
+      "name_check": "name listed in wikipedia season",
+      "madagascar_impact_evidence": "not_established",
+      "madagascar_impact_evidence_note": "The current record does not establish Madagascar impacts; absence of a reported centre landfall is not sufficient to infer zero effects."
     }
   }
 }
