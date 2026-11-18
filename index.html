@@ -628,15 +628,7 @@ function selectFeedback(st){
  return {
   id:objective?.ID||"unmatched",bossId:boss?.Boss_ID||"unmatched",
   objective:objective?.Feedback_O||"This combination has no matching forecaster text.",
-  forecasterText:(!activationLocationsApplicable?
-  ((stages.prePredicted&&!stock.length)?
-   "The forecast indicated that you should have mobilised, but you didn't. The full activation threshold was not exceeded.":
-   (objective?.Feedback_O||"This combination has no matching forecaster text.").replace(
-    /(?:The later activation forecast|the activation forecast)[^.]*\./gi,
-    "The activation threshold was not exceeded, so there are no activation locations to classify as correct or incorrect.")
-  ):
-  (objective?.Feedback_O||"This combination has no matching forecaster text."))+
-  " "+coverage+extraNote,
+  forecasterText:objective?.Feedback_O||"This combination has no matching forecaster text.",
   outcomeText:coverage+extraNote,
   boss:fillFeedback(boss?.Feedback_B||"We need to review the result and the remaining funds.",people),
   threshold:observed.full,forecast:stages.full,
