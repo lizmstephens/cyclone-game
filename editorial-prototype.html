@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cyclone Game — editorial design prototype</title>
+<style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#f5f0e7}
+iframe{border:0;width:100%;height:100%;display:block}
+</style>
+</head>
+<body>
+<iframe id="game" src="./index.html" title="One-storm Cyclone Game visual prototype"></iframe>
+<script>
+(function(){
+const frame=document.getElementById('game');
+frame.addEventListener('load',()=>{
+ const doc=frame.contentDocument;
+ if(!doc)return;
+ const css=`
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Libre+Baskerville:wght@400;700&display=swap');
+:root{font-family:'DM Sans',Arial,sans-serif!important;color:#292924!important;background:#f6f1e8!important}
+body{background:#f6f1e8!important;color:#292924!important}
+header{background:#fcfaf6!important;color:#272723!important;border-bottom:1px solid #ddd6ca!important;padding:15px max(22px,calc((100vw - 1350px)/2))!important;position:relative}
+header:before{content:'';display:block;width:25px;height:25px;flex:none;background:linear-gradient(to right,transparent 0 35%,#d8202b 35% 65%,transparent 65% 100%),linear-gradient(to bottom,transparent 0 35%,#d8202b 35% 65%,transparent 65% 100%);margin-right:5px}
+header h1{font-family:'Libre Baskerville',Georgia,serif!important;color:#292924!important;font-size:clamp(19px,2vw,27px)!important;line-height:1.2}
+header small{color:#82796e!important;font-size:12px!important}
+main{max-width:1350px!important;padding:26px 22px 55px!important}
+.stats{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:0!important;background:#eee7da!important;border:1px solid #ded5c6!important;margin-bottom:26px!important}
+.stat{border:0!important;border-right:1px solid #d9cebf!important;border-radius:0!important;background:transparent!important;padding:15px 21px!important}
+.stat:last-child{border-right:0!important}
+.stat .k{color:#796e62!important;font-size:11px!important;letter-spacing:.07em!important;text-transform:uppercase!important;font-weight:700}
+.stat .v{font-family:'Libre Baskerville',Georgia,serif!important;font-size:23px!important;color:#262520!important;font-weight:400!important;padding-top:4px}
+.layout{grid-template-columns:minmax(0,1.55fr) minmax(310px,.85fr)!important;gap:24px!important;align-items:start}
+.panel{border:1px solid #e0d8ca!important;border-radius:3px!important;background:#fffdf8!important;padding:21px!important;margin-bottom:20px!important;box-shadow:0 4px 15px rgba(68,52,33,.025)!important}
+.layout>section>.panel:first-child{background:#fffdf8!important}
+h2,h3{font-family:'Libre Baskerville',Georgia,serif!important;font-weight:400!important;line-height:1.35!important;color:#292923!important}
+h2{font-size:clamp(21px,2.1vw,29px)!important}h3{font-size:19px!important}
+#stormtitle{font-size:clamp(24px,2.7vw,35px)!important;line-height:1.2!important;margin-bottom:16px!important}
+#map{background:#e1eae7!important;border-radius:2px!important;min-height:320px}
+.pill{background:#f1e9db!important;color:#625d54!important;font-size:12px!important;border-radius:2px!important;padding:6px 10px!important;font-weight:600}
+.wind-legend{color:#6c675e!important;font-size:11px!important;gap:7px 11px!important}
+.subtle{color:#777167!important;font-size:12px!important;line-height:1.55!important}
+#brief{background:#f2efe8!important;border:0!important;border-left:3px solid #d7242d!important;border-radius:0!important;padding:18px 20px!important;color:#302d27!important;font-size:16px!important}
+#brief:before{content:'LATEST FORECAST BRIEFING';display:block;font-size:10px;letter-spacing:.13em;font-weight:700;color:#a23336;margin-bottom:9px}
+.actions{gap:10px!important}
+.action{background:#faf8f3!important;color:#2d2926!important;border:1px solid #d8d0c3!important;border-radius:2px!important;padding:16px!important;text-align:left!important;transition:background .2s,border .2s}
+.action strong{font-size:16px!important;font-weight:700!important}
+.action:hover:not(:disabled){background:#f2e9de!important;border-color:#b7a99a!important}
+.action.selected{background:#f9eee9!important;border:2px solid #bb3139!important;padding:15px!important}
+.wh{gap:8px!important}.wh label{background:#f8f5ef!important;border:1px solid #e4dccf!important;border-radius:2px!important;padding:12px!important}
+.wh label:has(input:checked){border-color:#b85e5e!important;background:#fcf0ec!important}
+input{accent-color:#c91e2a!important}
+.btn{background:#c51f2b!important;color:#fff!important;border-radius:2px!important;padding:13px 20px!important;letter-spacing:.01em!important}
+.btn.alt{background:#ebe4d8!important;color:#39352f!important}
+.btn:hover:not(:disabled){filter:brightness(.95)}
+#progressbar{background:#c51f2b!important}
+.storm-review{background:#fffdf8!important;border-color:#e2d8c9!important;border-radius:3px!important}
+.review-bubble{border-radius:3px!important}
+.review-bubble.scientist{background:#eaf0ec!important;border-color:#cddbd2!important;color:#354940!important}
+.review-bubble.boss{background:#f7efe1!important;border-color:#e1d4c0!important;color:#59472e!important}
+#start-screen{background:linear-gradient(100deg,rgba(29,41,39,.63),rgba(32,33,30,.22)),url('https://upload.wikimedia.org/wikipedia/commons/d/df/Tropical_Cyclone_Bingiza_%285446376180%29.jpg') center/cover no-repeat!important}
+#start-screen .intro{background:#faf6ed!important;backdrop-filter:none!important;border:0!important;border-radius:3px!important;box-shadow:0 18px 70px rgba(0,0,0,.19)!important}
+#start-screen h2{font-family:'Libre Baskerville',Georgia,serif!important;color:#272923!important;font-size:clamp(27px,4vw,43px)!important}
+#start-screen p[data-front-key=front_intro]{color:#302b27!important}
+#start-screen p[data-front-key=front_explainer]{color:#554e45!important}
+#start-screen label{border-radius:2px!important}
+#start-screen label:has(input:checked){border-color:#c51f2b!important;box-shadow:none!important}
+#start-screen #start-game{background:#c51f2b!important;color:white!important;border:1px solid #c51f2b!important}
+#start-screen .about-link{border-radius:2px!important;border-color:#ddd1c2!important;color:#484038!important;background:transparent!important}
+#start-screen .image-credit{color:#796f63!important}
+#prototype-tag{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#b02b32;font-weight:700;margin:0 0 8px}
+@media(max-width:850px){main{padding:16px!important}.layout{grid-template-columns:1fr!important}.stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}.stat:nth-child(2){border-right:0!important}.stat:nth-child(-n+2){border-bottom:1px solid #d9cebf!important}header{padding:13px 16px!important}.panel{padding:15px!important}#map{min-height:220px}}
+@media(max-width:520px){header:before{display:none}.stats{margin-bottom:15px!important}.stat{padding:12px!important}.stat .v{font-size:19px!important}#start-screen .choice-grid{grid-template-columns:1fr 1fr!important}}
+`;
+ const style=doc.createElement('style');style.textContent=css;doc.head.appendChild(style);
+ const logo=doc.createElement('div');logo.id='prototype-tag';logo.textContent='VISUAL DESIGN PROTOTYPE · ONE STORM';
+ const main=doc.querySelector('main');if(main)main.prepend(logo);
+ const one=doc.querySelector('input[name="game-length"][value="single"]');
+ if(one){one.checked=true;one.dispatchEvent(new Event('change',{bubbles:true}));}
+ const season=doc.querySelector('input[name="game-length"][value="season"]');
+ if(season && season.closest('label'))season.closest('label').style.display='none';
+ const gameLengthHeading=doc.querySelector('[data-front-key="game_length_heading"]');
+ if(gameLengthHeading)gameLengthHeading.textContent='Prototype mode';
+ const title=doc.querySelector('#start-screen h2');
+ if(title)title.textContent='The storm is coming.';
+ const btn=doc.getElementById('start-game');
+ if(btn)btn.textContent='Play one storm';
+ const restart=doc.getElementById('restart');
+ if(restart)restart.textContent='Start again';
+ });
+})();
+</script>
+</body>
+</html>
