@@ -652,9 +652,9 @@ function selectFeedback(st){
  // Simulated direct-wind exposure does not establish historical human impacts.
  const evidenceLimitedBoss=
   evidence==="documented_madagascar_effects"&&!affected.size?
-   "The historical record reports effects in Madagascar, but our wind-only model missed them. We need to review the assessment.":
+   "The records show Madagascar was affected, but our model missed it. Why didn't we anticipate that?":
   (evidence==="not_established"||evidence==="no_impacts_identified")&&affected.size?
-   "The simulation suggests exposure, but Madagascar impacts have not been verified. We shouldn't claim people were affected without that evidence.":
+   "The simulation suggests a threat, but we haven't verified impacts in Madagascar. What actually happened?":
    null;
  return {
   id:objective?.ID||"unmatched",bossId:boss?.Boss_ID||"unmatched",
