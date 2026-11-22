@@ -1,8 +1,8 @@
 {
   "source": "Madagascar Cyclone Game — Feedback Library",
   "sourceUrl": "https://docs.google.com/spreadsheets/d/1kEIwFSZOG8nxThiheJkO-Tgtqn97HmlrawF9-gbB9FQ/edit",
-  "snapshotDate": "2026-11-18",
-  "notes": "Synced from editable Google Sheet on 18 November 2026. The game may also load publicly readable live tabs.",
+  "snapshotDate": "2026-11-22",
+  "notes": "Synced from editable Google Sheet 22 November 2026; game also attempts live Google Sheets feedback reads.",
   "objective": [
     {
       "ID": "F01",
@@ -3707,168 +3707,168 @@
       "Communities reached": "All affected areas reached",
       "Spending": "Targeted spending",
       "Budget remaining": "Healthy",
-      "Feedback_B": "We reached {people_reached} people before the storm. The donor will be pleased. The resources we did commit were focused on the affected areas. We still have some room in the budget for the storms ahead."
+      "Feedback_B": "Fantastic! You reached {people_reached} people before the storm."
     },
     {
       "Boss_ID": "B02",
       "Communities reached": "All affected areas reached",
       "Spending": "Targeted spending",
       "Budget remaining": "Low",
-      "Feedback_B": "We reached {people_reached} people before the storm. The donor will be pleased. The resources we did commit were focused on the affected areas. I'm concerned about how little money is left for the rest of the season."
+      "Feedback_B": "Great work reaching {people_reached} people. But we're running low on funds."
     },
     {
       "Boss_ID": "B03",
       "Communities reached": "All affected areas reached",
       "Spending": "Targeted spending",
       "Budget remaining": "Exhausted",
-      "Feedback_B": "We reached {people_reached} people before the storm. The donor will be pleased. The resources we did commit were focused on the affected areas. We've used the whole budget. What happens if another cyclone comes?"
+      "Feedback_B": "You reached {people_reached} people. Brilliant! What happens if another cyclone comes with no budget left?"
     },
     {
       "Boss_ID": "B04",
       "Communities reached": "All affected areas reached",
       "Spending": "Unnecessary spending",
       "Budget remaining": "Healthy",
-      "Feedback_B": "We reached {people_reached} people before the storm. The donor will be pleased. But we also spent money in locations that weren't directly affected. We can't afford to do that too often. We still have some room in the budget for the storms ahead."
+      "Feedback_B": "Well done reaching {people_reached} people! But did we need to spend so much elsewhere?"
     },
     {
       "Boss_ID": "B05",
       "Communities reached": "All affected areas reached",
       "Spending": "Unnecessary spending",
       "Budget remaining": "Low",
-      "Feedback_B": "We reached {people_reached} people before the storm. The donor will be pleased. But we also spent money in locations that weren't directly affected. We can't afford to do that too often. I'm concerned about how little money is left for the rest of the season."
+      "Feedback_B": "You reached {people_reached} people, but spent more than necessary. Can we afford another storm?"
     },
     {
       "Boss_ID": "B06",
       "Communities reached": "All affected areas reached",
       "Spending": "Unnecessary spending",
       "Budget remaining": "Exhausted",
-      "Feedback_B": "We reached {people_reached} people before the storm. The donor will be pleased. But we also spent money in locations that weren't directly affected. We can't afford to do that too often. We've used the whole budget. What happens if another cyclone comes?"
+      "Feedback_B": "We helped {people_reached} people, but we've spent everything. Was all that extra spending necessary?"
     },
     {
       "Boss_ID": "B07",
       "Communities reached": "Some affected areas reached",
       "Spending": "Targeted spending",
       "Budget remaining": "Healthy",
-      "Feedback_B": "We helped {people_reached} people, but I am worried about the communities we couldn't reach. The resources we did commit were focused on the affected areas. We still have some room in the budget for the storms ahead."
+      "Feedback_B": "You helped {people_reached} people. Why didn't you take action in the other locations too?"
     },
     {
       "Boss_ID": "B08",
       "Communities reached": "Some affected areas reached",
       "Spending": "Targeted spending",
       "Budget remaining": "Low",
-      "Feedback_B": "We helped {people_reached} people, but I am worried about the communities we couldn't reach. The resources we did commit were focused on the affected areas. I'm concerned about how little money is left for the rest of the season."
+      "Feedback_B": "Good to reach {people_reached} people, but others missed out. And our budget is getting dangerously low."
     },
     {
       "Boss_ID": "B09",
       "Communities reached": "Some affected areas reached",
       "Spending": "Targeted spending",
       "Budget remaining": "Exhausted",
-      "Feedback_B": "We helped {people_reached} people, but I am worried about the communities we couldn't reach. The resources we did commit were focused on the affected areas. We've used the whole budget. What happens if another cyclone comes?"
+      "Feedback_B": "You reached {people_reached} people, but others missed out. How will we respond with nothing left?"
     },
     {
       "Boss_ID": "B10",
       "Communities reached": "Some affected areas reached",
       "Spending": "Unnecessary spending",
       "Budget remaining": "Healthy",
-      "Feedback_B": "We helped {people_reached} people, but I am worried about the communities we couldn't reach. But we also spent money in locations that weren't directly affected. We can't afford to do that too often. We still have some room in the budget for the storms ahead."
+      "Feedback_B": "You helped {people_reached} people, but missed others and spent unnecessarily. What happened?"
     },
     {
       "Boss_ID": "B11",
       "Communities reached": "Some affected areas reached",
       "Spending": "Unnecessary spending",
       "Budget remaining": "Low",
-      "Feedback_B": "We helped {people_reached} people, but I am worried about the communities we couldn't reach. But we also spent money in locations that weren't directly affected. We can't afford to do that too often. I'm concerned about how little money is left for the rest of the season."
+      "Feedback_B": "We helped {people_reached} people, but missed others and overspent. What will we do if another storm comes?"
     },
     {
       "Boss_ID": "B12",
       "Communities reached": "Some affected areas reached",
       "Spending": "Unnecessary spending",
       "Budget remaining": "Exhausted",
-      "Feedback_B": "We helped {people_reached} people, but I am worried about the communities we couldn't reach. But we also spent money in locations that weren't directly affected. We can't afford to do that too often. We've used the whole budget. What happens if another cyclone comes?"
+      "Feedback_B": "Some people received help, but others didn't, and the budget is gone. How did we end up here?"
     },
     {
       "Boss_ID": "B13",
       "Communities reached": "Affected areas missed",
       "Spending": "Targeted spending",
       "Budget remaining": "Healthy",
-      "Feedback_B": "People were affected, and we didn't get assistance to them. That's a difficult result to explain. The resources we did commit were focused on the affected areas. We still have some room in the budget for the storms ahead."
+      "Feedback_B": "Nobody received assistance in the affected areas. What went wrong?"
     },
     {
       "Boss_ID": "B14",
       "Communities reached": "Affected areas missed",
       "Spending": "Targeted spending",
       "Budget remaining": "Low",
-      "Feedback_B": "People were affected, and we didn't get assistance to them. That's a difficult result to explain. The resources we did commit were focused on the affected areas. I'm concerned about how little money is left for the rest of the season."
+      "Feedback_B": "We didn't reach anyone who needed help, and funds are running low. How do we explain that?"
     },
     {
       "Boss_ID": "B15",
       "Communities reached": "Affected areas missed",
       "Spending": "Targeted spending",
       "Budget remaining": "Exhausted",
-      "Feedback_B": "People were affected, and we didn't get assistance to them. That's a difficult result to explain. The resources we did commit were focused on the affected areas. We've used the whole budget. What happens if another cyclone comes?"
+      "Feedback_B": "Nobody received assistance, and there's nothing left in the budget. What are we going to do?"
     },
     {
       "Boss_ID": "B16",
       "Communities reached": "Affected areas missed",
       "Spending": "Unnecessary spending",
       "Budget remaining": "Healthy",
-      "Feedback_B": "People were affected, and we didn't get assistance to them. That's a difficult result to explain. But we also spent money in locations that weren't directly affected. We can't afford to do that too often. We still have some room in the budget for the storms ahead."
+      "Feedback_B": "We missed the people who needed help and spent money elsewhere. Why?"
     },
     {
       "Boss_ID": "B17",
       "Communities reached": "Affected areas missed",
       "Spending": "Unnecessary spending",
       "Budget remaining": "Low",
-      "Feedback_B": "People were affected, and we didn't get assistance to them. That's a difficult result to explain. But we also spent money in locations that weren't directly affected. We can't afford to do that too often. I'm concerned about how little money is left for the rest of the season."
+      "Feedback_B": "We didn't reach those who needed help, and we've nearly exhausted our funds. What went wrong?"
     },
     {
       "Boss_ID": "B18",
       "Communities reached": "Affected areas missed",
       "Spending": "Unnecessary spending",
       "Budget remaining": "Exhausted",
-      "Feedback_B": "People were affected, and we didn't get assistance to them. That's a difficult result to explain. But we also spent money in locations that weren't directly affected. We can't afford to do that too often. We've used the whole budget. What happens if another cyclone comes?"
+      "Feedback_B": "We spent the entire budget and didn't reach those who needed help. How can I explain that?"
     },
     {
       "Boss_ID": "B19",
       "Communities reached": "No areas affected",
       "Spending": "Targeted spending",
       "Budget remaining": "Healthy",
-      "Feedback_B": "At least no warehouse area was counted as directly affected this time. We avoided spending on locations outside the modelled impact footprint. We still have some room in the budget for the storms ahead."
+      "Feedback_B": "Good, we kept resources for another day!"
     },
     {
       "Boss_ID": "B20",
       "Communities reached": "No areas affected",
       "Spending": "Targeted spending",
       "Budget remaining": "Low",
-      "Feedback_B": "At least no warehouse area was counted as directly affected this time. We avoided spending on locations outside the modelled impact footprint. I'm concerned about how little money is left for the rest of the season."
+      "Feedback_B": "No one needed assistance here, but our budget is getting low. We need to be careful."
     },
     {
       "Boss_ID": "B21",
       "Communities reached": "No areas affected",
       "Spending": "Targeted spending",
       "Budget remaining": "Exhausted",
-      "Feedback_B": "At least no warehouse area was counted as directly affected this time. We avoided spending on locations outside the modelled impact footprint. We've used the whole budget. What happens if another cyclone comes?"
+      "Feedback_B": "No assistance was needed this time, but the budget is empty. What happens next?"
     },
     {
       "Boss_ID": "B22",
       "Communities reached": "No areas affected",
       "Spending": "Unnecessary spending",
       "Budget remaining": "Healthy",
-      "Feedback_B": "At least no areas met the game's direct-impact threshold this time. We still need to be ready for the next storm. But we also spent money in locations that weren't directly affected. We can't afford to do that too often. We still have some room in the budget for the storms ahead."
+      "Feedback_B": "Well, we didn't need to help anyone this time. Could we have avoided that spending?"
     },
     {
       "Boss_ID": "B23",
       "Communities reached": "No areas affected",
       "Spending": "Unnecessary spending",
       "Budget remaining": "Low",
-      "Feedback_B": "At least no areas met the game's direct-impact threshold this time. We still need to be ready for the next storm. But we also spent money in locations that weren't directly affected. We can't afford to do that too often. I'm concerned about how little money is left for the rest of the season."
+      "Feedback_B": "We didn't need to intervene, yet we spent money, and funds are running low. Why?"
     },
     {
       "Boss_ID": "B24",
       "Communities reached": "No areas affected",
       "Spending": "Unnecessary spending",
       "Budget remaining": "Exhausted",
-      "Feedback_B": "At least no areas met the game's direct-impact threshold this time. We still need to be ready for the next storm. But we also spent money in locations that weren't directly affected. We can't afford to do that too often. We've used the whole budget. What happens if another cyclone comes?"
+      "Feedback_B": "No assistance was needed, yet we've spent everything. How do we handle another cyclone?"
     }
   ]
 }
