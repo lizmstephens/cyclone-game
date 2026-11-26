@@ -118,16 +118,60 @@ body{min-height:100vh;background-color:#eaecea;background-image:url("data:image/
 .warehouse-option.activated .warehouse-dot{background:#216c43}
 @media(max-width:800px){.game-shell{width:calc(100% - 20px);margin:10px auto;border-radius:12px}.game-shell header{padding:15px}.game-shell main{padding:12px}.game-shell .layout{gap:0}}
 @media(max-width:390px){.warehouse-option{gap:5px;padding:8px 5px}.warehouse-option.pending{padding:7px 4px}.warehouse-dot{width:16px;height:16px;flex-basis:16px}}
+
+/* Compact gameplay: prioritise forecast and decision in one desktop viewport. */
+.game-shell{border:2px solid var(--rc-red);margin:12px auto;width:calc(100% - 32px)}
+.game-shell header{padding:9px 18px}
+.game-shell header:before{display:none}
+.game-shell header h1{margin:0;font-size:23px;line-height:1.2}
+.game-shell header .btn{padding:7px 12px;font-size:13px}
+.game-shell main{padding:10px 15px 10px}
+.game-shell .stats{gap:8px;margin-bottom:10px}
+.game-shell .stat{padding:7px 11px;border-radius:8px}
+.game-shell .stat:has(#budgetstat){padding-top:5px}
+.game-shell .stat .k{font-size:11px;line-height:1.3}
+.game-shell .stat .v{font-size:17px;line-height:1.3;margin-top:2px}
+.game-shell #seasoncard.single-storm{background:#f0f1f1;color:#798185;border-color:#e4e6e5}
+.game-shell #seasoncard.single-storm .k{color:#798185}
+.game-shell #seasoncard.single-storm .v{font-size:15px;font-weight:600}
+.game-shell .layout{gap:12px;align-items:start}
+.game-shell .panel{padding:12px;margin-bottom:9px}
+.game-shell h2{font-size:17px;margin:0 0 7px}
+.game-shell #datepill{font-size:11px;padding:4px 8px}
+.game-shell #map{margin-top:3px}
+.game-shell .wind-legend{margin-top:7px;gap:5px 10px}
+.game-shell .met-panel{padding:10px 12px 15px}
+.met-panel h3{margin:0 0 5px;font-size:14px}
+#brief{font-size:14px;line-height:1.4;margin:6px 0 2px;padding:9px 12px;border:2px solid #25D366}
+#brief:after{border-right:2px solid #25D366;border-bottom:2px solid #25D366;bottom:-7px;width:11px;height:11px}
+.game-shell .actions{gap:5px}
+.game-shell .action{padding:6px 10px;border-radius:7px;font-size:14px;line-height:1.3}
+.game-shell .action.selected{padding:5px 9px}
+.game-shell .action .subtle{font-size:11.5px;line-height:1.3}
+.game-shell .warehouse-heading{margin:9px 0 5px;font-size:13px}
+.game-shell .wh{gap:5px;margin:0 0 7px}
+.game-shell .warehouse-option{min-height:38px;padding:5px 7px;gap:7px;border-radius:7px}
+.game-shell .warehouse-option.pending{padding:4px 6px}
+.game-shell .warehouse-copy strong{font-size:12px}
+.game-shell .warehouse-copy small{font-size:10px}
+.game-shell .warehouse-dot{width:17px;height:17px;flex-basis:17px}
+.game-shell #cost{font-size:12px;margin-bottom:6px}
+.game-shell #message:empty{display:none}
+.game-shell #message{min-height:0;font-size:12px;margin:5px 0}
+.game-shell .decision-panel>.btn{padding:8px 12px;font-size:13px}
+.game-shell footer{margin:0;font-size:11px}
+@media(max-width:800px){.game-shell{margin:8px auto;width:calc(100% - 16px)}.game-shell main{padding:9px}.game-shell .layout{gap:0}.game-shell .stat .v{font-size:16px}}
 </style>
 </head>
 <body>
 
-<section id="start-screen"><div class="intro"><h2 data-front-key="front_title">Prepare for the cyclone!</h2><p data-front-key="front_intro">Can you use forecasts to support communities before a cyclone makes landfall?</p><p data-front-key="front_explainer">You have a limited budget for anticipatory action. Use it wisely to mobile resources and then take action. Actions can only be taken if resources have already been mobilised.<span style="display:block;margin-top:8px"></span>Oh, and you will need to keep your boss happy too!</p><h3 data-front-key="game_length_heading">Game Mode</h3><div class="choice-grid" role="group" aria-label="Game length"><label><input type="radio" name="game-length" value="single"><span><strong data-front-key="single_title">One Cyclone</strong><span data-front-key="single_description">One cyclone, selected at random</span></span></label><label><input type="radio" name="game-length" value="season" checked><span><strong data-front-key="season_title">One Season</strong><span data-front-key="season_description">Manage your budget through a fictional season; which could include anywhere between 2 and 7 random cyclones.</span></span></label></div><h3 data-front-key="difficulty_heading">Difficulty</h3><div class="choice-grid difficulty-grid" role="group" aria-label="Difficulty"><label><input type="radio" name="difficulty" value="3"><span><strong data-front-key="easy_title">Easy</strong><span data-front-key="easy_description">You only need 3 days in which to pre-activate</span></span></label><label><input type="radio" name="difficulty" value="4" checked><span><strong data-front-key="medium_title">Medium</strong><span data-front-key="medium_description">You only need 4 days in which to pre-activate</span></span></label><label><input type="radio" name="difficulty" value="5"><span><strong data-front-key="hard_title">Hard</strong><span data-front-key="hard_description">You have 5 days in which to pre-activate, the same as the EAP</span></span></label></div><p class="subtle" data-front-key="front_rules">Pre-activate to prepare an area; full activation is possible closer to landfall in an area you have prepared.</p><div class="start-actions"><button type="button" class="btn" id="start-game" data-front-key="start_button">Start game</button><a class="about-link" href="./about.html" data-front-key="about_button">About the game</a></div><p class="image-credit"><span data-front-key="image_credit">Background: NASA Terra/MODIS image of Cyclone Bingiza approaching Madagascar (13 February 2011), Jeff Schmaltz / NASA GSFC, CC BY 2.0.</span> <a href="https://earthobservatory.nasa.gov/images/49250/tropical-cyclone-bingiza" target="_blank" rel="noopener noreferrer" data-front-key="image_source_link_text">Image source</a> · <a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener noreferrer" data-front-key="image_licence_link_text">Licence</a>.</p></div></section><div class="game-shell"><header><div><h1 data-front-key="header_title">Prepare for the cyclone!</h1><small data-front-key="header_tagline">Can you use forecasts to support communities before a cyclone makes landfall?</small></div><button class="btn alt" id="restart" data-front-key="new_game_button">New game</button></header><main>
+<section id="start-screen"><div class="intro"><h2 data-front-key="front_title">Prepare for the cyclone!</h2><p data-front-key="front_intro">Can you use forecasts to support communities before a cyclone makes landfall?</p><p data-front-key="front_explainer">You have a limited budget for anticipatory action. Use it wisely to mobile resources and then take action. Actions can only be taken if resources have already been mobilised.<span style="display:block;margin-top:8px"></span>Oh, and you will need to keep your boss happy too!</p><h3 data-front-key="game_length_heading">Game Mode</h3><div class="choice-grid" role="group" aria-label="Game length"><label><input type="radio" name="game-length" value="single"><span><strong data-front-key="single_title">One Cyclone</strong><span data-front-key="single_description">One cyclone, selected at random</span></span></label><label><input type="radio" name="game-length" value="season" checked><span><strong data-front-key="season_title">One Season</strong><span data-front-key="season_description">Manage your budget through a fictional season; which could include anywhere between 2 and 7 random cyclones.</span></span></label></div><h3 data-front-key="difficulty_heading">Difficulty</h3><div class="choice-grid difficulty-grid" role="group" aria-label="Difficulty"><label><input type="radio" name="difficulty" value="3"><span><strong data-front-key="easy_title">Easy</strong><span data-front-key="easy_description">You only need 3 days in which to pre-activate</span></span></label><label><input type="radio" name="difficulty" value="4" checked><span><strong data-front-key="medium_title">Medium</strong><span data-front-key="medium_description">You only need 4 days in which to pre-activate</span></span></label><label><input type="radio" name="difficulty" value="5"><span><strong data-front-key="hard_title">Hard</strong><span data-front-key="hard_description">You have 5 days in which to pre-activate, the same as the EAP</span></span></label></div><p class="subtle" data-front-key="front_rules">Pre-activate to prepare an area; full activation is possible closer to landfall in an area you have prepared.</p><div class="start-actions"><button type="button" class="btn" id="start-game" data-front-key="start_button">Start game</button><a class="about-link" href="./about.html" data-front-key="about_button">About the game</a></div><p class="image-credit"><span data-front-key="image_credit">Background: NASA Terra/MODIS image of Cyclone Bingiza approaching Madagascar (13 February 2011), Jeff Schmaltz / NASA GSFC, CC BY 2.0.</span> <a href="https://earthobservatory.nasa.gov/images/49250/tropical-cyclone-bingiza" target="_blank" rel="noopener noreferrer" data-front-key="image_source_link_text">Image source</a> · <a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener noreferrer" data-front-key="image_licence_link_text">Licence</a>.</p></div></section><div class="game-shell"><header><div><h1>Before the Storm</h1></div><button class="btn alt" id="restart" data-front-key="new_game_button">New game</button></header><main>
 <div class="stats">
-<div class="stat"><div class="k">Season progress</div><div class="v" id="seasonstat">—</div></div>
+
 <div class="stat"><div class="k">Remaining budget</div><div class="v" id="budgetstat">—</div></div>
 <div class="stat"><div class="k">People reached</div><div class="v" id="peoplestat">0</div></div>
 <div class="stat"><div class="k">Boss's happiness</div><div class="v" id="bossstat">—</div></div>
+<div class="stat" id="seasoncard"><div class="k">Season progress</div><div class="v" id="seasonstat">—</div></div>
 </div>
 <section id="season-summary" class="panel" hidden aria-live="polite"></section>
 <div class="layout">
@@ -138,10 +182,11 @@ body{min-height:100vh;background-color:#eaecea;background-image:url("data:image/
 <div class="wind-legend" aria-label="Forecast map key"><span class="legend-entry"><span class="wind-dot" style="background:#61b7db"></span>&lt;63 km/h</span><span class="legend-entry"><span class="wind-dot" style="background:#36b99b"></span>63–88 km/h</span><span class="legend-entry"><span class="wind-dot" style="background:#ebca55"></span>89–117 km/h</span><span class="legend-entry"><span class="wind-dot" style="background:#f39a4b"></span>118–165 km/h</span><span class="legend-entry"><span class="wind-dot" style="background:#cf4b4b"></span>≥166 km/h</span></div><div class="wind-legend"><span class="legend-entry"><span class="line-sample" style="border-top:3px solid #36b99b"></span>Ensemble members: forecast intensity colours</span><span class="legend-entry"><span class="line-sample median"></span>Median track</span></div>
 
 </div>
-<div class="panel met-panel"><h3>Met Service update</h3><div id="brief"></div></div>
+
 </section>
 <aside>
-<div class="panel"><h2>Your decision</h2>
+<div class="panel met-panel"><h3>Met Service update</h3><div id="brief"></div></div>
+<div class="panel decision-panel"><h2>Your decision</h2>
 <div class="actions" id="actions">
 <button type="button" data-action="monitor" class="action">👀 <strong>Keep monitoring</strong><div class="subtle">0 · Wait for the next forecast</div></button>
 <button type="button" data-action="preposition" class="action">📦 <strong>Mobilise</strong><div class="subtle">20,000 per area · Prepare within 7 days, before your difficulty deadline</div></button>
@@ -153,7 +198,7 @@ body{min-height:100vh;background-color:#eaecea;background-image:url("data:image/
 <button id="advance" class="btn alt" style="display:none">Next forecast →</button>
 <button id="nextstorm" class="btn alt" style="display:none">Next storm →</button>
 </div>
-<div class="panel"><h3>Current status</h3><div id="stockstat" aria-live="polite"></div><div class="progress"><span id="progressbar" style="width:0%"></span></div></div>
+
 </aside>
 </div>
 <footer><a href="./about.html">About Game</a></footer>
@@ -431,7 +476,7 @@ fetch('https://raw.githubusercontent.com/datasets/geo-countries/master/data/coun
    const polys=geom.type==='Polygon'?[geom.coordinates]:geom.type==='MultiPolygon'?geom.coordinates:[];
    for(const poly of polys)for(const ring of poly){
     const xs=ring.map(p=>p[0]),ys=ring.map(p=>p[1]);
-    if(Math.max(...xs)>=35&&Math.min(...xs)<=71&&Math.max(...ys)>=-30&&Math.min(...ys)<=-5)rings.push(ring);
+    if(Math.max(...xs)>=35&&Math.min(...xs)<=71&&Math.max(...ys)>=-28&&Math.min(...ys)<=-8)rings.push(ring);
    }
   }
   landShapes=rings;
@@ -467,7 +512,7 @@ function colouredMemberSvg(track,x,y){
  return svg;
 }
 function mapSvg(rows){
-const lo=35,hi=71,north=-5,south=-30,left=48,top=20,width=820,height=600,right=width-15,bottom=height-28,x=lon=>left+(lon-lo)/(hi-lo)*(right-left),y=lat=>top+(north-lat)/(north-south)*(bottom-top);
+const lo=35,hi=71,north=-8,south=-28,left=48,top=20,width=820,height=450,right=width-15,bottom=height-28,x=lon=>left+(lon-lo)/(hi-lo)*(right-left),y=lat=>top+(north-lat)/(north-south)*(bottom-top);
 const coords=arr=>arr.map(p=>x(p[0]).toFixed(1)+","+y(p[1]).toFixed(1)).join(" ");
 const mapPts=coast.map(p=>[p[0],p[1]]);
 const ensemble=forecastMembers(current());
@@ -476,7 +521,7 @@ let svg='<svg viewBox="0 0 '+width+' '+height+'" xmlns="http://www.w3.org/2000/s
 svg+='<rect width="'+width+'" height="'+height+'" fill="#dfeef7"/>';
 svg+='<defs><clipPath id="forecast-domain"><rect x="'+left+'" y="'+top+'" width="'+(right-left)+'" height="'+(bottom-top)+'"/></clipPath></defs>';
 for(let l=35;l<=hi;l+=5)svg+='<line x1="'+x(l)+'" y1="'+top+'" x2="'+x(l)+'" y2="'+bottom+'" stroke="#bfd6de" stroke-dasharray="3 5"/><text x="'+x(l)+'" y="'+(height-8)+'" fill="#527080" font-size="12" text-anchor="middle">'+l+'°E</text>';
-for(let lat=-5;lat>=south;lat-=5)svg+='<line x1="'+left+'" y1="'+y(lat)+'" x2="'+right+'" y2="'+y(lat)+'" stroke="#bfd6de" stroke-dasharray="3 5"/><text x="'+(left-7)+'" y="'+(y(lat)+4)+'" fill="#527080" font-size="12" text-anchor="end">'+Math.abs(lat)+'°S</text>';
+for(const lat of [north,-10,-15,-20,-25,south])svg+='<line x1="'+left+'" y1="'+y(lat)+'" x2="'+right+'" y2="'+y(lat)+'" stroke="#bfd6de" stroke-dasharray="3 5"/><text x="'+(left-7)+'" y="'+(y(lat)+4)+'" fill="#527080" font-size="12" text-anchor="end">'+Math.abs(lat)+'°S</text>';
 svg+='<g clip-path="url(#forecast-domain)">';
 svg+=landShapes.length?landShapes.map(ring=>'<polygon points="'+coords(ring)+'" fill="#efece0" stroke="#738b7e" stroke-width="1.3"/>').join(""):'<polygon points="'+coords(mapPts)+'" fill="#efece0" stroke="#738b7e" stroke-width="2"/>';
 if(rows.length){
@@ -750,15 +795,13 @@ function finishStorm(){
 }
 function render(){
 const st=current(),t=displayTime(),remaining=remainingDays(),rows=forecast(st),last=st.impact!==null;
-$("seasonstat").textContent=G.mode==="single"?"One storm · In progress":"Storm "+(G.slot+1)+" · Season underway";
+$("seasoncard").classList.toggle("single-storm",G.mode==="single");
+$("seasonstat").textContent=G.mode==="single"?"One storm only":"Storm "+(G.slot+1)+" · Season underway";
 $("budgetstat").textContent=money(G.budget);$("peoplestat").textContent=G.people.toLocaleString("en-GB");$("bossstat").textContent=(G.boss>=70?"🙂":G.boss<40?"😟":"😐")+" "+G.boss+" / 100";
 $("stormtitle").textContent="Storm "+(G.slot+1)+" · Tropical system";
 $("datepill").textContent=t.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"});
 $("map").innerHTML=mapSvg(rows);
 $("brief").textContent=last?"The storm has passed. Reviewing impacts and expenditure.":forecastMessage(rows);
-const names=ids=>[...ids].map(id=>hubs.find(h=>h.id===id)?.name||id).join(", ")||"None";
- $("stockstat").innerHTML='<div class="status-line"><strong>Mobilised:</strong> '+esc(names(st.stock))+'</div><div class="status-line"><strong>Fully activated:</strong> '+esc(names(st.distributed))+'</div>';
-$("progressbar").style.width=(100*(st.day+1)/(st.duration+1)).toFixed(0)+"%";
 
 const actions=$("actions").querySelectorAll("[data-action]");
 for(const btn of actions){
