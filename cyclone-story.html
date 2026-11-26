@@ -86,7 +86,7 @@ body{padding-bottom:150px}
 .aa-step.active{color:var(--rc-red);font-weight:700;border:2px solid var(--rc-red)}
 .aa-step:hover{background:#fff1f3}
 @media(max-width:750px){.partner-logos{gap:12px;max-width:100%}.partner-logos img{height:80px;max-width:46%}body{padding-bottom:16px}}
-</style></head><body><svg id="storm-background" aria-hidden="true"></svg><div class="story-shell"><main id="page" tabindex="-1"></main><nav class="story-nav" aria-label="Story navigation"><div id="progress" class="progress-dots" aria-label="Story pages"></div></nav></div><aside class="partner-logos" aria-label="Partner organisations"><img src="https://cloud.tagbox.com/media/1780081/2198696/493243188790e8f8d64e4d96d48fd5b248c47a.jpeg" alt="Climate Centre"><img src="https://media.studentcrowd.net/q91/uni-logos/189.jpg?q=1740003616" alt="University of Reading"></aside><script>
+body.home .home-layout{display:block;width:100%;}body.home .home-animation{width:100%;max-width:none;margin:0}body.home .home-animation svg{width:100%;height:auto;max-height:570px}body.home #page{padding:0;justify-content:center}body.home .story-shell{padding-top:12px} @media(max-width:750px){body.home .home-animation svg{min-height:360px;max-height:540px}}</style></head><body><svg id="storm-background" aria-hidden="true"></svg><div class="story-shell"><main id="page" tabindex="-1"></main><nav class="story-nav" aria-label="Story navigation"><div id="progress" class="progress-dots" aria-label="Story pages"></div></nav></div><aside class="partner-logos" aria-label="Partner organisations"><img src="https://cloud.tagbox.com/media/1780081/2198696/493243188790e8f8d64e4d96d48fd5b248c47a.jpeg" alt="Climate Centre"><img src="https://media.studentcrowd.net/q91/uni-logos/189.jpg?q=1740003616" alt="University of Reading"></aside><script>
 const daily='./daily-forecasts.html';
 const pages={
 home:{section:'The challenge',title:'Tropical cyclones are one of the most impactful natural hazards globally',body:["Tropical cyclones are one of the most impactful natural hazards globally. Located in the South West Indian Ocean cyclone basin, Madagascar is threatened by two cyclones per year on average, but in some years it can be as many as seven.","Weather forecasts play a critical role in managing the risk posed by these cyclones.","Anticipatory action approaches transform these weather forecasts into lives and livelihoods saved.","The Malagasy Red Cross is one organisation that takes these actions in advance of cyclones to support communities","But how does anticipatory action work?"],buttons:[['Tell me about the forecasts','uncertainty'],['Tell me about the decisions','mobilise']]},
@@ -142,18 +142,39 @@ function startTrackAnimation(id){
  const bg=document.getElementById('storm-background');bg.replaceChildren();
  const home=id==='home',svg=home?document.getElementById('intro-cyclones'):bg;
  if(!svg)return;
- const W=home?500:Math.max(600,innerWidth),H=home?500:Math.max(500,innerHeight);
+ const W=home?1000:Math.max(600,innerWidth),H=home?570:Math.max(500,innerHeight);
  svg.setAttribute('viewBox','0 0 '+W+' '+H);
  const make=(tag,attrs,parent=svg)=>{const e=document.createElementNS(ns,tag);for(const [k,v] of Object.entries(attrs))e.setAttribute(k,v);parent.append(e);return e};
- const project=(lon,lat)=>{const [x,y]=equalEarth(lon,lat),[cx,cy]=equalEarth(49,-19);return [W*.43+(x-cx)*1275,H*.5-(y-cy)*1275]};
+ let center=equalEarth(47,-19),zoom=1800;const project=(lon,lat)=>{const [x,y]=equalEarth(lon,lat);return [W/2+(x-center[0])*zoom,H/2-(y-center[1])*zoom]};
  const pathOf=pts=>pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(2)+' '+p[1].toFixed(2)).join(' ');
  const smoothPath=pts=>{let d='M'+pts[0].join(' ');for(let i=1;i<pts.length;i++){const a=pts[i-1],b=pts[i],prev=pts[Math.max(0,i-2)],next=pts[Math.min(pts.length-1,i+1)];const c=a.map((v,k)=>v+(b[k]-prev[k])/8),e=b.map((v,k)=>v-(next[k]-a[k])/8);d+=' C'+c.join(' ')+' '+e.join(' ')+' '+b.join(' ')}return d};
  function edgeEntry(pts){const a=pts[0],b=pts[1];if(a[0]<-20||a[0]>W+20||a[1]<-20||a[1]>H+20)return pts;const dx=a[0]-b[0],dy=a[1]-b[1];const t=Math.min(dx>0?(W+22-a[0])/dx:dx<0?(-22-a[0])/dx:Infinity,dy>0?(H+22-a[1])/dy:dy<0?(-22-a[1])/dy:Infinity);return Number.isFinite(t)&&t>0?[[a[0]+dx*t,a[1]+dy*t],...pts]:pts;}
  let rings=[];
- if(home)coastPromise.then(f=>{if(token!==animationToken||!f)return;const polys=f.geometry.type==='Polygon'?[f.geometry.coordinates]:f.geometry.coordinates;rings=polys.map(p=>p[0]);for(const ring of rings){const n=make('path',{d:pathOf(ring.map(p=>project(...p)))+' Z',fill:'#fff',stroke:'#20282b','stroke-width':2,'stroke-linejoin':'round'});svg.prepend(n)}});
+
+ const homeReady=home?coastPromise.then(f=>{
+ if(token!==animationToken||!f)return false;
+ const polys=f.geometry.type==='Polygon'?[f.geometry.coordinates]:f.geometry.coordinates;
+ rings=polys.map(p=>p[0]);
+ const main=rings.reduce((best,ring)=>{const extent=r=>Math.max(...r.map(p=>p[1]))-Math.min(...r.map(p=>p[1]));return extent(ring)>extent(best)?ring:best},rings[0]);
+ const projected=main.map(p=>equalEarth(...p)),xx=projected.map(p=>p[0]),yy=projected.map(p=>p[1]);
+ center=[(Math.min(...xx)+Math.max(...xx))/2,(Math.min(...yy)+Math.max(...yy))/2];
+ zoom=Math.min((H-36)/(Math.max(...yy)-Math.min(...yy)),(W-100)/(Math.max(...xx)-Math.min(...xx)));
+ for(const ring of rings)make('path',{d:pathOf(ring.map(p=>project(...p)))+' Z',fill:'#fff',stroke:'#20282b','stroke-width':2,'stroke-linejoin':'round'});
+ const polygon=main.map(p=>project(...p)),words="Located in the South West Indian Ocean cyclone basin, Madagascar is threatened by two cyclones per year on average, but in some years it can be as many as seven.".split(' ');
+ const ctx=document.createElement('canvas').getContext('2d');
+ function span(y){const hits=[];for(let i=0,j=polygon.length-1;i<polygon.length;j=i++){const a=polygon[j],b=polygon[i];if((a[1]>y)!==(b[1]>y))hits.push(a[0]+(y-a[1])*(b[0]-a[0])/(b[1]-a[1]))}hits.sort((a,b)=>a-b);let best=null;for(let i=0;i+1<hits.length;i+=2){if(!best||hits[i+1]-hits[i]>best[1]-best[0])best=[hits[i],hits[i+1]]}return best}
+ function slot(y,fs){const samples=[-0.62,-0.4,0,.4,.62].map(k=>span(y+k*fs));if(samples.some(x=>!x))return null;const left=Math.max(...samples.map(x=>x[0]))+9,right=Math.min(...samples.map(x=>x[1]))-9;return right>left?[left,right]:null}
+ let chosen=null;
+ for(let fs=24;fs>=10&&!chosen;fs-=.5){ctx.font='600 '+fs+'px Arial';const lineH=fs*1.32;let best=null;
+ for(let start=55;start<H-75;start+=4){let rows=[],i=0;for(let y=start;y<H-28&&i<words.length;y+=lineH){const bounds=slot(y,fs);if(!bounds)break;let j=i;while(j<words.length&&ctx.measureText(words.slice(i,j+1).join(' ')).width<=bounds[1]-bounds[0])j++;if(j===i)break;rows.push({x:(bounds[0]+bounds[1])/2,y,text:words.slice(i,j).join(' ')});i=j}if(i===words.length){const score=Math.abs((rows[0].y+rows.at(-1).y)/2-H/2);if(!best||score<best.score)best={fs,rows,score}}}if(best)chosen=best}
+ if(chosen){const group=make('g',{'id':'island-copy','pointer-events':'none'});for(const row of chosen.rows){const t=make('text',{x:row.x,y:row.y,'font-family':'Arial, Helvetica, sans-serif','font-weight':600,'font-size':chosen.fs,'text-anchor':'middle','dominant-baseline':'central',fill:'#24383e'},group);t.textContent=row.text}}
+ else{console.error('Unable to fit opening text within island');}
+ return true;
+ }):Promise.resolve(true);
+
  const inside=(p,ring)=>{let yes=false;for(let i=0,j=ring.length-1;i<ring.length;j=i++){const a=ring[i],b=ring[j];if((a[1]>p[1])!==(b[1]>p[1])&&p[0]<(b[0]-a[0])*(p[1]-a[1])/(b[1]-a[1])+a[0])yes=!yes}return yes};
- archivePromise.then(archive=>{
- if(token!==animationToken)return;
+ Promise.all([archivePromise,homeReady]).then(([archive,ready])=>{
+ if(token!==animationToken||!ready)return;
  let active=[],finished=[],lastSpawn=-Infinity,previous=-1;
  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
  const colors=['#c8102e','#c8102e','#c8102e','#c8102e','#c8102e'];
@@ -165,10 +186,10 @@ function startTrackAnimation(id){
  let pts=raw.map(p=>home?project(...p):equalEarth(...p));
  if(!home){const xx=pts.map(p=>p[0]),yy=pts.map(p=>p[1]),dx=Math.max(...xx)-Math.min(...xx),dy=Math.max(...yy)-Math.min(...yy);const z=Math.min(W*.65/Math.max(dx,.01),H*.65/Math.max(dy,.01))*(.65+Math.random()*.35);const ox=Math.random()*W*.75+W*.125,oy=Math.random()*H*.75+H*.125;pts=pts.map(p=>[ox+(p[0]-(Math.min(...xx)+Math.max(...xx))/2)*z,oy-(p[1]-(Math.min(...yy)+Math.max(...yy))/2)*z]);}
  if(home)pts=edgeEntry(pts);const g=make('g',{}),p=make('path',{d:smoothPath(pts),fill:'none',stroke:colors[index%colors.length],'stroke-width':home?2.5:2,'stroke-linecap':'round','stroke-linejoin':'round',opacity:home?.85:.4},g);
- const length=p.getTotalLength();if(!length){g.remove();return}
- p.style.strokeDasharray=length+' '+length;p.style.strokeDashoffset=length;
+ let length=p.getTotalLength();if(!length){g.remove();return}if(home){const coast=rings.map(r=>r.map(q=>project(...q)));const total=length;for(let l=0;l<=total;l+=1){const q=p.getPointAtLength(l);if(coast.some(r=>inside([q.x,q.y],r))){length=l;break}}if(length<8){g.remove();return}}
+ p.style.strokeDasharray=length+' '+(p.getTotalLength()+length);p.style.strokeDashoffset=length;
  const symbol=make('image',{href:'https://commons.wikimedia.org/wiki/Special:FilePath/Hurricane_south.svg',x:home?-16:-13,y:home?-16:-13,width:home?32:26,height:home?32:26},g);
- active.push({g,p,symbol,length,start:ts,duration:home?10500:9500+Math.random()*4500});
+ active.push({g,p,symbol,length,start:ts,duration:home?10500:9500+Math.random()*4500});if(home){const text=svg.querySelector('#island-copy');if(text)svg.append(text)}
  }
  function frame(ts){
  if(token!==animationToken)return;
@@ -186,5 +207,5 @@ function startTrackAnimation(id){
 let trail=[];let current='home';const page=document.getElementById('page');function show(id,push=true){if(!pages[id])id='home';if(push&&id!==current)trail.push(current);current=id;document.body.classList.toggle('home',id==='home');const p=pages[id];page.replaceChildren();const h=document.createElement('h1');h.textContent=p.title;page.append(h);for(const [i,line] of p.body.entries()){const el=document.createElement('p');el.textContent=line;page.append(el);if(i===0&&(id==='mobilise'||id==='activate')){const flow=document.createElement('div');flow.className='aa-steps';flow.setAttribute('aria-label','Two-step anticipatory action process');for(const [label,target] of [['Mobilise','mobilise'],['Activate','activate']]){const step=document.createElement('button');step.type='button';step.textContent=label;step.className='aa-step'+(id===target?' active':'');if(id===target)step.setAttribute('aria-current','step');step.onclick=()=>show(target);flow.append(step);if(target==='mobilise'){const dash=document.createElement('span');dash.textContent='–';flow.append(dash)}}page.append(flow)}}if(p.note){const n=document.createElement('p');n.className='draft';n.textContent=p.note;page.append(n)}
 const actions=document.createElement('div');actions.className='actions';
 if(['ready','freddy','freddyLearn','chido'].includes(id)){p.buttons.forEach(([text,dest])=>{const b=document.createElement('button');b.textContent=text;b.onclick=()=>show(dest);actions.append(b)});if(actions.childElementCount)page.append(actions)}
-if(id==='home'||p.visual){const layout=document.createElement('div');layout.className=id==='home'?'home-layout':'illustrated-layout';const copy=document.createElement('div');copy.className='story-copy';while(page.firstChild)copy.append(page.firstChild);layout.append(copy);const art=document.createElement('div');art.className=id==='home'?'home-animation':'visual';if(id==='home'){copy.querySelector('h1').textContent='Before the storm';art.innerHTML='<svg id="intro-cyclones" viewBox="0 0 500 500" role="img" aria-label="Archived cyclone tracks approaching Madagascar"></svg>'}else{art.innerHTML=p.visual;if(id==='jokwe')art.classList.add('forecast-visual')}layout.append(art);page.append(layout);if(id==='jokwe')drawJokwe()}startTrackAnimation(id);renderProgress(id);history.replaceState(null,'','#'+id);window.scrollTo(0,0);page.focus({preventScroll:true})}show(location.hash.slice(1)||'home',false);
+if(id==='home'||p.visual){const layout=document.createElement('div');layout.className=id==='home'?'home-layout':'illustrated-layout';const copy=document.createElement('div');copy.className='story-copy';while(page.firstChild)copy.append(page.firstChild);if(id!=='home')layout.append(copy);const art=document.createElement('div');art.className=id==='home'?'home-animation':'visual';if(id==='home'){art.innerHTML='<svg id="intro-cyclones" viewBox="0 0 1000 570" role="img" aria-label="Located in the South West Indian Ocean cyclone basin, Madagascar is threatened by two cyclones per year on average, but in some years it can be as many as seven. Animated historical cyclone tracks approaching Madagascar."></svg>'}else{art.innerHTML=p.visual;if(id==='jokwe')art.classList.add('forecast-visual')}layout.append(art);page.append(layout);if(id==='jokwe')drawJokwe()}startTrackAnimation(id);renderProgress(id);history.replaceState(null,'','#'+id);window.scrollTo(0,0);page.focus({preventScroll:true})}show(location.hash.slice(1)||'home',false);
 </script></body></html>
