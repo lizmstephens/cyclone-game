@@ -76,11 +76,53 @@ footer{margin-top:12px;color:#5f7780;font-size:12px;line-height:1.5}
 .review-details{font-size:13px;color:#526b77;margin-top:22px}
 .review-details p{margin:9px 0;line-height:1.5}
 @media(max-width:700px){.review-voices{grid-template-columns:1fr;gap:24px}.review-bubble{padding:18px 19px 23px}.review-bubble.boss::after{right:auto;left:30px}.review-facts{font-size:15px}}
+
+/* Gameplay: quiet cyclone-track backdrop and a single editorial game card. */
+:root{background:#eaecea;color:#24383e;--rc-red:#c8102e;--rc-red-dark:#a70e26}
+body{min-height:100vh;background-color:#eaecea;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%271200%27%20height%3D%27740%27%20viewBox%3D%270%200%201200%20740%27%3E%3Cg%20opacity%3D%27.23%27%3E%3Cpath%20d%3D%27M-12%2010%20q-130%20-30%20-180%2035%20t-55%20130%20q5%2050%2060%2090%27%20fill%3D%27none%27%20stroke%3D%27%23b51d35%27%20stroke-width%3D%271.4%27%20stroke-dasharray%3D%272%208%27%20stroke-linecap%3D%27round%27%2F%3E%3Cpath%20d%3D%27M-12%2010%20q-130%20-30%20-180%2035%20t-55%20130%27%20fill%3D%27none%27%20stroke%3D%27%2371878d%27%20stroke-width%3D%271%27%20opacity%3D%27.35%27%2F%3E%3Ccircle%20cx%3D%27-12%27%20cy%3D%2710%27%20r%3D%273%27%20fill%3D%27%2371878d%27%2F%3E%3Cpath%20d%3D%27M221%20161%20q-130%20-30%20-180%2035%20t-55%20130%20q5%2050%2060%2090%27%20fill%3D%27none%27%20stroke%3D%27%2371878d%27%20stroke-width%3D%271.4%27%20stroke-dasharray%3D%272%208%27%20stroke-linecap%3D%27round%27%2F%3E%3Cpath%20d%3D%27M221%20161%20q-130%20-30%20-180%2035%20t-55%20130%27%20fill%3D%27none%27%20stroke%3D%27%2371878d%27%20stroke-width%3D%271%27%20opacity%3D%27.35%27%2F%3E%3Ccircle%20cx%3D%27221%27%20cy%3D%27161%27%20r%3D%273%27%20fill%3D%27%2371878d%27%2F%3E%3Cpath%20d%3D%27M454%20312%20q-130%20-30%20-180%2035%20t-55%20130%20q5%2050%2060%2090%27%20fill%3D%27none%27%20stroke%3D%27%2371878d%27%20stroke-width%3D%271.4%27%20stroke-dasharray%3D%272%208%27%20stroke-linecap%3D%27round%27%2F%3E%3Cpath%20d%3D%27M454%20312%20q-130%20-30%20-180%2035%20t-55%20130%27%20fill%3D%27none%27%20stroke%3D%27%2371878d%27%20stroke-width%3D%271%27%20opacity%3D%27.35%27%2F%3E%3Ccircle%20cx%3D%27454%27%20cy%3D%27312%27%20r%3D%273%27%20fill%3D%27%2371878d%27%2F%3E%3Cpath%20d%3D%27M687%20463%20q-130%20-30%20-180%2035%20t-55%20130%20q5%2050%2060%2090%27%20fill%3D%27none%27%20stroke%3D%27%23b51d35%27%20stroke-width%3D%271.4%27%20stroke-dasharray%3D%272%208%27%20stroke-linecap%3D%27round%27%2F%3E%3Cpath%20d%3D%27M687%20463%20q-130%20-30%20-180%2035%20t-55%20130%27%20fill%3D%27none%27%20stroke%3D%27%2371878d%27%20stroke-width%3D%271%27%20opacity%3D%27.35%27%2F%3E%3Ccircle%20cx%3D%27687%27%20cy%3D%27463%27%20r%3D%273%27%20fill%3D%27%2371878d%27%2F%3E%3Cpath%20d%3D%27M920%20614%20q-130%20-30%20-180%2035%20t-55%20130%20q5%2050%2060%2090%27%20fill%3D%27none%27%20stroke%3D%27%2371878d%27%20stroke-width%3D%271.4%27%20stroke-dasharray%3D%272%208%27%20stroke-linecap%3D%27round%27%2F%3E%3Cpath%20d%3D%27M920%20614%20q-130%20-30%20-180%2035%20t-55%20130%27%20fill%3D%27none%27%20stroke%3D%27%2371878d%27%20stroke-width%3D%271%27%20opacity%3D%27.35%27%2F%3E%3Ccircle%20cx%3D%27920%27%20cy%3D%27614%27%20r%3D%273%27%20fill%3D%27%2371878d%27%2F%3E%3Cpath%20d%3D%27M1153%205%20q-130%20-30%20-180%2035%20t-55%20130%20q5%2050%2060%2090%27%20fill%3D%27none%27%20stroke%3D%27%2371878d%27%20stroke-width%3D%271.4%27%20stroke-dasharray%3D%272%208%27%20stroke-linecap%3D%27round%27%2F%3E%3Cpath%20d%3D%27M1153%205%20q-130%20-30%20-180%2035%20t-55%20130%27%20fill%3D%27none%27%20stroke%3D%27%2371878d%27%20stroke-width%3D%271%27%20opacity%3D%27.35%27%2F%3E%3Ccircle%20cx%3D%271153%27%20cy%3D%275%27%20r%3D%273%27%20fill%3D%27%2371878d%27%2F%3E%3Cpath%20d%3D%27M36%20156%20q-130%20-30%20-180%2035%20t-55%20130%20q5%2050%2060%2090%27%20fill%3D%27none%27%20stroke%3D%27%23b51d35%27%20stroke-width%3D%271.4%27%20stroke-dasharray%3D%272%208%27%20stroke-linecap%3D%27round%27%2F%3E%3Cpath%20d%3D%27M36%20156%20q-130%20-30%20-180%2035%20t-55%20130%27%20fill%3D%27none%27%20stroke%3D%27%2371878d%27%20stroke-width%3D%271%27%20opacity%3D%27.35%27%2F%3E%3Ccircle%20cx%3D%2736%27%20cy%3D%27156%27%20r%3D%273%27%20fill%3D%27%2371878d%27%2F%3E%3Cpath%20d%3D%27M269%20307%20q-130%20-30%20-180%2035%20t-55%20130%20q5%2050%2060%2090%27%20fill%3D%27none%27%20stroke%3D%27%2371878d%27%20stroke-width%3D%271.4%27%20stroke-dasharray%3D%272%208%27%20stroke-linecap%3D%27round%27%2F%3E%3Cpath%20d%3D%27M269%20307%20q-130%20-30%20-180%2035%20t-55%20130%27%20fill%3D%27none%27%20stroke%3D%27%2371878d%27%20stroke-width%3D%271%27%20opacity%3D%27.35%27%2F%3E%3Ccircle%20cx%3D%27269%27%20cy%3D%27307%27%20r%3D%273%27%20fill%3D%27%2371878d%27%2F%3E%3Cpath%20d%3D%27M502%20458%20q-130%20-30%20-180%2035%20t-55%20130%20q5%2050%2060%2090%27%20fill%3D%27none%27%20stroke%3D%27%2371878d%27%20stroke-width%3D%271.4%27%20stroke-dasharray%3D%272%208%27%20stroke-linecap%3D%27round%27%2F%3E%3Cpath%20d%3D%27M502%20458%20q-130%20-30%20-180%2035%20t-55%20130%27%20fill%3D%27none%27%20stroke%3D%27%2371878d%27%20stroke-width%3D%271%27%20opacity%3D%27.35%27%2F%3E%3Ccircle%20cx%3D%27502%27%20cy%3D%27458%27%20r%3D%273%27%20fill%3D%27%2371878d%27%2F%3E%3Cpath%20d%3D%27M735%20609%20q-130%20-30%20-180%2035%20t-55%20130%20q5%2050%2060%2090%27%20fill%3D%27none%27%20stroke%3D%27%23b51d35%27%20stroke-width%3D%271.4%27%20stroke-dasharray%3D%272%208%27%20stroke-linecap%3D%27round%27%2F%3E%3Cpath%20d%3D%27M735%20609%20q-130%20-30%20-180%2035%20t-55%20130%27%20fill%3D%27none%27%20stroke%3D%27%2371878d%27%20stroke-width%3D%271%27%20opacity%3D%27.35%27%2F%3E%3Ccircle%20cx%3D%27735%27%20cy%3D%27609%27%20r%3D%273%27%20fill%3D%27%2371878d%27%2F%3E%3Cpath%20d%3D%27M968%200%20q-130%20-30%20-180%2035%20t-55%20130%20q5%2050%2060%2090%27%20fill%3D%27none%27%20stroke%3D%27%2371878d%27%20stroke-width%3D%271.4%27%20stroke-dasharray%3D%272%208%27%20stroke-linecap%3D%27round%27%2F%3E%3Cpath%20d%3D%27M968%200%20q-130%20-30%20-180%2035%20t-55%20130%27%20fill%3D%27none%27%20stroke%3D%27%2371878d%27%20stroke-width%3D%271%27%20opacity%3D%27.35%27%2F%3E%3Ccircle%20cx%3D%27968%27%20cy%3D%270%27%20r%3D%273%27%20fill%3D%27%2371878d%27%2F%3E%3Cpath%20d%3D%27M1201%20151%20q-130%20-30%20-180%2035%20t-55%20130%20q5%2050%2060%2090%27%20fill%3D%27none%27%20stroke%3D%27%2371878d%27%20stroke-width%3D%271.4%27%20stroke-dasharray%3D%272%208%27%20stroke-linecap%3D%27round%27%2F%3E%3Cpath%20d%3D%27M1201%20151%20q-130%20-30%20-180%2035%20t-55%20130%27%20fill%3D%27none%27%20stroke%3D%27%2371878d%27%20stroke-width%3D%271%27%20opacity%3D%27.35%27%2F%3E%3Ccircle%20cx%3D%271201%27%20cy%3D%27151%27%20r%3D%273%27%20fill%3D%27%2371878d%27%2F%3E%3Cpath%20d%3D%27M84%20302%20q-130%20-30%20-180%2035%20t-55%20130%20q5%2050%2060%2090%27%20fill%3D%27none%27%20stroke%3D%27%23b51d35%27%20stroke-width%3D%271.4%27%20stroke-dasharray%3D%272%208%27%20stroke-linecap%3D%27round%27%2F%3E%3Cpath%20d%3D%27M84%20302%20q-130%20-30%20-180%2035%20t-55%20130%27%20fill%3D%27none%27%20stroke%3D%27%2371878d%27%20stroke-width%3D%271%27%20opacity%3D%27.35%27%2F%3E%3Ccircle%20cx%3D%2784%27%20cy%3D%27302%27%20r%3D%273%27%20fill%3D%27%2371878d%27%2F%3E%3Cpath%20d%3D%27M317%20453%20q-130%20-30%20-180%2035%20t-55%20130%20q5%2050%2060%2090%27%20fill%3D%27none%27%20stroke%3D%27%2371878d%27%20stroke-width%3D%271.4%27%20stroke-dasharray%3D%272%208%27%20stroke-linecap%3D%27round%27%2F%3E%3Cpath%20d%3D%27M317%20453%20q-130%20-30%20-180%2035%20t-55%20130%27%20fill%3D%27none%27%20stroke%3D%27%2371878d%27%20stroke-width%3D%271%27%20opacity%3D%27.35%27%2F%3E%3Ccircle%20cx%3D%27317%27%20cy%3D%27453%27%20r%3D%273%27%20fill%3D%27%2371878d%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");background-size:1200px 740px;animation:track-drift 85s linear infinite}
+@keyframes track-drift{from{background-position:0 0}to{background-position:1200px 740px}}
+@media(prefers-reduced-motion:reduce){body{animation:none}}
+.game-shell{max-width:1260px;width:calc(100% - 44px);margin:24px auto;background:rgba(250,250,249,.97);border:1px solid #dededb;border-radius:18px;box-shadow:0 12px 48px rgba(35,45,46,.12);overflow:hidden}
+.game-shell header{background:#fff;color:#23363d;padding:22px 24px 19px;border-bottom:1px solid #e6e0e0;position:relative}
+.game-shell header:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--rc-red)}
+.game-shell header h1{color:#24383e}.game-shell header small{color:#53696f}
+.game-shell main{max-width:none;padding:20px 24px 23px}
+.game-shell .panel,.game-shell .stat{border-color:#e1e2df;box-shadow:0 1px 3px rgba(30,42,46,.025)}
+.game-shell .stat:has(#budgetstat){border-top:3px solid var(--rc-red);padding-top:13px}
+.game-shell .btn{background:var(--rc-red);color:#fff}
+.game-shell .btn:not(:disabled):hover{background:var(--rc-red-dark)}
+.game-shell .btn.alt{background:#fff;color:#39484d;border:1px solid #d7dedd}
+.game-shell .btn.alt:not(:disabled):hover{background:#f8eff1;color:var(--rc-red-dark)}
+.game-shell .action.selected{border-color:var(--rc-red);background:#fff5f6}
+.game-shell .progress span{background:#bd5568}
+.game-shell .pill{background:#f6edef;color:#783848}
+.game-shell footer a{color:#8f1c32;text-underline-offset:3px}
+.game-shell #map svg{display:block;width:100%;height:auto}
+.met-panel{padding-bottom:24px}
+.met-panel h3{display:flex;align-items:center;gap:8px;color:#24383e}
+.met-panel h3:before{content:"";width:11px;height:11px;border-radius:50%;background:#25D366}
+#brief{position:relative;background:#dcf8c6;border:1px solid #a8d6a7;color:#203a2b;border-radius:13px 13px 13px 2px;padding:14px 16px;margin:12px 0 3px}
+#brief:after{content:"";position:absolute;bottom:-7px;left:8px;width:12px;height:12px;background:#dcf8c6;transform:rotate(45deg);border-right:1px solid #a8d6a7;border-bottom:1px solid #a8d6a7}
+.warehouse-heading{margin:18px 0 7px;font-size:14px}
+.wh{margin:0 0 12px;gap:7px}
+.warehouse-option{display:flex;gap:9px;align-items:center;text-align:left;border:1px solid #e0e4e1;background:#fff;border-radius:9px;padding:9px 8px;min-width:0;min-height:51px;cursor:pointer;color:#24383e}
+.warehouse-option:disabled{cursor:default;background:#f9faf8}
+.warehouse-option:not(:disabled):hover,.warehouse-option:focus-visible{outline:2px solid #778d81;outline-offset:2px}
+.warehouse-option.pending{border:2px dashed #528362;padding:8px 7px;background:#f0f8ef}
+.warehouse-copy{min-width:0;display:grid;gap:2px}
+.warehouse-copy strong{font-size:13px;line-height:1.2;overflow-wrap:anywhere}
+.warehouse-copy small{font-size:11px;color:#57696a;line-height:1.15}
+.warehouse-dot{width:19px;height:19px;flex:0 0 19px;border-radius:50%;border:2px solid white;box-shadow:0 0 0 1px #c3ceca}
+.warehouse-option.idle .warehouse-dot{background:#c43b35}
+.warehouse-option.mobilised .warehouse-dot{background:#32a852}
+.warehouse-option.activated .warehouse-dot{background:#216c43}
+@media(max-width:800px){.game-shell{width:calc(100% - 20px);margin:10px auto;border-radius:12px}.game-shell header{padding:15px}.game-shell main{padding:12px}.game-shell .layout{gap:0}}
+@media(max-width:390px){.warehouse-option{gap:5px;padding:8px 5px}.warehouse-option.pending{padding:7px 4px}.warehouse-dot{width:16px;height:16px;flex-basis:16px}}
 </style>
 </head>
 <body>
-<header><div><h1 data-front-key="header_title">Prepare for the cyclone!</h1><small data-front-key="header_tagline">Can you use forecasts to support communities before a cyclone makes landfall?</small></div><button class="btn alt" id="restart" data-front-key="new_game_button">New game</button></header>
-<section id="start-screen"><div class="intro"><h2 data-front-key="front_title">Prepare for the cyclone!</h2><p data-front-key="front_intro">Can you use forecasts to support communities before a cyclone makes landfall?</p><p data-front-key="front_explainer">You have a limited budget for anticipatory action. Use it wisely to mobile resources and then take action. Actions can only be taken if resources have already been mobilised.<span style="display:block;margin-top:8px"></span>Oh, and you will need to keep your boss happy too!</p><h3 data-front-key="game_length_heading">Game Mode</h3><div class="choice-grid" role="group" aria-label="Game length"><label><input type="radio" name="game-length" value="single"><span><strong data-front-key="single_title">One Cyclone</strong><span data-front-key="single_description">One cyclone, selected at random</span></span></label><label><input type="radio" name="game-length" value="season" checked><span><strong data-front-key="season_title">One Season</strong><span data-front-key="season_description">Manage your budget through a fictional season; which could include anywhere between 2 and 7 random cyclones.</span></span></label></div><h3 data-front-key="difficulty_heading">Difficulty</h3><div class="choice-grid difficulty-grid" role="group" aria-label="Difficulty"><label><input type="radio" name="difficulty" value="3"><span><strong data-front-key="easy_title">Easy</strong><span data-front-key="easy_description">You only need 3 days in which to pre-activate</span></span></label><label><input type="radio" name="difficulty" value="4" checked><span><strong data-front-key="medium_title">Medium</strong><span data-front-key="medium_description">You only need 4 days in which to pre-activate</span></span></label><label><input type="radio" name="difficulty" value="5"><span><strong data-front-key="hard_title">Hard</strong><span data-front-key="hard_description">You have 5 days in which to pre-activate, the same as the EAP</span></span></label></div><p class="subtle" data-front-key="front_rules">Pre-activate to prepare an area; full activation is possible closer to landfall in an area you have prepared.</p><div class="start-actions"><button type="button" class="btn" id="start-game" data-front-key="start_button">Start game</button><a class="about-link" href="./about.html" data-front-key="about_button">About the game</a></div><p class="image-credit"><span data-front-key="image_credit">Background: NASA Terra/MODIS image of Cyclone Bingiza approaching Madagascar (13 February 2011), Jeff Schmaltz / NASA GSFC, CC BY 2.0.</span> <a href="https://earthobservatory.nasa.gov/images/49250/tropical-cyclone-bingiza" target="_blank" rel="noopener noreferrer" data-front-key="image_source_link_text">Image source</a> · <a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener noreferrer" data-front-key="image_licence_link_text">Licence</a>.</p></div></section><main>
+
+<section id="start-screen"><div class="intro"><h2 data-front-key="front_title">Prepare for the cyclone!</h2><p data-front-key="front_intro">Can you use forecasts to support communities before a cyclone makes landfall?</p><p data-front-key="front_explainer">You have a limited budget for anticipatory action. Use it wisely to mobile resources and then take action. Actions can only be taken if resources have already been mobilised.<span style="display:block;margin-top:8px"></span>Oh, and you will need to keep your boss happy too!</p><h3 data-front-key="game_length_heading">Game Mode</h3><div class="choice-grid" role="group" aria-label="Game length"><label><input type="radio" name="game-length" value="single"><span><strong data-front-key="single_title">One Cyclone</strong><span data-front-key="single_description">One cyclone, selected at random</span></span></label><label><input type="radio" name="game-length" value="season" checked><span><strong data-front-key="season_title">One Season</strong><span data-front-key="season_description">Manage your budget through a fictional season; which could include anywhere between 2 and 7 random cyclones.</span></span></label></div><h3 data-front-key="difficulty_heading">Difficulty</h3><div class="choice-grid difficulty-grid" role="group" aria-label="Difficulty"><label><input type="radio" name="difficulty" value="3"><span><strong data-front-key="easy_title">Easy</strong><span data-front-key="easy_description">You only need 3 days in which to pre-activate</span></span></label><label><input type="radio" name="difficulty" value="4" checked><span><strong data-front-key="medium_title">Medium</strong><span data-front-key="medium_description">You only need 4 days in which to pre-activate</span></span></label><label><input type="radio" name="difficulty" value="5"><span><strong data-front-key="hard_title">Hard</strong><span data-front-key="hard_description">You have 5 days in which to pre-activate, the same as the EAP</span></span></label></div><p class="subtle" data-front-key="front_rules">Pre-activate to prepare an area; full activation is possible closer to landfall in an area you have prepared.</p><div class="start-actions"><button type="button" class="btn" id="start-game" data-front-key="start_button">Start game</button><a class="about-link" href="./about.html" data-front-key="about_button">About the game</a></div><p class="image-credit"><span data-front-key="image_credit">Background: NASA Terra/MODIS image of Cyclone Bingiza approaching Madagascar (13 February 2011), Jeff Schmaltz / NASA GSFC, CC BY 2.0.</span> <a href="https://earthobservatory.nasa.gov/images/49250/tropical-cyclone-bingiza" target="_blank" rel="noopener noreferrer" data-front-key="image_source_link_text">Image source</a> · <a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener noreferrer" data-front-key="image_licence_link_text">Licence</a>.</p></div></section><div class="game-shell"><header><div><h1 data-front-key="header_title">Prepare for the cyclone!</h1><small data-front-key="header_tagline">Can you use forecasts to support communities before a cyclone makes landfall?</small></div><button class="btn alt" id="restart" data-front-key="new_game_button">New game</button></header><main>
 <div class="stats">
 <div class="stat"><div class="k">Season progress</div><div class="v" id="seasonstat">—</div></div>
 <div class="stat"><div class="k">Remaining budget</div><div class="v" id="budgetstat">—</div></div>
@@ -93,19 +135,19 @@ footer{margin-top:12px;color:#5f7780;font-size:12px;line-height:1.5}
 <div class="panel">
 <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap"><h2 id="stormtitle">Loading…</h2><span class="pill" id="datepill">Forecast briefing</span></div>
 <div id="map" role="img" aria-label="Map of Madagascar with forecast tracks and warehouse locations"></div>
-<div class="wind-legend" aria-label="Forecast map key"><span class="legend-entry"><span class="wind-dot" style="background:#61b7db"></span>&lt;63 km/h</span><span class="legend-entry"><span class="wind-dot" style="background:#36b99b"></span>63–88 km/h</span><span class="legend-entry"><span class="wind-dot" style="background:#ebca55"></span>89–117 km/h</span><span class="legend-entry"><span class="wind-dot" style="background:#f39a4b"></span>118–165 km/h</span><span class="legend-entry"><span class="wind-dot" style="background:#cf4b4b"></span>≥166 km/h</span></div><div class="wind-legend"><span class="legend-entry"><span class="line-sample" style="border-top:3px solid #36b99b"></span>Ensemble members: forecast intensity colours</span><span class="legend-entry"><span class="line-sample median"></span>Median track</span><span>Track colours and dots show forecast wind strength, not observed intensity</span></div><div class="subtle" style="margin-top:7px">Warehouses: red = not mobilised; green = mobilised; dark green = fully activated. Winds are approximate 10 m model winds; averaging period unverified.</div>
+<div class="wind-legend" aria-label="Forecast map key"><span class="legend-entry"><span class="wind-dot" style="background:#61b7db"></span>&lt;63 km/h</span><span class="legend-entry"><span class="wind-dot" style="background:#36b99b"></span>63–88 km/h</span><span class="legend-entry"><span class="wind-dot" style="background:#ebca55"></span>89–117 km/h</span><span class="legend-entry"><span class="wind-dot" style="background:#f39a4b"></span>118–165 km/h</span><span class="legend-entry"><span class="wind-dot" style="background:#cf4b4b"></span>≥166 km/h</span></div><div class="wind-legend"><span class="legend-entry"><span class="line-sample" style="border-top:3px solid #36b99b"></span>Ensemble members: forecast intensity colours</span><span class="legend-entry"><span class="line-sample median"></span>Median track</span></div>
 
 </div>
-<div class="panel"><h3>Met Service · WhatsApp update</h3><div id="brief"></div><div class="subtle" id="forecastsource"></div></div>
+<div class="panel met-panel"><h3>Met Service update</h3><div id="brief"></div></div>
 </section>
 <aside>
-<div class="panel"><h2>Your decision</h2><div class="subtle" id="leadtime"></div>
+<div class="panel"><h2>Your decision</h2>
 <div class="actions" id="actions">
-<button type="button" data-action="monitor" class="action">👀 <strong>Keep monitoring</strong><div class="subtle">CHF 0 · Wait for the next forecast</div></button>
-<button type="button" data-action="preposition" class="action">📦 <strong>Mobilise</strong><div class="subtle">CHF 20,000 per area · Prepare within 7 days, before your difficulty deadline</div></button>
-<button type="button" data-action="distribute" class="action">🤝 <strong>Full activation</strong><div class="subtle">CHF 8,000 per area · Requires mobilisation · 3- and 2-day briefings only</div></button>
+<button type="button" data-action="monitor" class="action">👀 <strong>Keep monitoring</strong><div class="subtle">0 · Wait for the next forecast</div></button>
+<button type="button" data-action="preposition" class="action">📦 <strong>Mobilise</strong><div class="subtle">20,000 per area · Prepare within 7 days, before your difficulty deadline</div></button>
+<button type="button" data-action="distribute" class="action">🤝 <strong>Full activation</strong><div class="subtle">8,000 per area · Requires mobilisation · 3- and 2-day briefings only</div></button>
 </div>
-<div id="warehouses" class="wh"></div><div id="cost" class="subtle">Select an action above.</div>
+<h3 class="warehouse-heading">Warehouse areas</h3><div id="warehouses" class="wh" role="group" aria-label="Warehouse areas"></div><div id="cost" class="subtle">Select an action above.</div>
 <div id="message" aria-live="polite"></div>
 <button id="confirm" class="btn" disabled>Confirm decision</button>
 <button id="advance" class="btn alt" style="display:none">Next forecast →</button>
@@ -114,8 +156,8 @@ footer{margin-top:12px;color:#5f7780;font-size:12px;line-height:1.5}
 <div class="panel"><h3>Current status</h3><div id="stockstat" aria-live="polite"></div><div class="progress"><span id="progressbar" style="width:0%"></span></div></div>
 </aside>
 </div>
-<footer>Training game using simplified assumptions; not an operational forecast. <a href="./about.html">About the game and data</a> · <a href="./jokwe.html">Original Jokwe prototype</a>.</footer>
-</main>
+<footer><a href="./about.html">About Game</a></footer>
+</main></div>
 <script>
 
 // Optional read-only front-page copy from Google Sheets (only the published "Front page" tab).
@@ -257,7 +299,7 @@ const cost={preposition:20000,distribute:8000};
 const PRE_WINDOW=7,ACT_WINDOW=3,STRONG_WIND=118,STORM_WIND=63,PRE_TRIGGER_MIN_DAYS=5;
 const $=id=>document.getElementById(id);
 const date=x=>{const s=String(x).trim().replace(" ","T");return new Date((/^\d{4}-\d{2}-\d{2}$/.test(s)?s+"T00:00:00":s)+"Z");};
-const dayMs=86400000, money=x=>"CHF "+Math.round(x).toLocaleString("en-GB");
+const dayMs=86400000, money=x=>Math.round(x).toLocaleString("en-GB");
 const clamp=(a,lo,hi)=>Math.max(lo,Math.min(hi,a));
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 function stormCount(){const weights=[[2,10],[3,20],[4,25],[5,20],[6,15],[7,10]];let r=Math.random()*100;for(const [k,p] of weights){r-=p;if(r<0)return k;}return 7;}
@@ -389,7 +431,7 @@ fetch('https://raw.githubusercontent.com/datasets/geo-countries/master/data/coun
    const polys=geom.type==='Polygon'?[geom.coordinates]:geom.type==='MultiPolygon'?geom.coordinates:[];
    for(const poly of polys)for(const ring of poly){
     const xs=ring.map(p=>p[0]),ys=ring.map(p=>p[1]);
-    if(Math.max(...xs)>=16&&Math.min(...xs)<=71&&Math.max(...ys)>=-36&&Math.min(...ys)<=-5)rings.push(ring);
+    if(Math.max(...xs)>=35&&Math.min(...xs)<=71&&Math.max(...ys)>=-30&&Math.min(...ys)<=-5)rings.push(ring);
    }
   }
   landShapes=rings;
@@ -425,15 +467,17 @@ function colouredMemberSvg(track,x,y){
  return svg;
 }
 function mapSvg(rows){
-const lo=16,hi=71,left=58,top=25,width=820,height=525,x=lon=>left+(lon-lo)/(hi-lo)*(width-left-15),y=lat=>top+(-5-lat)/31*(height-top-28);
+const lo=35,hi=71,north=-5,south=-30,left=48,top=20,width=820,height=600,right=width-15,bottom=height-28,x=lon=>left+(lon-lo)/(hi-lo)*(right-left),y=lat=>top+(north-lat)/(north-south)*(bottom-top);
 const coords=arr=>arr.map(p=>x(p[0]).toFixed(1)+","+y(p[1]).toFixed(1)).join(" ");
 const mapPts=coast.map(p=>[p[0],p[1]]);
 const ensemble=forecastMembers(current());
 
-let svg='<svg viewBox="0 0 820 525" xmlns="http://www.w3.org/2000/svg" aria-label="Cyclone forecast track and uncertainty around Madagascar">';
-svg+='<rect width="820" height="525" fill="#dfeef7"/>';
-for(let l=20;l<=hi;l+=5)svg+='<line x1="'+x(l)+'" y1="20" x2="'+x(l)+'" y2="510" stroke="#bfd6de" stroke-dasharray="3 5"/><text x="'+x(l)+'" y="516" fill="#527080" font-size="12" text-anchor="middle">'+l+'°E</text>';
-for(let lat=-10;lat>=-35;lat-=5)svg+='<line x1="43" y1="'+y(lat)+'" x2="808" y2="'+y(lat)+'" stroke="#bfd6de" stroke-dasharray="3 5"/><text x="8" y="'+(y(lat)+4)+'" fill="#527080" font-size="12">'+Math.abs(lat)+'°S</text>';
+let svg='<svg viewBox="0 0 '+width+' '+height+'" xmlns="http://www.w3.org/2000/svg" aria-label="Cyclone forecast track and uncertainty around Madagascar">';
+svg+='<rect width="'+width+'" height="'+height+'" fill="#dfeef7"/>';
+svg+='<defs><clipPath id="forecast-domain"><rect x="'+left+'" y="'+top+'" width="'+(right-left)+'" height="'+(bottom-top)+'"/></clipPath></defs>';
+for(let l=35;l<=hi;l+=5)svg+='<line x1="'+x(l)+'" y1="'+top+'" x2="'+x(l)+'" y2="'+bottom+'" stroke="#bfd6de" stroke-dasharray="3 5"/><text x="'+x(l)+'" y="'+(height-8)+'" fill="#527080" font-size="12" text-anchor="middle">'+l+'°E</text>';
+for(let lat=-5;lat>=south;lat-=5)svg+='<line x1="'+left+'" y1="'+y(lat)+'" x2="'+right+'" y2="'+y(lat)+'" stroke="#bfd6de" stroke-dasharray="3 5"/><text x="'+(left-7)+'" y="'+(y(lat)+4)+'" fill="#527080" font-size="12" text-anchor="end">'+Math.abs(lat)+'°S</text>';
+svg+='<g clip-path="url(#forecast-domain)">';
 svg+=landShapes.length?landShapes.map(ring=>'<polygon points="'+coords(ring)+'" fill="#efece0" stroke="#738b7e" stroke-width="1.3"/>').join(""):'<polygon points="'+coords(mapPts)+'" fill="#efece0" stroke="#738b7e" stroke-width="2"/>';
 if(rows.length){
  svg+=ensemble.map(track=>colouredMemberSvg(track,x,y)).join("");
@@ -441,7 +485,7 @@ if(rows.length){
  for(const p of rows){const c=windTrackColour(p.wind);svg+='<circle cx="'+x(p.lon)+'" cy="'+y(p.lat)+'" r="6.2" fill="'+c+'" stroke="#224650" stroke-width="1.1"/><text x="'+(x(p.lon)+9)+'" y="'+(y(p.lat)-10)+'" font-size="11" fill="#234553" stroke="#dfeef7" stroke-width="3" paint-order="stroke">+'+p.day+'d</text>';}
 }
 for(const h of hubs){const stocked=current().stock.has(h.id),delivered=current().distributed.has(h.id);const fill=delivered?"#216c43":stocked?"#32a852":"#c43b35";svg+='<circle cx="'+x(h.lon)+'" cy="'+y(h.lat)+'" r="8.7" fill="'+fill+'" stroke="#fff" stroke-width="2"/><text x="'+(x(h.lon)+13)+'" y="'+(y(h.lat)-8)+'" font-size="15" font-weight="750" fill="#193742" stroke="#fff" stroke-width="4" paint-order="stroke">'+esc(h.name)+'</text>';}
-svg+='</svg>';return svg;
+svg+='</g><rect x="'+left+'" y="'+top+'" width="'+(right-left)+'" height="'+(bottom-top)+'" fill="none" stroke="#bfd6de" stroke-width="1"/></svg>';return svg;
 }
 function coordsPixel(p){return p.map(v=>v[0].toFixed(1)+","+v[1].toFixed(1)).join(" ");}
 
@@ -712,12 +756,6 @@ $("stormtitle").textContent="Storm "+(G.slot+1)+" · Tropical system";
 $("datepill").textContent=t.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"});
 $("map").innerHTML=mapSvg(rows);
 $("brief").textContent=last?"The storm has passed. Reviewing impacts and expenditure.":forecastMessage(rows);
-const windAtLandfall=forecastLandfall(rows),signals=trainingSignals(st);$("forecastsource").textContent="Training estimate · Tropical-storm-strength mainland landfall: "+Math.round(signals.probability*100)+"% of ensemble tracks · Cyclone-strength signal: "+(signals.activation?"yes":"not indicated")+" · Not an official forecast.";
-const landfallForecast=predictedLandfallCountdown(st);
-$("leadtime").textContent=last?"Storm completed":
- landfallForecast?(landfallForecast.fraction>.5?"Forecast mainland landfall in approximately ":"Possible mainland landfall in around ")+landfallForecast.days+" day(s) ("+Math.round(landfallForecast.fraction*100)+"% of ensemble members show a crossing).":
- "No forecast mainland landfall in the next 7 days.";
-
 const names=ids=>[...ids].map(id=>hubs.find(h=>h.id===id)?.name||id).join(", ")||"None";
  $("stockstat").innerHTML='<div class="status-line"><strong>Mobilised:</strong> '+esc(names(st.stock))+'</div><div class="status-line"><strong>Fully activated:</strong> '+esc(names(st.distributed))+'</div>';
 $("progressbar").style.width=(100*(st.day+1)/(st.duration+1)).toFixed(0)+"%";
@@ -731,15 +769,23 @@ for(const btn of actions){
  if(a==="preposition"){
   const late=remaining<G.prepDays;
   heading.textContent=late?"Too late to mobilise":"Mobilise";
-  description.textContent=late?"Mobilisation deadline passed ("+G.prepDays+" days before landfall).":"CHF 20,000 per area · Prepare 7 to "+G.prepDays+" days ahead";
+  description.textContent=late?"Mobilisation deadline passed ("+G.prepDays+" days before landfall).":"20,000 per area · Prepare 7 to "+G.prepDays+" days ahead";
  }else if(a==="distribute"){
   const late=remaining<2;
   heading.textContent=late?"Too late to activate":"Full activation";
-  description.textContent=late?"Activation deadline passed after the 2-day briefing.":"CHF 8,000 per area · Requires mobilisation · 3- and 2-day briefings";
+  description.textContent=late?"Activation deadline passed after the 2-day briefing.":"8,000 per area · Requires mobilisation · 3- and 2-day briefings";
  }
 }
-$("warehouses").style.display=!st.acted&&!last&&["preposition","distribute"].includes(st.choice)?"grid":"none";
-$("warehouses").innerHTML=hubs.map(h=>{const blocked=st.choice==="preposition"?st.stock.has(h.id):!st.stock.has(h.id)||st.distributed.has(h.id);return '<label class="'+(blocked?"disabled":"")+'"><input type="checkbox" data-hub="'+h.id+'" '+(blocked?"disabled":"")+' '+(st.chosen.has(h.id)?"checked":"")+'>'+h.name+'</label>';}).join("");
+const focusedHub=document.activeElement?.closest("#warehouses [data-hub]")?.dataset.hub;
+$("warehouses").innerHTML=hubs.map(h=>{
+ const stocked=st.stock.has(h.id),activated=st.distributed.has(h.id),selected=st.chosen.has(h.id);
+ const choosing=!st.acted&&!last&&((st.choice==="preposition"&&canPrep()&&!stocked)||(st.choice==="distribute"&&canDist()&&stocked&&!activated));
+ const preview=choosing&&selected;
+ const status=activated?"activated":preview&&st.choice==="distribute"?"activated":stocked||preview&&st.choice==="preposition"?"mobilised":"idle";
+ const stateText=preview?(st.choice==="distribute"?"Activate selected":"Mobilise selected"):activated?"Fully activated":stocked?"Mobilised":"Not mobilised";
+ return '<button type="button" class="warehouse-option '+status+(preview?" pending":"")+'" data-hub="'+h.id+'" aria-pressed="'+Boolean(preview)+'" '+(choosing?"":"disabled")+'><span class="warehouse-dot" aria-hidden="true"></span><span class="warehouse-copy"><strong>'+esc(h.name)+'</strong><small>'+stateText+'</small></span></button>';
+}).join("");
+if(focusedHub)$("warehouses").querySelector('[data-hub="'+focusedHub+'"]:not(:disabled)')?.focus({preventScroll:true});
 const n=st.chosen.size*(cost[st.choice]||0);
 $("cost").textContent=st.acted?"Decision confirmed for today.":st.choice==="monitor"?"No cost.":st.choice?"Cost: "+money(n)+(n>G.budget?" — insufficient budget":""):"Choose one of the three actions.";
 $("confirm").disabled=st.acted||last||!st.choice||(["preposition","distribute"].includes(st.choice)&&!n)||n>G.budget;
@@ -897,7 +943,7 @@ function confirm(){
  st.acted=true;render();$("message").textContent="Decision saved. Advance to the next briefing.";
 }
 $("actions").addEventListener("click",e=>{const b=e.target.closest("[data-action]");if(b&&!b.disabled)selectAction(b.dataset.action);});
-$("warehouses").addEventListener("change",e=>{const box=e.target.closest("[data-hub]");if(!box)return;const st=current();if(box.checked)st.chosen.add(box.dataset.hub);else st.chosen.delete(box.dataset.hub);render();});
+$("warehouses").addEventListener("click",e=>{const box=e.target.closest("[data-hub]");if(!box||box.disabled)return;const st=current(),id=box.dataset.hub;if(st.chosen.has(id))st.chosen.delete(id);else st.chosen.add(id);render();});
 $("confirm").addEventListener("click",confirm);
 $("advance").addEventListener("click",()=>{const st=current();if(!st.acted||st.impact!==null)return;if(st.day+1>=st.duration){finishStorm();return;}st.day++;st.acted=false;st.choice="";st.chosen.clear();$("message").textContent="";render();});
 $("nextstorm").addEventListener("click",()=>{if(current().impact===null||G.finished)return;G.slot++;$("message").textContent="A new cyclone is developing. Your remaining budget carries forward.";render();});
