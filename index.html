@@ -196,7 +196,15 @@ body{min-height:100vh;background-color:#eaecea;isolation:isolate}
 .game-shell{overflow:visible}
 .game-shell header{border-radius:16px 16px 0 0}
 @media(max-width:750px){.chapter-dot{width:26px}.chapter-dot::before{width:16px;height:16px}.chapter-dot[data-tip]::after{white-space:normal;width:120px}.game-shell{max-width:calc(100% - 16px)}}
-#start-screen{background:transparent}#start-screen[hidden],.game-shell[hidden]{display:none!important}.game-shell{max-width:1000px;width:calc(100% - 32px)}@media(max-width:750px){.game-shell{width:calc(100% - 32px);max-width:1000px}}</style>
+#start-screen{background:transparent}#start-screen[hidden],.game-shell[hidden]{display:none!important}.game-shell{max-width:1000px;width:calc(100% - 32px)}@media(max-width:750px){.game-shell{width:calc(100% - 32px);max-width:1000px}}
+#map .map-warehouse{cursor:default;outline:none}
+#map .map-warehouse.selectable{cursor:pointer}
+#map .map-warehouse.selectable:hover .warehouse-pin,#map .map-warehouse:focus-visible .warehouse-pin{stroke:#173e51;stroke-width:3}
+#map .map-warehouse:focus-visible .warehouse-ring{stroke-width:3;stroke-dasharray:none}
+#map .warehouse-pulse{transform-box:fill-box;transform-origin:center;animation:warehouse-select-pulse .55s ease-out both;pointer-events:none}
+@keyframes warehouse-select-pulse{from{transform:scale(.75);opacity:1}to{transform:scale(1.45);opacity:0}}
+@media(prefers-reduced-motion:reduce){#map .warehouse-pulse{animation:none;opacity:0}}
+</style>
 </head>
 <body>
 
@@ -214,7 +222,7 @@ body{min-height:100vh;background-color:#eaecea;isolation:isolate}
 <section>
 <div class="panel">
 <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap"><h2 id="stormtitle">Loading…</h2><span class="pill" id="datepill">Forecast briefing</span></div>
-<div id="map" role="img" aria-label="Map of Madagascar with forecast tracks and warehouse locations"></div>
+<div id="map" role="group" aria-label="Map of Madagascar with forecast tracks and warehouse locations"></div>
 <div class="wind-legend" aria-label="Forecast map key"><span class="legend-entry"><span class="wind-dot" style="background:#61b7db"></span>&lt;63 km/h</span><span class="legend-entry"><span class="wind-dot" style="background:#36b99b"></span>63–88 km/h</span><span class="legend-entry"><span class="wind-dot" style="background:#ebca55"></span>89–117 km/h</span><span class="legend-entry"><span class="wind-dot" style="background:#f39a4b"></span>118–165 km/h</span><span class="legend-entry"><span class="wind-dot" style="background:#cf4b4b"></span>≥166 km/h</span></div><div class="wind-legend"><span class="legend-entry"><span class="line-sample" style="border-top:3px solid #36b99b"></span>Ensemble members: forecast intensity colours</span><span class="legend-entry"><span class="line-sample median"></span>Median track</span></div>
 
 </div>
@@ -565,7 +573,14 @@ if(rows.length){
  svg+='<polyline points="'+coords(rows.map(p=>[p.lon,p.lat]))+'" fill="none" stroke="#c74c44" stroke-width="3" stroke-dasharray="8 5"/>';
  for(const p of rows){const c=windTrackColour(p.wind);svg+='<circle cx="'+x(p.lon)+'" cy="'+y(p.lat)+'" r="6.2" fill="'+c+'" stroke="#224650" stroke-width="1.1"/><text x="'+(x(p.lon)+9)+'" y="'+(y(p.lat)-10)+'" font-size="11" fill="#234553" stroke="#dfeef7" stroke-width="3" paint-order="stroke">+'+p.day+'d</text>';}
 }
-for(const h of hubs){const stocked=current().stock.has(h.id),delivered=current().distributed.has(h.id);const fill=delivered?"#216c43":stocked?"#32a852":"#c43b35";svg+='<circle cx="'+x(h.lon)+'" cy="'+y(h.lat)+'" r="8.7" fill="'+fill+'" stroke="#fff" stroke-width="2"/><text x="'+(x(h.lon)+13)+'" y="'+(y(h.lat)-8)+'" font-size="15" font-weight="750" fill="#193742" stroke="#fff" stroke-width="4" paint-order="stroke">'+esc(h.name)+'</text>';}
+for(const h of hubs){
+ const state=warehouseState(h),cx=x(h.lon),cy=y(h.lat),fill=state.status==="activated"?"#216c43":state.status==="mobilised"?"#32a852":"#c43b35";
+ svg+='<g class="map-warehouse'+(state.choosing?' selectable':'')+(state.preview?' pending':'')+'" data-map-hub="'+h.id+'" role="button" tabindex="'+(state.choosing?'0':'-1')+'" aria-disabled="'+!state.choosing+'" aria-pressed="'+state.preview+'" aria-label="'+esc(h.name+' — '+state.stateText)+'"><title>'+esc(h.name+' — '+state.stateText+(state.choosing?' · Click to '+(state.preview?'deselect':'select'):'') )+'</title>';
+ svg+='<circle cx="'+cx+'" cy="'+cy+'" r="19" fill="transparent" class="warehouse-hit"/>';
+ if(state.choosing)svg+='<circle cx="'+cx+'" cy="'+cy+'" r="13.5" fill="none" stroke="'+(state.preview?fill:'#173e51')+'" stroke-width="2" stroke-dasharray="'+(state.preview?'4 2':'2 3')+'" class="warehouse-ring"/>';
+ if(state.preview)svg+='<circle cx="'+cx+'" cy="'+cy+'" r="16" fill="none" stroke="'+fill+'" stroke-width="1.8" class="warehouse-pulse"/>';
+ svg+='<circle cx="'+cx+'" cy="'+cy+'" r="8.7" fill="'+fill+'" stroke="#fff" stroke-width="2" class="warehouse-pin"/><text x="'+(cx+13)+'" y="'+(cy-8)+'" font-size="15" font-weight="750" fill="#193742" stroke="#fff" stroke-width="4" paint-order="stroke">'+esc(h.name)+'</text></g>';
+}
 svg+='</g><rect x="'+left+'" y="'+top+'" width="'+(right-left)+'" height="'+(bottom-top)+'" fill="none" stroke="#bfd6de" stroke-width="1"/></svg>';return svg;
 }
 function coordsPixel(p){return p.map(v=>v[0].toFixed(1)+","+v[1].toFixed(1)).join(" ");}
@@ -829,6 +844,18 @@ function finishStorm(){
  st.acted=true;G.finished=G.slot===G.storms.length-1;render();
  $("message").textContent="Storm completed. "+helped.length+" affected areas received full activation.";
 }
+function warehouseState(h){
+ const st=current(),stocked=st.stock.has(h.id),activated=st.distributed.has(h.id),selected=st.chosen.has(h.id),last=st.impact!==null;
+ const choosing=!st.acted&&!last&&((st.choice==="preposition"&&canPrep()&&!stocked)||(st.choice==="distribute"&&canDist()&&stocked&&!activated));
+ const preview=choosing&&selected;
+ const status=activated?"activated":preview&&st.choice==="distribute"?"activated":stocked||preview&&st.choice==="preposition"?"mobilised":"idle";
+ const stateText=preview?(st.choice==="distribute"?"Activate selected":"Mobilise selected"):activated?"Fully activated":stocked?"Mobilised":"Not mobilised";
+ return {choosing,preview,status,stateText};
+}
+function toggleWarehouse(id){
+ const h=hubs.find(h=>h.id===id);if(!h||!warehouseState(h).choosing)return;
+ const st=current();if(st.chosen.has(id))st.chosen.delete(id);else st.chosen.add(id);render();
+}
 function render(){
 const st=current(),t=displayTime(),remaining=remainingDays(),rows=forecast(st),last=st.impact!==null;
 $("seasoncard").classList.toggle("single-storm",G.mode==="single");
@@ -836,7 +863,9 @@ $("seasonstat").textContent=G.mode==="single"?"One storm only":"Storm "+(G.slot+
 $("budgetstat").textContent=money(G.budget);$("peoplestat").textContent=G.people.toLocaleString("en-GB");$("bossstat").textContent=(G.boss>=70?"🙂":G.boss<40?"😟":"😐")+" "+G.boss+" / 100";
 $("stormtitle").textContent="Storm "+(G.slot+1)+" · Tropical system";
 $("datepill").textContent=t.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"});
+const focusedMapHub=document.activeElement?.closest("#map [data-map-hub]")?.dataset.mapHub;
 $("map").innerHTML=mapSvg(rows);
+if(focusedMapHub)$("map").querySelector('[data-map-hub="'+focusedMapHub+'"][aria-disabled="false"]')?.focus({preventScroll:true});
 $("brief").textContent=last?"The storm has passed. Reviewing impacts and expenditure.":forecastMessage(rows);
 
 const actions=$("actions").querySelectorAll("[data-action]");
@@ -857,11 +886,7 @@ for(const btn of actions){
 }
 const focusedHub=document.activeElement?.closest("#warehouses [data-hub]")?.dataset.hub;
 $("warehouses").innerHTML=hubs.map(h=>{
- const stocked=st.stock.has(h.id),activated=st.distributed.has(h.id),selected=st.chosen.has(h.id);
- const choosing=!st.acted&&!last&&((st.choice==="preposition"&&canPrep()&&!stocked)||(st.choice==="distribute"&&canDist()&&stocked&&!activated));
- const preview=choosing&&selected;
- const status=activated?"activated":preview&&st.choice==="distribute"?"activated":stocked||preview&&st.choice==="preposition"?"mobilised":"idle";
- const stateText=preview?(st.choice==="distribute"?"Activate selected":"Mobilise selected"):activated?"Fully activated":stocked?"Mobilised":"Not mobilised";
+ const {choosing,preview,status,stateText}=warehouseState(h);
  return '<button type="button" class="warehouse-option '+status+(preview?" pending":"")+'" data-hub="'+h.id+'" aria-pressed="'+Boolean(preview)+'" '+(choosing?"":"disabled")+'><span class="warehouse-dot" aria-hidden="true"></span><span class="warehouse-copy"><strong>'+esc(h.name)+'</strong><small>'+stateText+'</small></span></button>';
 }).join("");
 if(focusedHub)$("warehouses").querySelector('[data-hub="'+focusedHub+'"]:not(:disabled)')?.focus({preventScroll:true});
@@ -1022,7 +1047,9 @@ function confirm(){
  st.acted=true;render();$("message").textContent="Decision saved. Advance to the next briefing.";
 }
 $("actions").addEventListener("click",e=>{const b=e.target.closest("[data-action]");if(b&&!b.disabled)selectAction(b.dataset.action);});
-$("warehouses").addEventListener("click",e=>{const box=e.target.closest("[data-hub]");if(!box||box.disabled)return;const st=current(),id=box.dataset.hub;if(st.chosen.has(id))st.chosen.delete(id);else st.chosen.add(id);render();});
+$("warehouses").addEventListener("click",e=>{const box=e.target.closest("[data-hub]");if(box&&!box.disabled)toggleWarehouse(box.dataset.hub);});
+$("map").addEventListener("click",e=>{const pin=e.target.closest("[data-map-hub]");if(pin)toggleWarehouse(pin.dataset.mapHub);});
+$("map").addEventListener("keydown",e=>{const pin=e.target.closest("[data-map-hub]");if(pin&&(e.key==="Enter"||e.key===" ")){e.preventDefault();toggleWarehouse(pin.dataset.mapHub);}});
 $("confirm").addEventListener("click",confirm);
 $("advance").addEventListener("click",()=>{const st=current();if(!st.acted||st.impact!==null)return;if(st.day+1>=st.duration){finishStorm();return;}st.day++;st.acted=false;st.choice="";st.chosen.clear();$("message").textContent="";render();});
 $("nextstorm").addEventListener("click",()=>{if(current().impact===null||G.finished)return;G.slot++;$("message").textContent="A new cyclone is developing. Your remaining budget carries forward.";render();});
